@@ -76,7 +76,6 @@ private:
 	int		m_innerSamplePos;
 	int		m_frame;
 	int		m_frameCount;
-	int		m_loopCount;
 	uint32_t m_hostReplayRate;
 
 	AtariMachine m_atariMachine;

@@ -244,7 +244,6 @@ bool	SndhFile::InitSubSong(int subSongId)
 	m_innerSamplePos = 0;
 	m_frame = 0;
 	m_frameCount = info.playerTickCount;
-	m_loopCount = 0;
 	m_atariMachine.Startup(m_hostReplayRate);
 	if (m_atariMachine.Upload(m_rawBuffer, SNDH_UPLOAD_ADDR, m_rawSize))
 	{
@@ -255,6 +254,7 @@ bool	SndhFile::InitSubSong(int subSongId)
 
 int	SndhFile::AudioRender(int16_t* buffer, int count, uint32_t* pSampleViewInfo)
 {
+	int outsize = 0;
 	for (int i = 0; i < count; i++)
 	{
 		m_innerSamplePos--;
@@ -265,19 +265,15 @@ int	SndhFile::AudioRender(int16_t* buffer, int count, uint32_t* pSampleViewInfo)
 			m_innerSamplePos = m_samplePerTick;
 			m_frame++;
 			if (m_frame >= m_frameCount)
-				m_loopCount++;
+				break;
 		}
 
-		// compute the Atari machine sample (YM2149 and STE DAC)
-		if (0 == m_loopCount)
-			*buffer++ = m_atariMachine.ComputeNextSample(pSampleViewInfo);
-		else
-			*buffer++ = 0;
-
+		*buffer++ = m_atariMachine.ComputeNextSample(pSampleViewInfo);
 		if (pSampleViewInfo)
 			pSampleViewInfo++;
+		outsize++;
 	}
-	return m_loopCount;
+	return outsize;
 }
 
 int SndhFile::FastForward(int framesToSkip)
@@ -288,13 +284,15 @@ int SndhFile::FastForward(int framesToSkip)
 	if (framesToSkip + m_frame >= m_frameCount)
 		framesToSkip = m_frameCount - m_frame;
 
+	int frameSkipped = framesToSkip;
 	for (int i = 0; i < framesToSkip; i++)
 	{
 		m_atariMachine.Jsr(SNDH_UPLOAD_ADDR + 8, 0);
 		m_innerSamplePos = m_samplePerTick;
 		m_frame++;
+		frameSkipped++;
 		if (m_frame >= m_frameCount)
-			m_loopCount++;
+			break;
 	}
-	return framesToSkip;
+	return frameSkipped;
 }

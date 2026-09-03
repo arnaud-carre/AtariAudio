@@ -5,7 +5,7 @@
 #include "WavWriter.h"
 
 static const int kHostReplayRate = 44100;
-static const int kAudioBufferLen = kHostReplayRate;	// 1 second of audio buffer is enough
+static const int kAudioBufferLen = kHostReplayRate*10;	// 10 seconds of audio buffer is enough
 
 static int16_t audioBuffer[kAudioBufferLen];
 
@@ -65,9 +65,14 @@ int	main(int argc, char* argv[])
 						const int duration = info.playerTickCount / info.playerTickRate;
 						printf("Rendering %d:%02d sec of subsong #%d/#%d (%dHz player)\n", duration / 60, duration % 60, s, subsongCount, info.playerTickRate);
 
-						// loop till the sndh loop count is >0
-						while (0 == sndh.AudioRender(audioBuffer, kAudioBufferLen))
-							wavWriter.AddAudioData(audioBuffer, kAudioBufferLen);
+						// loop till the end
+						int len;
+						do
+						{
+							len = sndh.AudioRender(audioBuffer, kAudioBufferLen);
+							wavWriter.AddAudioData(audioBuffer, len);
+						}
+						while (len == kAudioBufferLen);						
 					}
 				}
 				sndh.Unload();
