@@ -36,6 +36,7 @@ int	main(int argc, char* argv[])
 
 	printf("sndh2wav, convert atari SNDH music file into a wav\n");
 	printf("Build using AtariAudio library v" ATARI_AUDIO_VERSION "\n");
+	printf("https://github.com/arnaud-carre/AtariAudio\n");
 	printf("\n");
 	if (argc != 3)
 	{

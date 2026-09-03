@@ -1,6 +1,6 @@
 # Atari Audio Library v1.05
 
-AtariAudio/ directory contains Atari Audio library. You can use it to play SNDH files or directly use YM2149 emulator if you want to write your own tracker.
+You can use AtariAudio library to play ATARI SNDH music files. You can also directly use YM2149 emulator if you want to write your own YM tracker.
 The libray doesn't use any dependency, and should compile on any platform, including embeded systems (it doesn't even use float )
 
 # Playing SNDH file in your own app
@@ -29,16 +29,20 @@ Like, let's say your replay rate is 44.1Khz and you want to generate 1 second of
   AudioRender(buffer, 44100);
 ````
 
+AudioRender returns the amount of samples generated. If it's lower than "count", it means you reached the end of the music
+
 # Versions
 
 - 1.05 : SndhFile::AudioRender API change (now returns sample count). Use timedb database for SNDH without music len
 - 1.04 : added SndhFile::FastForward function
 - 1.03 : added Ripper & Converter into SubSongInfo struct. some minor linux compilation fixes
 
+# Examples
+
+The repo also contains a sndh2wav project to show how to convert a .sndh file into a WAV file
+
 # Credits
 
 - AtariAudio library written by Arnaud Carré aka Leonard/Oxygene.
 - MUSASHI 68000 emulation written by Karl Stenerud
 - Atari ICE depacker C version written by Hans Wessels
-
-
