@@ -29,13 +29,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -95,10 +95,12 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
     </Link>
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
@@ -150,6 +152,7 @@
     <ClCompile Include="..\..\src\Mk68901.cpp" />
     <ClCompile Include="..\..\src\SndhFile.cpp" />
     <ClCompile Include="..\..\src\SteDac.cpp" />
+    <ClCompile Include="..\..\src\timedb.cpp" />
     <ClCompile Include="..\..\src\ym2149c.cpp" />
     <ClCompile Include="sndh2wav.cpp" />
     <ClCompile Include="wavwriter.cpp" />
@@ -162,9 +165,11 @@
     <ClInclude Include="..\..\src\external\Musashi\m68kconf.h" />
     <ClInclude Include="..\..\src\external\Musashi\m68kcpu.h" />
     <ClInclude Include="..\..\src\external\Musashi\m68kops.h" />
+    <ClInclude Include="..\..\src\external\timedb.inc.h" />
     <ClInclude Include="..\..\src\Mk68901.h" />
     <ClInclude Include="..\..\src\SndhFile.h" />
     <ClInclude Include="..\..\src\SteDac.h" />
+    <ClInclude Include="..\..\src\timedb.h" />
     <ClInclude Include="..\..\src\ym2149c.h" />
     <ClInclude Include="..\..\src\ym2149_tables.h" />
     <ClInclude Include="wavwriter.h" />

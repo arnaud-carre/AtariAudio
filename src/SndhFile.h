@@ -68,7 +68,7 @@ private:
 	int		m_rawSize;
 
 	int		m_defaultSubSong;
-	int		m_subSongLenInTick[kSubsongCountMax];
+	uint32_t	m_subSongLenInTick[kSubsongCountMax];
 	int		m_subSongCount;
 	int		m_playerRate;
 

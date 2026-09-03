@@ -9,6 +9,7 @@
 #include <assert.h>
 #include "SndhFile.h"
 #include "external/ice_24.h"
+#include "timedb.h"
 
 SndhFile::SndhFile()
 {
@@ -86,6 +87,7 @@ bool	SndhFile::Load(const void* rawSndhFile, int sndhFileSize, uint32_t hostRepl
 	for (int i = 0; i < kSubsongCountMax; i++)
 		m_subSongLenInTick[i] = 0;
 
+	bool bFrms = false;
 	const char* read8 = (const char*)m_rawBuffer;
 	if (m_rawSize > 16)
 	{
@@ -172,6 +174,7 @@ bool	SndhFile::Load(const void* rawSndhFile, int sndhFileSize, uint32_t hostRepl
 						m_subSongLenInTick[i] = Read32(read8);
 						read8 += 4;
 					}
+					bFrms = true;
 				}
 				else if (0 == strncmp(read8, "HDNS", 4))
 				{
@@ -195,6 +198,11 @@ bool	SndhFile::Load(const void* rawSndhFile, int sndhFileSize, uint32_t hostRepl
 			if ((m_defaultSubSong > m_subSongCount) ||
 				(m_defaultSubSong < 1))
 				m_defaultSubSong = 1;
+
+			// if no new FRMS timing tag, try to search in timedb
+			// (and eventually override any old TIME tag, that are often broken)
+			if (!bFrms)
+				timedbSearch(m_rawBuffer, m_rawSize, m_subSongLenInTick, kSubsongCountMax);
 
 			ret = true;
 		}
