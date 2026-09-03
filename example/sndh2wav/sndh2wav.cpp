@@ -37,7 +37,7 @@ int	main(int argc, char* argv[])
 	printf("sndh2wav, convert atari SNDH music file into a wav\n");
 	printf("Build using AtariAudio library v" ATARI_AUDIO_VERSION "\n");
 	printf("\n");
-	if (argc != 2)
+	if (argc != 3)
 	{
 		printf("Usage:\n"
 			   "\tsndh2wav <sndh file> <wav file>\n");
@@ -51,7 +51,7 @@ int	main(int argc, char* argv[])
 		WavWriter wavWriter;
 		if (wavWriter.Open(argv[2], kHostReplayRate, 1))
 		{
-			if (sndh.Load(sndhFileBuffer, sndhFileSize, kHostReplayRate))
+			if (sndh.Load(sndhFileBuffer, int(sndhFileSize), kHostReplayRate))
 			{
 				int subsongCount = sndh.GetSubsongCount();
 
@@ -67,12 +67,7 @@ int	main(int argc, char* argv[])
 
 						// loop till the sndh loop count is >0
 						while (0 == sndh.AudioRender(audioBuffer, kAudioBufferLen))
-						{
 							wavWriter.AddAudioData(audioBuffer, kAudioBufferLen);
-							len -= 512;
-							if (len <= 0)
-								break;
-						}
 					}
 				}
 				sndh.Unload();
@@ -80,9 +75,5 @@ int	main(int argc, char* argv[])
 			wavWriter.Close();
 		}
 	}
-
-
-
-
 	return 0;
 }
