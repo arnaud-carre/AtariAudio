@@ -14,8 +14,6 @@ static const TimeDbEntry sDatabase[] =
 	#include "external/timedb.inc.h"
 };
 
-static const int kDatabaseLen = sizeof(sDatabase) / sizeof(sDatabase[0]);
-
 static uint32_t hashInternal(const uint8_t* d, size_t size, uint32_t hashIn)
 {
 	uint32_t hash = hashIn;
@@ -34,13 +32,13 @@ static uint32_t sc68Hash(const void* data, size_t size)
 		return 0;
 
 	uint32_t hash = hashInternal((const uint8_t *)data, 32, 0);
-	hash = hashInternal((const uint8_t *)data, size, hash);
-	return hash;
+	return hashInternal((const uint8_t *)data, size, hash);
 }
 
 int timedbSearch(const void* data, size_t size, uint32_t* framesArray, int framesArraySize)
 {
 	const uint32_t hash = sc68Hash(data, size);
+	static const int kDatabaseLen = sizeof(sDatabase) / sizeof(sDatabase[0]);
 	for (int i = 0; i < kDatabaseLen; i++)
 	{
 		if (sDatabase[i].hash == hash)
@@ -58,6 +56,8 @@ int timedbSearch(const void* data, size_t size, uint32_t* framesArray, int frame
 			}
 			return songCount;
 		}
+		else if (hash > sDatabase[i].hash)
+			break;
 	}
 	return 0;
 }
