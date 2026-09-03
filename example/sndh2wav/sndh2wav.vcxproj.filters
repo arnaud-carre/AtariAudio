@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\AtariAudio">
+      <UniqueIdentifier>{ad468a23-4529-4b0e-ab6c-51b0869543df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AtariAudio\external">
+      <UniqueIdentifier>{ea45d5b5-3789-427a-a4be-c025b272bf58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AtariAudio\external\Musashi">
+      <UniqueIdentifier>{fb6d4302-8827-438e-8baf-19928435fbed}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sndh2wav.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\AtariMachine.cpp">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Mk68901.cpp">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SndhFile.cpp">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SteDac.cpp">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ym2149c.cpp">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\external\ice_24.c">
+      <Filter>Source Files\AtariAudio\external</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\external\Musashi\m68kcpu.c">
+      <Filter>Source Files\AtariAudio\external\Musashi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\external\Musashi\m68kops.c">
+      <Filter>Source Files\AtariAudio\external\Musashi</Filter>
+    </ClCompile>
+    <ClCompile Include="wavwriter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\AtariAudio.h">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AtariMachine.h">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Mk68901.h">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SndhFile.h">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SteDac.h">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ym2149_tables.h">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ym2149c.h">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\external\ice_24.h">
+      <Filter>Source Files\AtariAudio\external</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\external\Musashi\m68k.h">
+      <Filter>Source Files\AtariAudio\external\Musashi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\external\Musashi\m68kconf.h">
+      <Filter>Source Files\AtariAudio\external\Musashi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\external\Musashi\m68kcpu.h">
+      <Filter>Source Files\AtariAudio\external\Musashi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\external\Musashi\m68kops.h">
+      <Filter>Source Files\AtariAudio\external\Musashi</Filter>
+    </ClInclude>
+    <ClInclude Include="wavwriter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

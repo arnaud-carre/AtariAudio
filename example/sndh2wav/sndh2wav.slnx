@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="sndh2wav.vcxproj" Id="5f89ac94-8562-4bde-a2fb-e66bf24fb70e" />
+</Solution>
