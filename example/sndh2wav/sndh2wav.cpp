@@ -53,14 +53,16 @@ int	main(int argc, char* argv[])
 		{
 			if (sndh.Load(sndhFileBuffer, int(sndhFileSize), kHostReplayRate))
 			{
+				SndhFile::SubSongInfo info;
 				int subsongCount = sndh.GetSubsongCount();
+				if (sndh.GetSubsongInfo(1, info))
+					printf("\"%s\" by %s\n", info.musicName, info.musicAuthor);
 
 				// Loop over all subsongs
 				for (int s = 1; s <= subsongCount; s++)
 				{
 					if (sndh.InitSubSong(s))
 					{
-						SndhFile::SubSongInfo info;
 						sndh.GetSubsongInfo(s, info);
 						const int duration = info.playerTickCount / info.playerTickRate;
 						printf("Rendering %d:%02d sec of subsong #%d/#%d (%dHz player)\n", duration / 60, duration % 60, s, subsongCount, info.playerTickRate);
