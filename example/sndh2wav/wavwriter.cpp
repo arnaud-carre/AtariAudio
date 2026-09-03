@@ -7,7 +7,7 @@
 
 WavWriter::WavWriter()
 {
-	m_h = NULL;
+	m_h = nullptr;
 }
 
 WavWriter::~WavWriter()
@@ -68,6 +68,6 @@ void	WavWriter::Close()
 		fwrite(&head, 1, sizeof(WAVHeader), m_h);
 		fseek(m_h, 0, SEEK_END);
 		fclose(m_h);
-		m_h = NULL;
+		m_h = nullptr;
 	}
 }

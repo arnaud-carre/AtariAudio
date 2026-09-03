@@ -48,7 +48,7 @@ public:
 	 * Note: Always use "buffer" as audio source. Do *not* mix yourself the SampleViewInfo data
 	 * It's visualization data only!
 	*/
-	int		AudioRender(int16_t* buffer, int count, uint32_t* pSampleViewInfo = NULL);
+	int		AudioRender(int16_t* buffer, int count, uint32_t* pSampleViewInfo = nullptr);
 
 	const void*	GetRawData() const { return m_rawBuffer; }
 	const int	GetRawDataSize() const { return m_rawSize; }

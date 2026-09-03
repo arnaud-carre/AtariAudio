@@ -20,7 +20,7 @@ static const uint32_t D_DUMP_WRITE_AD2 = 0xfffaff;
 #include <stdio.h>
 #endif
 
-static AtariMachine*	gCurrentMachine = NULL;
+static AtariMachine*	gCurrentMachine = nullptr;
 static const uint32_t ivector[5] = { 0x134,0x120,0x114,0x110,0x13c };
 
 unsigned int  m68k_read_memory_8(unsigned int address)
@@ -76,7 +76,7 @@ unsigned int  AtariMachine::memRead8(unsigned int address)
 #if D_DUMP_READ
 	if ((address >= D_DUMP_READ_AD1) && (address <= D_DUMP_READ_AD2))
 	{
-		uint32_t pc = m68k_get_reg(NULL, M68K_REG_PC);
+		uint32_t pc = m68k_get_reg(nullptr, M68K_REG_PC);
 		printf("$%06x: move.b $%06x,d0 ( =#$%02x )\n", pc, address, r);
 	}
 #endif
@@ -98,7 +98,7 @@ unsigned int  AtariMachine::memRead16(unsigned int address)
 #if D_DUMP_READ
 	if ((address >= D_DUMP_READ_AD1) && (address <= D_DUMP_READ_AD2))
 	{
-		uint32_t pc = m68k_get_reg(NULL, M68K_REG_PC);
+		uint32_t pc = m68k_get_reg(nullptr, M68K_REG_PC);
 		printf("$%06x: move.w $%06x,d0 ( =#$%04x )\n", pc, address, r);
 	}
 #endif
@@ -116,7 +116,7 @@ void AtariMachine::memWrite8(unsigned int address, unsigned int value)
 #if D_DUMP_WRITE
 	if ((address >= D_DUMP_WRITE_AD1) && (address <= D_DUMP_WRITE_AD2))
 	{
-		uint32_t pc = m68k_get_reg(NULL, M68K_REG_PC);
+		uint32_t pc = m68k_get_reg(nullptr, M68K_REG_PC);
 		printf("$%06x: move.b #$%02x,$%06x\n", pc, value, address);
 	}
 #endif
@@ -140,7 +140,7 @@ void AtariMachine::memWrite16(unsigned int address, unsigned int value)
 #if D_DUMP_WRITE
 	if ((address >= D_DUMP_WRITE_AD1) && (address <= D_DUMP_WRITE_AD2))
 	{
-		uint32_t pc = m68k_get_reg(NULL, M68K_REG_PC);
+		uint32_t pc = m68k_get_reg(nullptr, M68K_REG_PC);
 		printf("$%06x: move.w #$%04x,$%06x\n", pc, value, address);
 	}
 #endif
@@ -162,7 +162,7 @@ AtariMachine::~AtariMachine()
 	if (m_RAM)
 	{
 		free(m_RAM);
-		m_RAM = NULL;
+		m_RAM = nullptr;
 	}
 }
 
@@ -278,7 +278,7 @@ void	AtariMachine::XBios(int func, uint32_t a7)
 			uint32_t callbackAddr = m68k_read_memory_32(a7 + 2);
 
 			// push PC on stack (so future RTS will get back right after the TRAP)
-			uint32_t pc = m68k_get_reg(NULL, M68K_REG_PC);
+			uint32_t pc = m68k_get_reg(nullptr, M68K_REG_PC);
 			a7 -= 4;
 			m68k_write_memory_32(a7, pc);
 			m68k_set_reg(M68K_REG_SP, a7);
@@ -294,7 +294,7 @@ void	AtariMachine::XBios(int func, uint32_t a7)
 void	AtariMachine::TrapInstructionCallback(int v)
 {
 
-	int a7 = m68k_get_reg(NULL, M68K_REG_SP);
+	int a7 = m68k_get_reg(nullptr, M68K_REG_SP);
 	int func = m68k_read_memory_16(a7);
 
 	switch (v)
@@ -343,7 +343,7 @@ void	AtariMachine::Startup(uint32_t hostReplayRate)
 	// so by default, set the timer C handler to RTE, just in case
 	m68k_write_memory_32(0x114, RTE_INSTRUCTION_ADDR);
 
-	gCurrentMachine = NULL;
+	gCurrentMachine = nullptr;
 }
 
 bool	AtariMachine::Upload(const void* src, uint32_t addr, uint32_t size)
@@ -351,7 +351,7 @@ bool	AtariMachine::Upload(const void* src, uint32_t addr, uint32_t size)
 	if (addr + size > RAM_SIZE)
 		return false;
 
-	if ((NULL == src) || (0 == size))
+	if ((nullptr == src) || (0 == size))
 		return false;
 
 	memcpy(m_RAM + addr, src, size);
@@ -398,7 +398,7 @@ bool	AtariMachine::Jsr(uint32_t addr, uint32_t d0)
 	ConfigureReturnByRts();
 	m68k_set_reg(M68K_REG_D0, d0);
 	ret = JmpBinary(addr, 50*10);		// timeout of 1sec for init
-	gCurrentMachine = NULL;
+	gCurrentMachine = nullptr;
 	return ret;
 }
 
@@ -430,6 +430,6 @@ int16_t	AtariMachine::ComputeNextSample(uint32_t* pSampleDebugInfo)
 			m_Ym2149.InsideTimerIrq(false);
 		}
 	}
-	gCurrentMachine = NULL;
+	gCurrentMachine = nullptr;
 	return out;
 }

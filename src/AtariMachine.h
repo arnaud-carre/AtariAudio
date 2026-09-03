@@ -32,7 +32,7 @@ public:
 	void		Startup(uint32_t hostReplayRate);
 	bool		Upload(const void* src, uint32_t addr, uint32_t size);
 	bool		Jsr(uint32_t addr, uint32_t d0);
-	int16_t		ComputeNextSample(uint32_t* pSampleDebugInfo = NULL);
+	int16_t		ComputeNextSample(uint32_t* pSampleDebugInfo = nullptr);
 
 	unsigned int	memRead8(unsigned int address);
 	unsigned int	memRead16(unsigned int address);
