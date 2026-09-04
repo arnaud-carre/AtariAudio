@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------------
-	Atari Audio Library v1.05
+	Atari Audio Library v1.06
 	Small & accurate ATARI-ST audio emulation
 	Arnaud Carré aka Leonard/Oxygene
 	@leonard_coder
@@ -9,6 +9,7 @@
 #include "AtariMachine.h"
 
 static	const	int		kSubsongCountMax = 128;
+static const	int kDefaultSongDuration = 60 * 3;
 
 class SndhFile
 {
@@ -56,6 +57,9 @@ public:
 	const void*	GetRawData() const { return m_rawBuffer; }
 	const int	GetRawDataSize() const { return m_rawSize; }
 
+	static 	void 	SetDefaultSongDuration(int durationInSec);
+
+
 private:
 	uint16_t		Read16(const char*);
 	uint32_t		Read32(const char*);
@@ -81,6 +85,7 @@ private:
 	int		m_frame;
 	int		m_frameCount;
 	uint32_t m_hostReplayRate;
+	static int 	s_defaultSongDurationInSec;
 
 	AtariMachine m_atariMachine;
 };

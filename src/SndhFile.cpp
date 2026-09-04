@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------------
-	Atari Audio Library v1.05
+	Atari Audio Library v1.06
 	Small & accurate ATARI-ST audio emulation
 	by Arnaud Carré aka Leonard/Oxygene
 	@leonard_coder
@@ -10,6 +10,8 @@
 #include "SndhFile.h"
 #include "external/ice_24.h"
 #include "timedb.h"
+
+int 	SndhFile::s_defaultSongDurationInSec = kDefaultSongDuration;
 
 SndhFile::SndhFile()
 {
@@ -208,7 +210,16 @@ bool	SndhFile::Load(const void* rawSndhFile, int sndhFileSize, uint32_t hostRepl
 		}
 	}
 
-	if ( !ret )
+	if (ret)
+	{
+		// set default song duration to any "0" frameEnd
+		for (int i = 0; i < m_subSongCount; i++)
+		{
+			if (m_subSongLenInTick[i] <= 0)
+				m_subSongLenInTick[i] = s_defaultSongDurationInSec * m_playerRate;
+		}
+	}
+	else
 		Unload();
 
 	m_bLoaded = ret;
@@ -310,6 +321,10 @@ int SndhFile::AudioRenderWithVisualInfos(int16_t* buffer, int count, uint32_t* p
 	return AudioRenderInternal(buffer, count, pVisualSamples);
 }
 
+void SndhFile::SetDefaultSongDuration(int durationInSec)
+{
+	s_defaultSongDurationInSec = durationInSec;
+}
 
 int SndhFile::FastForward(int framesToSkip)
 {

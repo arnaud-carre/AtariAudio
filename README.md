@@ -1,4 +1,4 @@
-# AtariAudio Library v1.05
+# AtariAudio Library v1.06
 
 src/ contains all files needed to compile AtariAudio library. It allows you to play ATARI SNDH music files. You can also directly use YM2149 emulator if you want to write your own YM tracker.
 The libray doesn't use any dependency, and should compile on any platform, including embeded systems (it doesn't even use float )
@@ -33,6 +33,7 @@ AudioRender returns the amount of samples generated. If it's lower than "count",
 
 # Versions
 
+- 1.06 : added SetDefaultSongDuration for SNDH files without any duration info
 - 1.05 : SndhFile::AudioRender API change (now returns sample count). Use timedb database for SNDH without music len
 - 1.04 : added SndhFile::FastForward function
 - 1.03 : added Ripper & Converter into SubSongInfo struct. some minor linux compilation fixes
