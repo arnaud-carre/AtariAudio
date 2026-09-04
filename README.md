@@ -1,4 +1,4 @@
-# Atari Audio Library v1.05
+# AtariAudio Library v1.05
 
 src/ contains all files needed to compile AtariAudio library. It allows you to play ATARI SNDH music files. You can also directly use YM2149 emulator if you want to write your own YM tracker.
 The libray doesn't use any dependency, and should compile on any platform, including embeded systems (it doesn't even use float )
