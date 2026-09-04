@@ -210,16 +210,7 @@ bool	SndhFile::Load(const void* rawSndhFile, int sndhFileSize, uint32_t hostRepl
 		}
 	}
 
-	if (ret)
-	{
-		// set default song duration to any "0" frameEnd
-		for (int i = 0; i < m_subSongCount; i++)
-		{
-			if (m_subSongLenInTick[i] <= 0)
-				m_subSongLenInTick[i] = s_defaultSongDurationInSec * m_playerRate;
-		}
-	}
-	else
+	if (!ret)
 		Unload();
 
 	m_bLoaded = ret;
@@ -241,6 +232,8 @@ bool	SndhFile::GetSubsongInfo(int subSongId, SubSongInfo& out) const
 		return false;
 
 	out.playerTickCount = m_subSongLenInTick[subSongId - 1];
+	if (out.playerTickCount <= 0)
+		out.playerTickCount = s_defaultSongDurationInSec * m_playerRate;
 	out.playerTickRate = m_playerRate;
 	out.samplePerTick = m_hostReplayRate / m_playerRate;
 	out.musicName = m_Title;
