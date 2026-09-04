@@ -19,9 +19,9 @@ bool	InitSubSong(int subSongId);
 Atari SNDH musics could contain several subsongs. You should *always* call InitSubsong before any audio rendering function. By convention, subsongs starts at 1.
 
 ````
-int		AudioRender(int16_t* buffer, int count, uint32_t* pSampleViewInfo = NULL);
+int		AudioRender(int16_t* buffer, int count);
 ````
-This is the main audio rendering function. Render "count" samples into buffer. Buffer is a 16bits, signed, mono, sample buffer. pSampleViewInfo is optional buffer of count * uint32_t buffer. Could be used for oscilloscope viewer. More details in the source code.
+This is the main audio rendering function. Render "count" samples into buffer. Buffer is a 16bits, signed, mono, sample buffer.
 Like, let's say your replay rate is 44.1Khz and you want to generate 1 second of music:
 
 ````
