@@ -56,8 +56,7 @@ public:
 
 	const void*	GetRawData() const { return m_rawBuffer; }
 	const int	GetRawDataSize() const { return m_rawSize; }
-
-	static 	void 	SetDefaultSongDuration(int durationInSec);
+	void 	SetDefaultSongDuration(int durationInSec);
 
 
 private:
@@ -85,7 +84,7 @@ private:
 	int		m_frame;
 	int		m_frameCount;
 	uint32_t m_hostReplayRate;
-	static int 	s_defaultSongDurationInSec;
+	int 	m_defaultSongDurationInSec;
 
 	AtariMachine m_atariMachine;
 };

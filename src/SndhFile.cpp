@@ -11,7 +11,6 @@
 #include "external/ice_24.h"
 #include "timedb.h"
 
-int 	SndhFile::s_defaultSongDurationInSec = kDefaultSongDuration;
 
 SndhFile::SndhFile()
 {
@@ -37,6 +36,7 @@ void	SndhFile::Unload()
 	m_rawSize = 0;
 	m_playerRate = 0;
 	m_subSongCount = -1;
+	m_defaultSongDurationInSec = kDefaultSongDuration;
 }
 
 uint16_t	SndhFile::Read16(const char* r)
@@ -233,7 +233,7 @@ bool	SndhFile::GetSubsongInfo(int subSongId, SubSongInfo& out) const
 
 	out.playerTickCount = m_subSongLenInTick[subSongId - 1];
 	if (out.playerTickCount <= 0)
-		out.playerTickCount = s_defaultSongDurationInSec * m_playerRate;
+		out.playerTickCount = m_defaultSongDurationInSec * m_playerRate;
 	out.playerTickRate = m_playerRate;
 	out.samplePerTick = m_hostReplayRate / m_playerRate;
 	out.musicName = m_Title;
@@ -316,7 +316,7 @@ int SndhFile::AudioRenderWithVisualInfos(int16_t* buffer, int count, uint32_t* p
 
 void SndhFile::SetDefaultSongDuration(int durationInSec)
 {
-	s_defaultSongDurationInSec = durationInSec;
+	m_defaultSongDurationInSec = durationInSec;
 }
 
 int SndhFile::FastForward(int framesToSkip)
