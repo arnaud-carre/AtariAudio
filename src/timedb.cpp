@@ -31,6 +31,7 @@ static uint32_t sc68Hash(const void* data, size_t size)
 	if (size < 32)
 		return 0;
 
+	// weird hash calculation due to original sc68 parsing 32bytes header, seek back to 0, and read complete file
 	uint32_t hash = hashInternal((const uint8_t *)data, 32, 0);
 	return hashInternal((const uint8_t *)data, size, hash);
 }
@@ -56,7 +57,7 @@ int timedbSearch(const void* data, size_t size, uint32_t* framesArray, int frame
 			}
 			return songCount;
 		}
-		else if (hash > sDatabase[i].hash)
+		else if (hash < sDatabase[i].hash)
 			break;
 	}
 	return 0;
