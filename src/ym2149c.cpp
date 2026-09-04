@@ -39,7 +39,7 @@ void	Ym2149c::Reset(uint32_t hostReplayRate, uint32_t ymClock)
 	m_currentLevel = 0;
 	m_innerCycle = 0;
 	m_envPos = 0;
-	m_currentDebugThreeVoices = 0;
+	m_currentVisualLevels = 0;
 	m_dcAdjustPos = 0;
 	m_dcAdjustSum = 0;
 	for (int i=0;i<1<<kDcAdjustHistoryBit;i++)
@@ -178,7 +178,7 @@ uint16_t Ym2149c::Tick()
 
 // called at host replay rate ( like 48Khz )
 // internally update YM chip state machine at 250Khz and average output for each host sample
-int16_t Ym2149c::ComputeNextSample(uint32_t* pSampleDebugInfo)
+int16_t Ym2149c::ComputeNextSample()
 {
 	uint16_t highMask = 0;
 	do
@@ -196,6 +196,7 @@ int16_t Ym2149c::ComputeNextSample(uint32_t* pSampleDebugInfo)
 	levels |= ((m_regs[10] & 0x10) ? envLevel : (m_regs[10]<<1)) << 10;
 	levels &= highMask;
 	assert(levels < 0x8000);
+	m_currentVisualLevels = uint16_t(levels);
 
 	// if period <=1 and TONE is active, empirically reduce final output value by 2 (some STF digisound use this mode)
 	const int halfShiftA = ((m_tonePeriod[0] > 1) || (m_regs[7]&(1<<0)))?0:1;
@@ -209,11 +210,7 @@ int16_t Ym2149c::ComputeNextSample(uint32_t* pSampleDebugInfo)
 	uint32_t levelB = s_ym2149LogLevels[indexB] >> halfShiftB;
 	uint32_t levelC = s_ym2149LogLevels[indexC] >> halfShiftC;
 
-	int16_t out = dcAdjust(levelA + levelB + levelC);
-	if (pSampleDebugInfo)
-		*pSampleDebugInfo = (s_ViewVolTab[indexA] << 0) | (s_ViewVolTab[indexB] << 8) | (s_ViewVolTab[indexC] << 16);
-
-	return out;
+	return dcAdjust(levelA + levelB + levelC);
 }
 
 void	Ym2149c::InsideTimerIrq(bool inside)

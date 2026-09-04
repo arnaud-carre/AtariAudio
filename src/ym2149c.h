@@ -14,8 +14,10 @@ public:
 	void	Reset(uint32_t hostReplayRate, uint32_t ymClock = 2000000);
 	void	WritePort(uint8_t port, uint8_t value);
 	uint8_t ReadPort(uint8_t port) const;
-	int16_t	ComputeNextSample(uint32_t* pSampleDebugInfo = nullptr);
+	int16_t	ComputeNextSample();
 	void	InsideTimerIrq(bool inside);
+
+	uint16_t GetCurrentVisualLevels() const { return m_currentVisualLevels; } // only used for some player visual, contains 3 YM voices volume and STE DAC in 8888 format
 
 private:
 	void	WriteReg(int reg, uint8_t value);
@@ -43,6 +45,7 @@ private:
 	uint32_t	m_noiseMask;
 	uint32_t	m_noiseRndRack;
 	uint32_t	m_currentNoiseMask;
+	uint16_t 	m_currentVisualLevels;
 	uint16_t	m_dcAdjustBuffer[1<<kDcAdjustHistoryBit];
 	unsigned int	m_dcAdjustPos;
 	uint32_t	m_dcAdjustSum;
@@ -50,7 +53,6 @@ private:
 	uint32_t	m_currentLevel;
 	uint32_t	m_innerCycle;
 	uint32_t 	m_noiseHalf;
-	uint32_t	m_currentDebugThreeVoices;
 	bool		m_insideTimerIrq;
 	bool		m_edgeNeedReset[3];
 };

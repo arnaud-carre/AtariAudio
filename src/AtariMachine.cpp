@@ -402,13 +402,35 @@ bool	AtariMachine::Jsr(uint32_t addr, uint32_t d0)
 	return ret;
 }
 
-int16_t	AtariMachine::ComputeNextSample(uint32_t* pSampleDebugInfo)
+#define	k15toS8(a)	((((a*127)>>15)+63)^0x80)	// signed 8bits value for oscillators viewing display per voice
+static const uint32_t	s_ViewVolTab[16*2] =
+{
+	k15toS8(152),k15toS8(181),k15toS8(215),k15toS8(255),
+	k15toS8(304),k15toS8(362),k15toS8(430),k15toS8(511),
+	k15toS8(608),k15toS8(724),k15toS8(861),k15toS8(1023),
+	k15toS8(1217),k15toS8(1448),k15toS8(1722),k15toS8(2047),
+	k15toS8(2435),k15toS8(2896),k15toS8(3444),k15toS8(4095),
+	k15toS8(4870),k15toS8(5792),k15toS8(6888),k15toS8(8191),
+	k15toS8(9741),k15toS8(11584),k15toS8(13776),k15toS8(16383),
+	k15toS8(19483),k15toS8(23169),k15toS8(27553),k15toS8(32767)
+};
+
+uint32_t AtariMachine::ComputeCurrentVisualLevels() const
+{
+	const uint32_t ymVisual = m_Ym2149.GetCurrentVisualLevels();
+	const unsigned int indexA = (ymVisual >> 0) & 31;
+	const unsigned int indexB = (ymVisual >> 5) & 31;
+	const unsigned int indexC = (ymVisual >> 10) & 31;
+	uint32_t visualLevels = (s_ViewVolTab[indexA] << 0) | (s_ViewVolTab[indexB] << 8) | (s_ViewVolTab[indexC] << 16);
+	visualLevels |= (m_SteDac.GetCurrentVisualLevel()<<24);
+	return visualLevels;
+}
+
+int16_t	AtariMachine::ComputeNextSample()
 {
 	gCurrentMachine = this;
-	int32_t level = m_Ym2149.ComputeNextSample(pSampleDebugInfo);
+	int32_t level = m_Ym2149.ComputeNextSample();
 	int32_t steLevel = m_SteDac.ComputeNextSample((const int8_t*)m_RAM, RAM_SIZE, m_Mfp);
-	if (steLevel && (pSampleDebugInfo))
-		*pSampleDebugInfo |= (steLevel >> 8) << 24;
 	level += steLevel;
 
 	if (level > 32767)

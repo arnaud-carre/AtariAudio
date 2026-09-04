@@ -260,29 +260,56 @@ bool	SndhFile::InitSubSong(int subSongId)
 	return ret;
 }
 
-int	SndhFile::AudioRender(int16_t* buffer, int count, uint32_t* pSampleViewInfo)
+int	SndhFile::AudioRenderInternal(int16_t* buffer, int count, uint32_t* pSampleViewInfo)
 {
 	int outsize = 0;
-	for (int i = 0; i < count; i++)
+	if (m_frame < m_frameCount)
 	{
-		m_innerSamplePos--;
-		// check if we should call SNDH music driver tick (most of the time 50hz)
-		if (m_innerSamplePos <= 0)
+		while (count > 0)
 		{
-			m_atariMachine.Jsr(SNDH_UPLOAD_ADDR + 8, 0);
-			m_innerSamplePos = m_samplePerTick;
-			m_frame++;
-			if (m_frame >= m_frameCount)
-				break;
-		}
+			int todo = (m_innerSamplePos <= count) ? m_innerSamplePos : count;
 
-		*buffer++ = m_atariMachine.ComputeNextSample(pSampleViewInfo);
-		if (pSampleViewInfo)
-			pSampleViewInfo++;
-		outsize++;
+			if (nullptr == pSampleViewInfo)
+			{
+				for (int s = 0; s < todo; s++)
+					*buffer++ = m_atariMachine.ComputeNextSample();
+			}
+			else
+			{
+				for (int s = 0; s < todo; s++)
+				{
+					*buffer++ = m_atariMachine.ComputeNextSample();
+					*pSampleViewInfo++ = m_atariMachine.ComputeCurrentVisualLevels();
+				}
+			}
+
+			count -= todo;
+			outsize += todo;
+			m_innerSamplePos -= todo;
+
+			if (m_innerSamplePos <= 0)
+			{
+				m_atariMachine.Jsr(SNDH_UPLOAD_ADDR + 8, 0);
+				m_innerSamplePos = m_samplePerTick;
+				m_frame++;
+				if (m_frame >= m_frameCount)
+					break;
+			}
+		}
 	}
 	return outsize;
 }
+
+int SndhFile::AudioRender(int16_t* buffer, int count)
+{
+	return AudioRenderInternal(buffer, count, nullptr);
+}
+
+int SndhFile::AudioRenderWithVisualInfos(int16_t* buffer, int count, uint32_t* pVisualSamples)
+{
+	return AudioRenderInternal(buffer, count, pVisualSamples);
+}
+
 
 int SndhFile::FastForward(int framesToSkip)
 {
@@ -292,15 +319,12 @@ int SndhFile::FastForward(int framesToSkip)
 	if (framesToSkip + m_frame >= m_frameCount)
 		framesToSkip = m_frameCount - m_frame;
 
-	int frameSkipped = framesToSkip;
 	for (int i = 0; i < framesToSkip; i++)
 	{
 		m_atariMachine.Jsr(SNDH_UPLOAD_ADDR + 8, 0);
 		m_innerSamplePos = m_samplePerTick;
 		m_frame++;
-		frameSkipped++;
-		if (m_frame >= m_frameCount)
-			break;
+		assert(m_frame <= m_frameCount);
 	}
-	return frameSkipped;
+	return framesToSkip;
 }

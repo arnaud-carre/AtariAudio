@@ -32,7 +32,8 @@ public:
 	void		Startup(uint32_t hostReplayRate);
 	bool		Upload(const void* src, uint32_t addr, uint32_t size);
 	bool		Jsr(uint32_t addr, uint32_t d0);
-	int16_t		ComputeNextSample(uint32_t* pSampleDebugInfo = nullptr);
+	int16_t		ComputeNextSample();
+	uint32_t	ComputeCurrentVisualLevels() const;
 
 	unsigned int	memRead8(unsigned int address);
 	unsigned int	memRead16(unsigned int address);
@@ -40,7 +41,6 @@ public:
 	void			memWrite16(unsigned int address, unsigned int value);
 	void			TrapInstructionCallback(int v);
 	void			ResetCb(void);
-
 
 private:
 	void		ConfigureReturnByRts();
