@@ -8,7 +8,7 @@
 
 #define	ATARI_AUDIO_VERSION		"1.07"
 
-#include "Ym2149c.h"
+#include "ym2149c.h"
 #include "AtariMachine.h"
 #include "SndhFile.h"
 
