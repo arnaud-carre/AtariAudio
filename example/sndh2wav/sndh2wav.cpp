@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "../../src/AtariAudio.h"
-#include "WavWriter.h"
+#include "wavwriter.h"
 
 static const int kHostReplayRate = 48000;
 static const int kAudioBufferLen = kHostReplayRate*10;	// 10 seconds of audio buffer is enough
