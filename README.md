@@ -44,6 +44,12 @@ NOTE: some SNDH files doesn't provide any song duration information. In this cas
 
 The repo also contains a sndh2wav project to show how to convert a .sndh file into a WAV file
 
+# Applications using AtariAudio library
+
+[SndhArchivePlayer](https://github.com/arnaud-carre/sndh-player) - Player able to directly open the large 100MiB SNDH ZIP archive file and instant play any of thousand Atari music
+
+[BZR Player 2](https://github.com/aargirakis/BZRPlayer) - Audio player for Windows and Linux supporting a wide array of multi-platform exotic file formats
+
 # Credits
 
 - AtariAudio library written by Arnaud Carré aka Leonard/Oxygene.
