@@ -33,8 +33,8 @@ target_compile_definitions(sndh2wav
         "$<$<STREQUAL:${CMAKE_CXX_COMPILER_ARCHITECTURE_ID},X86>:WIN32>"
 )
 
-target_compile_options(sndh2wav
-    PRIVATE
-        /W3
-)
-
+if(MSVC)
+    target_compile_options(sndh2wav PRIVATE /W3)
+else()
+    target_compile_options(sndh2wav PRIVATE -Wall -Wextra)
+endif()
