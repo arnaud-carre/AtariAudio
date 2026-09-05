@@ -30,7 +30,6 @@ private:
 	int			m_selectedReg;
 	const uint8_t* m_pCurrentEnv;
 	uint32_t	m_ymClockOneEighth;
-	uint32_t	m_resamplingDividor;
 	uint32_t	m_hostReplayRate;
 	uint32_t	m_toneCounter[3];
 	uint32_t	m_tonePeriod[3];
@@ -50,7 +49,6 @@ private:
 	unsigned int	m_dcAdjustPos;
 	uint32_t	m_dcAdjustSum;
 	uint8_t		m_regs[14];
-	uint32_t	m_currentLevel;
 	uint32_t	m_innerCycle;
 	uint32_t 	m_noiseHalf;
 	bool		m_insideTimerIrq;

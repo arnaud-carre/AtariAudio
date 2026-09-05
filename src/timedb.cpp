@@ -1,16 +1,21 @@
-#include <assert.h>
+/*--------------------------------------------------------------------
+	Atari Audio Library v1.07
+	Small & accurate ATARI-ST audio emulation
+	Arnaud Carré aka Leonard/Oxygene
+	@leonard_coder
+--------------------------------------------------------------------*/
 #include "timedb.h"
 
 struct TimeDbEntry
 {
 	uint32_t hash;
-	int songId;
 	uint32_t frames;
 };
 
-#define TIMEDB_ENTRY(HASH,SONGID,FRAMES,FLAGS) { 0x##HASH, SONGID, FRAMES }
+#define TIMEDB_ENTRY(HASH,SONGID,FRAMES,FLAGS) { 0x##HASH, FRAMES }
 static const TimeDbEntry sDatabase[] =
 {
+	// timedb.inc.h database by Benjamin Gerard & SNDH Community
 	#include "external/timedb.inc.h"
 };
 
@@ -45,11 +50,10 @@ int timedbSearch(const void* data, uint32_t size, uint32_t* framesArray, int fra
 		if (sDatabase[i].hash == hash)
 		{
 			int songCount = 0;
-			// now we walk all songs
-			while (sDatabase[i].hash == hash)
+			// now we walk all subsongs
+			while ((i < kDatabaseLen) && (sDatabase[i].hash == hash))
 			{
 				framesArray[songCount] = sDatabase[i].frames;
-				assert(sDatabase[i].songId == songCount + 1);
 				songCount++;
 				i++;
 				if (songCount >= framesArraySize)

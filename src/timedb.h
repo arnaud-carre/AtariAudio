@@ -1,3 +1,9 @@
+/*--------------------------------------------------------------------
+	Atari Audio Library v1.07
+	Small & accurate ATARI-ST audio emulation
+	Arnaud Carré aka Leonard/Oxygene
+	@leonard_coder
+--------------------------------------------------------------------*/
 #pragma once
 #include <stdint.h>
 

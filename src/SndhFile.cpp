@@ -208,7 +208,6 @@ bool	SndhFile::InitSubSong(int subSongId)
 {
 	bool ret = false;
 	m_innerSamplePos = 0;
-	m_frame = 0;
 	m_atariMachine.Startup(m_hostReplayRate);
 	if (m_atariMachine.Upload(m_songInfo.rawBinaryPlayer, SNDH_UPLOAD_ADDR, m_songInfo.rawBinaryPlayerSize))
 	{
@@ -217,22 +216,29 @@ bool	SndhFile::InitSubSong(int subSongId)
 	return ret;
 }
 
-void	SndhFile::AudioRenderInternal(int16_t* buffer, int count, uint32_t* pSampleViewInfo)
+void	SndhFile::AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t* pSampleViewInfo)
 {
 	while (count > 0)
 	{
-		int todo = (m_innerSamplePos <= count) ? m_innerSamplePos : count;
+		if (0 == m_innerSamplePos)
+		{
+			m_atariMachine.Jsr(SNDH_UPLOAD_ADDR + 8, 0);
+			m_innerSamplePos = m_samplePerTick;
+		}
+
+		uint32_t todo = (m_innerSamplePos <= count) ? m_innerSamplePos : count;
+		assert(m_innerSamplePos >= todo);
 
 		if (buffer)
 		{
 			if (nullptr == pSampleViewInfo)
 			{
-				for (int s = 0; s < todo; s++)
+				for (uint32_t s = 0; s < todo; s++)
 					*buffer++ = m_atariMachine.ComputeNextSample();
 			}
 			else
 			{
-				for (int s = 0; s < todo; s++)
+				for (uint32_t s = 0; s < todo; s++)
 				{
 					*buffer++ = m_atariMachine.ComputeNextSample();
 					*pSampleViewInfo++ = m_atariMachine.ComputeCurrentVisualLevels();
@@ -242,17 +248,12 @@ void	SndhFile::AudioRenderInternal(int16_t* buffer, int count, uint32_t* pSample
 		else
 		{
 			// fast forward
-			for (int s = 0; s < todo; s++)
+			for (uint32_t s = 0; s < todo; s++)
 				m_atariMachine.ComputeNextSample();
 		}
 
 		count -= todo;
 		m_innerSamplePos -= todo;
-		if (m_innerSamplePos <= 0)
-		{
-			m_atariMachine.Jsr(SNDH_UPLOAD_ADDR + 8, 0);
-			m_innerSamplePos = m_samplePerTick;
-		}
 	}
 }
 

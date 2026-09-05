@@ -58,18 +58,13 @@ private:
 	uint16_t		Read16(const char*);
 	uint32_t		Read32(const char*);
 	const char*	skipNTString(const char* r);
-	void		AudioRenderInternal(int16_t* buffer, int count, uint32_t* pSampleViewInfo);
+	void		AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t* pSampleViewInfo);
 
 	SongInfo m_songInfo;
 	AtariMachine m_atariMachine;
 
 	uint32_t	m_subSongLenInTick[kSubsongCountMax];
-
-	int		m_samplePerTick;
-	int		m_innerSamplePos;
-	int		m_frame;
-	int		m_frameCount;
+	uint32_t	m_samplePerTick;
+	uint32_t	m_innerSamplePos;
 	uint32_t m_hostReplayRate;
-	int 	m_defaultSongDurationInSec;
-
 };
