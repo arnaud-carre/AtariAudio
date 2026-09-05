@@ -14,10 +14,10 @@ static const TimeDbEntry sDatabase[] =
 	#include "external/timedb.inc.h"
 };
 
-static uint32_t hashInternal(const uint8_t* d, size_t size, uint32_t hashIn)
+static uint32_t hashInternal(const uint8_t* d, uint32_t size, uint32_t hashIn)
 {
 	uint32_t hash = hashIn;
-	for (size_t i=0;i<size;i++)
+	for (uint32_t i=0;i<size;i++)
 	{
 		hash += *d++;
 		hash += hash << 10;
@@ -26,7 +26,7 @@ static uint32_t hashInternal(const uint8_t* d, size_t size, uint32_t hashIn)
 	return hash;
 }
 
-static uint32_t sc68Hash(const void* data, size_t size)
+static uint32_t sc68Hash(const void* data, uint32_t size)
 {
 	if (size < 32)
 		return 0;
@@ -36,7 +36,7 @@ static uint32_t sc68Hash(const void* data, size_t size)
 	return hashInternal((const uint8_t *)data, size, hash);
 }
 
-int timedbSearch(const void* data, size_t size, uint32_t* framesArray, int framesArraySize)
+int timedbSearch(const void* data, uint32_t size, uint32_t* framesArray, int framesArraySize)
 {
 	const uint32_t hash = sc68Hash(data, size);
 	static const int kDatabaseLen = sizeof(sDatabase) / sizeof(sDatabase[0]);

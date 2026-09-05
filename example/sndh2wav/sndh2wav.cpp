@@ -4,7 +4,7 @@
 #include "../../src/AtariAudio.h"
 #include "WavWriter.h"
 
-static const int kHostReplayRate = 44100;
+static const int kHostReplayRate = 48000;
 static const int kAudioBufferLen = kHostReplayRate*10;	// 10 seconds of audio buffer is enough
 
 static int16_t audioBuffer[kAudioBufferLen];
@@ -54,28 +54,31 @@ int	main(int argc, char* argv[])
 		{
 			if (sndh.Load(sndhFileBuffer, int(sndhFileSize), kHostReplayRate))
 			{
-				SndhFile::SubSongInfo info;
-				int subsongCount = sndh.GetSubsongCount();
-				if (sndh.GetSubsongInfo(1, info))
-					printf("\"%s\" by %s\n", info.musicName, info.musicAuthor);
+				const SndhFile::SongInfo& si = sndh.GetSongInfo();
+				int subsongCount = si.subsongCount;
+				printf("\"%s\" by %s\n", si.musicName, si.musicAuthor);
 
 				// Loop over all subsongs
 				for (int s = 1; s <= subsongCount; s++)
 				{
 					if (sndh.InitSubSong(s))
 					{
-						sndh.GetSubsongInfo(s, info);
-						const int duration = info.playerTickCount / info.playerTickRate;
-						printf("Rendering %d:%02d sec of subsong #%d/#%d (%dHz player)\n", duration / 60, duration % 60, s, subsongCount, info.playerTickRate);
-
-						// loop till the end
-						int len;
-						do
+						uint32_t sampleCount = sndh.GetSubsongDurationSample(s);
+						if (0 == sampleCount)
 						{
-							len = sndh.AudioRender(audioBuffer, kAudioBufferLen);
-							wavWriter.AddAudioData(audioBuffer, len);
+							// a subsong of duration 0 means SNDH file doesn't provide any duration
+							sampleCount = 3*60*kHostReplayRate;		// so decide to play 3 minutes by default
 						}
-						while (len == kAudioBufferLen);						
+						const int durationInSec = sampleCount / kHostReplayRate;
+						printf("Rendering %d:%02d sec of subsong #%d/#%d (%dHz player)\n", durationInSec / 60, durationInSec % 60, s, subsongCount, si.playerTickRate);
+
+						while (sampleCount > 0)
+						{
+							uint32_t todo = (sampleCount > kAudioBufferLen) ? kAudioBufferLen : sampleCount;
+							sndh.AudioRender(audioBuffer, todo);
+							wavWriter.AddAudioData(audioBuffer, todo);
+							sampleCount -= todo;
+						}
 					}
 				}
 				sndh.Unload();
