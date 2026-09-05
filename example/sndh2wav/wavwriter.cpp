@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdint.h>
-#include "WavWriter.h"
+#include "wavwriter.h"
 
 WavWriter::WavWriter()
 {
