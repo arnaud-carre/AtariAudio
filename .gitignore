@@ -427,3 +427,24 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# 1. Ignore any folder named "build" or "Build" anywhere in the repository tree
+**/build/
+**/Build/
+**/[bB]uild*/
+
+# 2. Ignore temporary CMake output files generated anywhere
+**/CMakeFiles/
+**/CMakeCache.txt
+**/cmake_install.cmake
+**/CMakeLists.txt.user
+**/compile_commands.json
+
+# 3. Ignore compiled binaries and object files anywhere
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dylib
+*.out

@@ -1,0 +1,7 @@
+# Step 3: Configure CMake with custom source path
+    - name: Configure CMake
+      run: cmake -S example/sndh2wav -B example/sndh2wav/build -DCMAKE_BUILD_TYPE=Release
+
+    # Step 4: Build the project
+    - name: Compile project
+      run: cmake --build example/sndh2wav/build --config Release
