@@ -1,7 +1,26 @@
-# Step 3: Configure CMake with custom source path
-    - name: Configure CMake
-      run: cmake -S example/sndh2wav -B example/sndh2wav/build -DCMAKE_BUILD_TYPE=Release
+name: Linux Build Check
 
-    # Step 4: Build the project
-    - name: Compile project
-      run: cmake --build example/sndh2wav/build --config Release
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake
+
+      - name: Configure CMake
+        run: cmake -S example/sndh2wav -B example/sndh2wav/build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Compile project
+        run: cmake --build example/sndh2wav/build --config Release
