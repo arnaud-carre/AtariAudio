@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------------
-	Atari Audio Library v1.07
+	Atari Audio Library v1.08
 	Small & accurate ATARI-ST audio emulation
 	by Arnaud Carré aka Leonard/Oxygene
 	@leonard_coder
@@ -14,7 +14,7 @@
 
 SndhFile::SndhFile()
 {
-	memset(&m_songInfo, 0, sizeof(m_songInfo));
+	m_songInfo.rawBinaryPlayer = nullptr;
 	Unload();
 }
 
@@ -27,6 +27,7 @@ void	SndhFile::Unload()
 {
 	free((void*)m_songInfo.rawBinaryPlayer);
 	memset(&m_songInfo, 0, sizeof(m_songInfo));
+	m_hostReplayRate = 0;
 }
 
 uint16_t	SndhFile::Read16(const char* r)
@@ -207,17 +208,23 @@ bool	SndhFile::Load(const void* rawSndhFile, int sndhFileSize, uint32_t hostRepl
 bool	SndhFile::InitSubSong(int subSongId)
 {
 	bool ret = false;
-	m_innerSamplePos = 0;
-	m_atariMachine.Startup(m_hostReplayRate);
-	if (m_atariMachine.Upload(m_songInfo.rawBinaryPlayer, SNDH_UPLOAD_ADDR, m_songInfo.rawBinaryPlayerSize))
+	if ((subSongId >= 1) && (subSongId <= m_songInfo.subsongCount))
 	{
-		ret = m_atariMachine.Jsr(SNDH_UPLOAD_ADDR, subSongId);
+		m_innerSamplePos = 0;
+		m_atariMachine.Startup(m_hostReplayRate);
+		if (m_atariMachine.Upload(m_songInfo.rawBinaryPlayer, SNDH_UPLOAD_ADDR, m_songInfo.rawBinaryPlayerSize))
+		{
+			ret = m_atariMachine.Jsr(SNDH_UPLOAD_ADDR, subSongId);
+		}
 	}
 	return ret;
 }
 
 void	SndhFile::AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t* pSampleViewInfo)
 {
+	if (!IsValid())
+		return;
+
 	while (count > 0)
 	{
 		if (0 == m_innerSamplePos)

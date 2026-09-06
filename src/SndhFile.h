@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------------
-	Atari Audio Library v1.07
+	Atari Audio Library v1.08
 	Small & accurate ATARI-ST audio emulation
 	Arnaud Carré aka Leonard/Oxygene
 	@leonard_coder
@@ -59,6 +59,7 @@ private:
 	uint32_t		Read32(const char*);
 	const char*	skipNTString(const char* r);
 	void		AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t* pSampleViewInfo);
+	bool IsValid() const { return m_songInfo.subsongCount > 0; }
 
 	SongInfo m_songInfo;
 	AtariMachine m_atariMachine;
