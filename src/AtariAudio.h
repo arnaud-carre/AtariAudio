@@ -6,7 +6,7 @@
 --------------------------------------------------------------------*/
 #pragma once
 
-#define	ATARI_AUDIO_VERSION		"1.07"
+#define	ATARI_AUDIO_VERSION		"1.08"
 
 #include "ym2149c.h"
 #include "AtariMachine.h"
