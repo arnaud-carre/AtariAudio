@@ -150,7 +150,7 @@
     <ClCompile Include="..\..\src\external\Musashi\m68kcpu.c" />
     <ClCompile Include="..\..\src\external\Musashi\m68kops.c" />
     <ClCompile Include="..\..\src\Mk68901.cpp" />
-    <ClCompile Include="..\..\src\SndhFile.cpp" />
+    <ClCompile Include="..\..\src\SndhRenderer.cpp" />
     <ClCompile Include="..\..\src\SteDac.cpp" />
     <ClCompile Include="..\..\src\timedb.cpp" />
     <ClCompile Include="..\..\src\ym2149c.cpp" />
@@ -167,7 +167,7 @@
     <ClInclude Include="..\..\src\external\Musashi\m68kops.h" />
     <ClInclude Include="..\..\src\external\timedb.inc.h" />
     <ClInclude Include="..\..\src\Mk68901.h" />
-    <ClInclude Include="..\..\src\SndhFile.h" />
+    <ClInclude Include="..\..\src\SndhRenderer.h" />
     <ClInclude Include="..\..\src\SteDac.h" />
     <ClInclude Include="..\..\src\timedb.h" />
     <ClInclude Include="..\..\src\ym2149c.h" />

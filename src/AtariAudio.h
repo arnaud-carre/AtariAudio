@@ -10,5 +10,4 @@
 
 #include "ym2149c.h"
 #include "AtariMachine.h"
-#include "SndhFile.h"
-
+#include "SndhRenderer.h"

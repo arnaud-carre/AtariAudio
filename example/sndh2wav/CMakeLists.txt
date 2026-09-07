@@ -10,7 +10,7 @@ target_sources(sndh2wav
         ../../src/external/Musashi/m68kcpu.c
         ../../src/external/Musashi/m68kops.c
         ../../src/Mk68901.cpp
-        ../../src/SndhFile.cpp
+        ../../src/SndhRenderer.cpp
         ../../src/SteDac.cpp
         ../../src/timedb.cpp
         ../../src/ym2149c.cpp

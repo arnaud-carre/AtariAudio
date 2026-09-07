@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include "SndhFile.h"
+#include "SndhRenderer.h"
 #include "external/ice_24.h"
 #include "timedb.h"
 

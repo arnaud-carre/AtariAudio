@@ -9,7 +9,7 @@ static const int kAudioBufferLen = kHostReplayRate*10;	// 10 seconds of audio bu
 
 static int16_t audioBuffer[kAudioBufferLen];
 
-void* LoadFile(const char* sFilename, size_t& sizeOut)
+void* LoadFile(const char* sFilename, uint32_t& sizeOut)
 {
 	sizeOut = 0;
 	void* buffer = nullptr;
@@ -21,18 +21,14 @@ void* LoadFile(const char* sFilename, size_t& sizeOut)
 		buffer = malloc(sndhSize);
 		fseek(h, 0, SEEK_SET);
 		fread(buffer, 1, sndhSize, h);
-		sizeOut = sndhSize;
+		sizeOut = uint32_t(sndhSize);
 		fclose(h);
 	}
 	return buffer;
 }
 
-
-
 int	main(int argc, char* argv[])
 {
-
-	SndhFile sndh;
 
 	printf("sndh2wav, convert atari SNDH music file into a wav\n");
 	printf("Build using AtariAudio library v" ATARI_AUDIO_VERSION "\n");
@@ -45,25 +41,26 @@ int	main(int argc, char* argv[])
 		return -1;
 	}
 
-	size_t sndhFileSize;
+	uint32_t sndhFileSize;
 	void* sndhFileBuffer = LoadFile(argv[1], sndhFileSize);
 	if ( sndhFileBuffer )
 	{
 		WavWriter wavWriter;
 		if (wavWriter.Open(argv[2], kHostReplayRate, 1))
 		{
-			if (sndh.Load(sndhFileBuffer, int(sndhFileSize), kHostReplayRate))
+			SndhRenderer* sr = SndhRenderer::Create(sndhFileBuffer, sndhFileSize, kHostReplayRate);
+			if (sr)
 			{
-				const SndhFile::SongInfo& si = sndh.GetSongInfo();
+				const SndhRenderer::SongInfo& si = sr->GetSongInfo();
 				int subsongCount = si.subsongCount;
 				printf("\"%s\" by %s\n", si.musicName, si.musicAuthor);
 
 				// Loop over all subsongs
 				for (int s = 1; s <= subsongCount; s++)
 				{
-					if (sndh.InitSubSong(s))
+					if (sr->InitSubSong(s))
 					{
-						uint32_t sampleCount = sndh.GetSubsongDurationSample(s);
+						uint32_t sampleCount = sr->GetSubsongDurationSample(s);
 						if (0 == sampleCount)
 						{
 							// a subsong of duration 0 means SNDH file doesn't provide any duration
@@ -75,13 +72,13 @@ int	main(int argc, char* argv[])
 						while (sampleCount > 0)
 						{
 							uint32_t todo = (sampleCount > kAudioBufferLen) ? kAudioBufferLen : sampleCount;
-							sndh.AudioRender(audioBuffer, todo);
+							sr->AudioRender(audioBuffer, todo);
 							wavWriter.AddAudioData(audioBuffer, todo);
 							sampleCount -= todo;
 						}
 					}
 				}
-				sndh.Unload();
+				SndhRenderer::Destroy(sr);
 			}
 			wavWriter.Close();
 		}
