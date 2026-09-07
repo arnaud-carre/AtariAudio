@@ -52,22 +52,21 @@ int	main(int argc, char* argv[])
 			if (sr)
 			{
 				const SndhRenderer::SongInfo& si = sr->GetSongInfo();
-				int subsongCount = si.subsongCount;
 				printf("\"%s\" by %s\n", si.musicName, si.musicAuthor);
 
 				// Loop over all subsongs
-				for (int s = 1; s <= subsongCount; s++)
+				for (int s = 1; s <= si.subsongCount; s++)
 				{
+					uint32_t sampleCount = sr->GetSubsongDurationSample(s);
+					if (0 == sampleCount)
+					{
+						// a subsong of duration 0 means SNDH file doesn't provide any duration
+						sampleCount = 3*60*kHostReplayRate;		// so decide to play 3 minutes by default
+					}
 					if (sr->InitSubSong(s))
 					{
-						uint32_t sampleCount = sr->GetSubsongDurationSample(s);
-						if (0 == sampleCount)
-						{
-							// a subsong of duration 0 means SNDH file doesn't provide any duration
-							sampleCount = 3*60*kHostReplayRate;		// so decide to play 3 minutes by default
-						}
 						const int durationInSec = sampleCount / kHostReplayRate;
-						printf("Rendering %d:%02d sec of subsong #%d/#%d (%dHz player)\n", durationInSec / 60, durationInSec % 60, s, subsongCount, si.playerTickRate);
+						printf("Rendering %d:%02d sec of subsong #%d/#%d (%dHz player)\n", durationInSec / 60, durationInSec % 60, s, si.subsongCount, si.playerTickRate);
 
 						while (sampleCount > 0)
 						{
