@@ -8,14 +8,10 @@
 #include <stdint.h>
 #include "AtariMachine.h"
 
-static	const	int		kSubsongCountMax = 128;
 
-class SndhFile
+class SndhRenderer
 {
 public:
-	SndhFile();
-	~SndhFile();
-
 	struct SongInfo
 	{
 		int subsongCount;
@@ -27,14 +23,15 @@ public:
 		const char* converter;
 		const char* year;
 		const void* rawBinaryPlayer;
-		int rawBinaryPlayerSize;
+		uint32_t rawBinaryPlayerSize;
 	};
 
-	bool	Load(const void* rawSndhFile, int sndhFileSize, uint32_t hostReplayRate);
+	static SndhRenderer*	Create(const void* sndhMemoryData, uint32_t sndhMemorySize, uint32_t hostReplayRate);
+	static void Destroy(SndhRenderer* sr);
+
 	const 	SongInfo&	GetSongInfo() const { return m_songInfo; };
 	uint32_t GetSubsongDurationSample(int subsongId) const;
 	uint32_t GetSubsongDurationMs(int subsongId) const;
-	void	Unload();
 
 	bool	InitSubSong(int subSongId);
 
@@ -55,11 +52,20 @@ public:
 
 
 private:
+	static	const	int		kSubsongCountMax = 128;
+	static	const	uint32_t	SNDH_UPLOAD_ADDR = 0x10002;		// some SNDH can't play below (ie SynthDream2) Also some driver crash if loaded at 64KiB bound ( metal planet by Floopy at 1:44 )
+
+    // Private constructors prevent direct instantiation
+    SndhRenderer();
+    ~SndhRenderer();
+    SndhRenderer(const SndhRenderer&) = delete;            // Prevent copy construction
+    SndhRenderer& operator=(const SndhRenderer&) = delete; // Prevent copy assignment
+
+	bool	Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t hostReplayRate);
 	uint16_t		Read16(const char*);
 	uint32_t		Read32(const char*);
 	const char*	skipNTString(const char* r);
 	void		AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t* pSampleViewInfo);
-	bool IsValid() const { return m_songInfo.subsongCount > 0; }
 
 	SongInfo m_songInfo;
 	AtariMachine m_atariMachine;
@@ -69,3 +75,4 @@ private:
 	uint32_t	m_innerSamplePos;
 	uint32_t m_hostReplayRate;
 };
+
