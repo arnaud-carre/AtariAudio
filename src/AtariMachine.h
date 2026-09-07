@@ -35,6 +35,7 @@ public:
 	void			memWrite16(unsigned int address, unsigned int value);
 	void			TrapInstructionCallback(int v);
 	void			ResetCb(void);
+	void 			MuteVoices(uint32_t muteMask);
 
 private:
 	static	const	uint32_t	RAM_SIZE = 4*1024*1024;
@@ -50,9 +51,10 @@ private:
 	void		XbiosTimerSet(int ctrlPort, int dataPort, int enablePort, int bit, int mask, int ctrlValue, int dataValue);
 
 	uint8_t*	m_RAM;
-	int			m_ExitCode;
-	uint32_t	m_NextGemdosMallocAd;
-	Ym2149c		m_Ym2149;
-	Mk68901		m_Mfp;
-	SteDac		m_SteDac;
+	int			m_exitCode;
+	uint32_t	m_nextGemdosMallocAd;
+	uint32_t 	m_muteMask;
+	Ym2149c		m_ym2149;
+	Mk68901		m_mfp;
+	SteDac		m_steDac;
 };

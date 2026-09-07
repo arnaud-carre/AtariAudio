@@ -26,6 +26,7 @@ void	Ym2149c::Reset(uint32_t hostReplayRate, uint32_t ymClock)
 		m_toneCounter[v] = 0;
 		m_tonePeriod[v] = 0;
 	}
+	MuteVoices(0);	// do not mute anything
 	m_toneEdges = (stdLibRand()&((1<<10)|(1<<5)|(1<<0)))*0x1f;		// YM internal edge state are un-predictable
 	m_insideTimerIrq = false;
 	m_hostReplayRate = hostReplayRate;
@@ -174,6 +175,13 @@ uint16_t Ym2149c::Tick()
 	return vmask;
 }
 
+void Ym2149c::MuteVoices(uint32_t muteMask)
+{
+	m_enableMask = 0;
+	for (int i = 0; i < 3; i++)
+		m_enableMask |= muteMask&(1 << i) ? 0 : 31 << (i * 5);
+}
+
 // called at host replay rate ( like 48Khz )
 // internally update YM chip state machine at 250Khz and average output for each host sample
 int16_t Ym2149c::ComputeNextSample()
@@ -194,6 +202,9 @@ int16_t Ym2149c::ComputeNextSample()
 	levels |= ((m_regs[10] & 0x10) ? envLevel : (m_regs[10]<<1)) << 10;
 	levels &= highMask;
 	assert(levels < 0x8000);
+
+	levels &= m_enableMask;		// ability to artificially mute some voices
+
 	m_currentVisualLevels = uint16_t(levels);
 
 	// if period <=1 and TONE is active, empirically reduce final output value by 2 (some STF digisound use this mode)

@@ -18,6 +18,7 @@ public:
 	void	InsideTimerIrq(bool inside);
 
 	uint16_t GetCurrentVisualLevels() const { return m_currentVisualLevels; } // only used for some player visual, contains 3 YM voices volume and STE DAC in 8888 format
+	void MuteVoices(uint32_t muteMask);
 
 private:
 	void	WriteReg(int reg, uint8_t value);
@@ -46,11 +47,12 @@ private:
 	uint32_t	m_currentNoiseMask;
 	uint16_t 	m_currentVisualLevels;
 	uint16_t	m_dcAdjustBuffer[1<<kDcAdjustHistoryBit];
-	unsigned int	m_dcAdjustPos;
+	uint32_t	m_dcAdjustPos;
 	uint32_t	m_dcAdjustSum;
 	uint8_t		m_regs[14];
 	uint32_t	m_innerCycle;
 	uint32_t 	m_noiseHalf;
+	uint32_t 	m_enableMask;
 	bool		m_insideTimerIrq;
 	bool		m_edgeNeedReset[3];
 };

@@ -36,6 +36,7 @@ SndhRenderer::SndhRenderer()
 	m_songInfo.ripper = sEmptyString;
 	m_songInfo.converter = sEmptyString;
 	m_songInfo.year = sEmptyString;
+	m_subsongInit = false;
 }
 
 SndhRenderer::~SndhRenderer()
@@ -225,11 +226,14 @@ bool	SndhRenderer::InitSubSong(int subSongId)
 			ret = m_atariMachine.Jsr(SNDH_UPLOAD_ADDR, subSongId);
 		}
 	}
+	m_subsongInit = ret;
 	return ret;
 }
 
 void	SndhRenderer::AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t* pSampleViewInfo)
 {
+	if (!m_subsongInit)
+		return;
 
 	while (count > 0)
 	{
