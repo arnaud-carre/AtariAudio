@@ -30,8 +30,9 @@
 #ifndef M68K__HEADER
 #define M68K__HEADER
 
-#ifndef ARRAY_LENGTH
-#define ARRAY_LENGTH(x)         (sizeof(x) / sizeof(x[0]))
+
+#ifndef M68K_ARRAY_LENGTH
+#define M68K_ARRAY_LENGTH(x)         (sizeof(x) / sizeof(x[0]))
 #endif
 
 #ifndef FALSE
@@ -44,8 +45,11 @@
 /* ======================================================================== */
 
 /* Import the configuration for this build */
+#ifdef MUSASHI_CNF
+#include MUSASHI_CNF
+#else
 #include "m68kconf.h"
-
+#endif
 
 /* ======================================================================== */
 /* ============================ GENERAL DEFINES =========================== */
@@ -91,8 +95,12 @@ enum
 	M68K_CPU_TYPE_68010,
 	M68K_CPU_TYPE_68EC020,
 	M68K_CPU_TYPE_68020,
-	M68K_CPU_TYPE_68030,	/* Supported by disassembler ONLY */
-	M68K_CPU_TYPE_68040		/* Supported by disassembler ONLY */
+	M68K_CPU_TYPE_68EC030,
+	M68K_CPU_TYPE_68030,
+	M68K_CPU_TYPE_68EC040,
+	M68K_CPU_TYPE_68LC040,
+	M68K_CPU_TYPE_68040,
+	M68K_CPU_TYPE_SCC68070
 };
 
 /* Registers used by m68k_get_reg() and m68k_set_reg() */
@@ -139,10 +147,6 @@ typedef enum
 	M68K_REG_IR,		/* Instruction register */
 	M68K_REG_CPU_TYPE	/* Type of CPU being run */
 } m68k_register_t;
-
-#ifdef __cplusplus
-	extern "C" {
-#endif
 
 /* ======================================================================== */
 /* ====================== FUNCTIONS CALLED BY THE CPU ===================== */
@@ -268,6 +272,14 @@ void m68k_set_tas_instr_callback(int  (*callback)(void));
  */
 void m68k_set_illg_instr_callback(int  (*callback)(int));
 
+/* Set the callback for TRAP instructions.
+ * You must enable M68K_TRAP_HAS_CALLBACK in m68kconf.h.
+ * The CPU calls this callback every time it encounters a TRAP instruction
+ * which must return 1 if it handles the instruction or 0 if it's to be handled on the CPU.
+ * Default behavior: return 0, exception will occur.
+ */
+void m68k_set_trap_instr_callback(int  (*callback)(int));
+
 /* Set the callback for CPU function code changes.
  * You must enable M68K_EMULATE_FC in m68kconf.h.
  * The CPU calls this callback with the function code before every memory
@@ -341,6 +353,10 @@ unsigned int m68k_get_virq(unsigned int level);
 void m68k_pulse_halt(void);
 
 
+/* Trigger a bus error exception */
+void m68k_pulse_bus_error(void);
+
+
 /* Context switching to allow multiple CPUs */
 
 /* Get the size of the cpu context in bytes */
@@ -378,15 +394,12 @@ unsigned int m68k_disassemble(char* str_buff, unsigned int pc, unsigned int cpu_
  */
 unsigned int m68k_disassemble_raw(char* str_buff, unsigned int pc, const unsigned char* opdata, const unsigned char* argdata, unsigned int cpu_type);
 
-#ifdef __cplusplus
-	}
-#endif
 
 /* ======================================================================== */
 /* ============================== MAME STUFF ============================== */
 /* ======================================================================== */
 
-#if M68K_COMPILE_FOR_MAME == OPT_ON
+#if M68K_COMPILE_FOR_MAME == M68K_OPT_ON
 #include "m68kmame.h"
 #endif /* M68K_COMPILE_FOR_MAME */
 
@@ -394,5 +407,6 @@ unsigned int m68k_disassemble_raw(char* str_buff, unsigned int pc, const unsigne
 /* ======================================================================== */
 /* ============================== END OF FILE ============================= */
 /* ======================================================================== */
+
 
 #endif /* M68K__HEADER */

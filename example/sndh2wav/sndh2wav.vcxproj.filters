@@ -14,17 +14,20 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Source Files\AtariAudio">
-      <UniqueIdentifier>{ad468a23-4529-4b0e-ab6c-51b0869543df}</UniqueIdentifier>
+      <UniqueIdentifier>{399f49b4-7053-4481-8048-7a5711d1734f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\AtariAudio\external">
-      <UniqueIdentifier>{ea45d5b5-3789-427a-a4be-c025b272bf58}</UniqueIdentifier>
+      <UniqueIdentifier>{9c7f2cb8-1a01-4626-a486-536e7b9c635f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\AtariAudio\external\Musashi">
-      <UniqueIdentifier>{fb6d4302-8827-438e-8baf-19928435fbed}</UniqueIdentifier>
+    <Filter Include="Source Files\AtariAudio\external\musashi">
+      <UniqueIdentifier>{29370657-4946-43cc-aefd-533637ae2938}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="sndh2wav.cpp">
+    <ClCompile Include="Sndh2Wav.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wavwriter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\AtariMachine.cpp">
@@ -33,32 +36,35 @@
     <ClCompile Include="..\..\src\Mk68901.cpp">
       <Filter>Source Files\AtariAudio</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\SndhRenderer.cpp">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\SteDac.cpp">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\timedb.cpp">
       <Filter>Source Files\AtariAudio</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\ym2149c.cpp">
       <Filter>Source Files\AtariAudio</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\external\Musashi\m68k.cpp">
+      <Filter>Source Files\AtariAudio\external\musashi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\external\Musashi\m68kops.cpp">
+      <Filter>Source Files\AtariAudio\external\musashi</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\external\ice_24.c">
       <Filter>Source Files\AtariAudio\external</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\external\Musashi\m68kcpu.c">
-      <Filter>Source Files\AtariAudio\external\Musashi</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\external\Musashi\m68kops.c">
-      <Filter>Source Files\AtariAudio\external\Musashi</Filter>
-    </ClCompile>
-    <ClCompile Include="wavwriter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\timedb.cpp">
-      <Filter>Source Files\AtariAudio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\SndhRenderer.cpp">
-      <Filter>Source Files\AtariAudio</Filter>
+    <ClCompile Include="..\..\src\external\Musashi\m68kcpu.cpp">
+      <Filter>Source Files\AtariAudio\external\musashi</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="wavwriter.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\AtariAudio.h">
       <Filter>Source Files\AtariAudio</Filter>
     </ClInclude>
@@ -68,7 +74,13 @@
     <ClInclude Include="..\..\src\Mk68901.h">
       <Filter>Source Files\AtariAudio</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\SndhRenderer.h">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\SteDac.h">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\timedb.h">
       <Filter>Source Files\AtariAudio</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\ym2149_tables.h">
@@ -77,32 +89,28 @@
     <ClInclude Include="..\..\src\ym2149c.h">
       <Filter>Source Files\AtariAudio</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\external\ice_24.h">
-      <Filter>Source Files\AtariAudio\external</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\external\Musashi\m68k.h">
-      <Filter>Source Files\AtariAudio\external\Musashi</Filter>
+      <Filter>Source Files\AtariAudio\external\musashi</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\external\Musashi\m68kconf.h">
-      <Filter>Source Files\AtariAudio\external\Musashi</Filter>
+      <Filter>Source Files\AtariAudio\external\musashi</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\external\Musashi\m68kcpu.h">
-      <Filter>Source Files\AtariAudio\external\Musashi</Filter>
+      <Filter>Source Files\AtariAudio\external\musashi</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\external\Musashi\m68kops.h">
-      <Filter>Source Files\AtariAudio\external\Musashi</Filter>
+      <Filter>Source Files\AtariAudio\external\musashi</Filter>
     </ClInclude>
-    <ClInclude Include="wavwriter.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\src\external\ice_24.h">
+      <Filter>Source Files\AtariAudio\external</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\external\timedb.inc.h">
       <Filter>Source Files\AtariAudio\external</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\timedb.h">
-      <Filter>Source Files\AtariAudio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\SndhRenderer.h">
-      <Filter>Source Files\AtariAudio</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\external\Musashi\m68k_func.inc">
+      <Filter>Source Files\AtariAudio\external\musashi</Filter>
+    </None>
   </ItemGroup>
 </Project>
