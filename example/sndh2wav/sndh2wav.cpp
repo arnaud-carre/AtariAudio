@@ -55,6 +55,7 @@ int	main(int argc, char* argv[])
 		WavWriter wavWriter;
 		if (wavWriter.Open(argv[2], kHostReplayRate, 1))
 		{
+			#if 0
 			SndhRenderer* sr = SndhRenderer::Create(sndhFileBuffer, sndhFileSize, kHostReplayRate);
 			if (sr)
 			{
@@ -86,6 +87,13 @@ int	main(int argc, char* argv[])
 				}
 				SndhRenderer::Destroy(sr);
 			}
+			#else
+			YmRenderer* yr = YmRenderer::Create(sndhFileBuffer, sndhFileSize, kHostReplayRate);
+			if (yr)
+			{
+				YmRenderer::Destroy(yr);
+			}
+			#endif
 			wavWriter.Close();
 		}
 	}

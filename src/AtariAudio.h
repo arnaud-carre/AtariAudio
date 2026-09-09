@@ -11,3 +11,4 @@
 #include "ym2149c.h"
 #include "AtariMachine.h"
 #include "SndhRenderer.h"
+#include "YmRenderer.h"

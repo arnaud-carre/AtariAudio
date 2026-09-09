@@ -60,6 +60,12 @@
     <ClCompile Include="..\..\src\external\Musashi\m68kcpu.cpp">
       <Filter>Source Files\AtariAudio\external\musashi</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\YmRenderer.cpp">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\external\lzh.cpp">
+      <Filter>Source Files\AtariAudio\external</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="wavwriter.h">
@@ -105,6 +111,12 @@
       <Filter>Source Files\AtariAudio\external</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\external\timedb.inc.h">
+      <Filter>Source Files\AtariAudio\external</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\YmRenderer.h">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\external\lzh.h">
       <Filter>Source Files\AtariAudio\external</Filter>
     </ClInclude>
   </ItemGroup>

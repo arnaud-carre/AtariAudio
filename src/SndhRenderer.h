@@ -85,9 +85,6 @@ private:
     SndhRenderer& operator=(const SndhRenderer&) = delete; // Prevent copy assignment
 
 	bool	Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t hostReplayRate);
-	uint16_t		Read16(const char*);
-	uint32_t		Read32(const char*);
-	const char*	skipNTString(const char* r);
 	void		AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t* pSampleViewInfo);
 
 	SongInfo m_songInfo;

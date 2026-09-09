@@ -44,20 +44,20 @@ SndhRenderer::~SndhRenderer()
 	free((void*)m_songInfo.rawBinaryPlayer);
 }
 
-uint16_t	SndhRenderer::Read16(const char* r)
+uint16_t	AURead16(const char* r)
 {
 	const uint8_t* r8 = (const uint8_t*)r;
 	uint16_t v = (r8[0] << 8) | (r8[1]);
 	return v;
 }
 
-uint32_t	SndhRenderer::Read32(const char* r)
+uint32_t	AURead32(const char* r)
 {
-	uint32_t v = (Read16(r) << 16) | Read16(r + 2);
+	uint32_t v = (AURead16(r) << 16) | AURead16(r + 2);
 	return v;
 }
 
-const char* SndhRenderer::skipNTString(const char* r)
+const char* AUskipNTString(const char* r)
 {
 	r += strlen(r) + 1;
 	return r;
@@ -76,6 +76,8 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 		long csize = ice_24_depack((unsigned char*)rawSndhFile, (unsigned char*)si.rawBinaryPlayer);
 		if (si.rawBinaryPlayerSize != csize)
 		{
+			free((void*)si.rawBinaryPlayer);
+			si.rawBinaryPlayer = nullptr;
 			return false;
 		}
 	}
@@ -95,7 +97,7 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 	{
 		if ((0x60 == read8[0]) && (0 == strncmp(read8 + 12, "SNDH", 4)))
 		{
-			int headerSize = Read16(read8 + 2) + 2; // suppose it's bra.w
+			int headerSize = AURead16(read8 + 2) + 2; // suppose it's bra.w
 			if (read8[1])
 				headerSize = read8[1] + 2;			// but maybe it's bra.s
 			const char* readEnd = read8 + headerSize;
@@ -115,33 +117,33 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 				if (0 == strncmp(read8, "!#", 2))
 				{
 					si.defaultSubsong = atoi(read8 + 2);
-					read8 = skipNTString(read8+2);
+					read8 = AUskipNTString(read8+2);
 				}
 				else if (0 == strncmp(read8, "TITL", 4))
 				{
 					si.musicName = read8 + 4;
-					read8 = skipNTString(read8 + 4);
+					read8 = AUskipNTString(read8 + 4);
 				}
 				else if (0 == strncmp(read8, "COMM", 4))
 				{
 					si.musicAuthor = read8 + 4;
-					read8 = skipNTString(read8 + 4);
+					read8 = AUskipNTString(read8 + 4);
 				}
 				else if (0 == strncmp(read8, "RIPP", 4))
 				{
 					si.ripper = read8 + 4;
-					read8 = skipNTString(read8 + 4);
+					read8 = AUskipNTString(read8 + 4);
 				}
 				else if (0 == strncmp(read8, "CONV", 4))
 				{
 					si.converter = read8 + 4;
-					read8 = skipNTString(read8 + 4);
+					read8 = AUskipNTString(read8 + 4);
 				}
 				else if ((0 == strncmp(read8, "YEAR", 4)))
 				{
 					if ( read8[4] != 0)
 						si.year = read8 + 4;	// many sndh files have "" as year string
-					read8 = skipNTString(read8 + 4);
+					read8 = AUskipNTString(read8 + 4);
 				}
 				else if (0 == strncmp(read8, "##", 2))
 				{
@@ -161,7 +163,7 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 						read8++;
 					for (int i = 0; i < si.subsongCount; i++)
 					{
-						int lenInSec = Read16(read8);
+						int lenInSec = AURead16(read8);
 						assert(si.playerTickRate > 0);
 						m_subSongLenInTick[i] = lenInSec * si.playerTickRate;
 						read8 += 2;
@@ -173,7 +175,7 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 					read8 += 4;
 					for (int i = 0; i < si.subsongCount; i++)
 					{
-						m_subSongLenInTick[i] = Read32(read8);
+						m_subSongLenInTick[i] = AURead32(read8);
 						read8 += 4;
 					}
 					bFrms = true;
@@ -189,7 +191,7 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 							(0 == strncmp(read8, "!V", 2)))
 				{
 					si.playerTickRate = atoi(read8 + 2);
-					read8 = skipNTString(read8 + 2);
+					read8 = AUskipNTString(read8 + 2);
 				}
 				else
 				{
