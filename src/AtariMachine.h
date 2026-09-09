@@ -37,6 +37,7 @@ public:
 	void			memWrite16(unsigned int address, unsigned int value);
 	void			TrapInstructionCallback(int v);
 	void			ResetCb(void);
+	void 			IllegalCb(void);
 	void 			MuteVoices(uint32_t muteMask);
 
 private:

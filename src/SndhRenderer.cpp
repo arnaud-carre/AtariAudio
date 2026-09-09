@@ -239,7 +239,12 @@ void	SndhRenderer::AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t
 	{
 		if (0 == m_innerSamplePos)
 		{
-			m_atariMachine.Jsr(SNDH_UPLOAD_ADDR + 8, 0);
+			if (!m_atariMachine.Jsr(SNDH_UPLOAD_ADDR + 8, 0))
+			{
+				// player probably crash
+				m_subsongInit = false;
+				break;
+			}
 			m_innerSamplePos = m_samplePerTick;
 		}
 
