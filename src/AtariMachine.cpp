@@ -70,8 +70,9 @@ void M68k_Reset_Callback(void* user)
 
 int M68k_Illegal_Callback(void* user, int opcode)
 {
-	(void)user;
 	(void)opcode;
+	AtariMachine* mch = (AtariMachine*)user;
+	mch->IllegalCb();
 	return 1;
 }
 
@@ -113,6 +114,7 @@ unsigned int  AtariMachine::memRead8(unsigned int address)
 
 unsigned int  AtariMachine::memRead16(unsigned int address)
 {
+	assert(0 == (address & 1));
 	assert(0 == (address & 0xff000000));
 	uint16_t r = ~0;
 	if (address < RAM_SIZE - 1)
@@ -142,6 +144,12 @@ void	AtariMachine::ResetCb(void)
 	m_cpu.m68k_end_timeslice();
 }
 
+void AtariMachine::IllegalCb()
+{
+	m_exitCode |= AtariMachine::ExitCode::kCrash;
+	m_cpu.m68k_end_timeslice();
+}
+
 void AtariMachine::memWrite8(unsigned int address, unsigned int value)
 {
 	assert(0 == (address & 0xff000000));
@@ -168,6 +176,7 @@ void AtariMachine::memWrite8(unsigned int address, unsigned int value)
 
 void AtariMachine::memWrite16(unsigned int address, unsigned int value)
 {
+	assert(0 == (address & 1));
 	assert(0 == (address & 0xff000000));
 	if (address < RAM_SIZE - 1)
 	{
@@ -451,7 +460,8 @@ int16_t	AtariMachine::ComputeNextSample()
 			uint32_t pc = m_cpu.MemRead32(ivector[t]);
 			ConfigureReturnByRte();
 			m_ym2149.InsideTimerIrq(true);
-			JmpBinary(pc, 1);	// execute the timer code until RTE (probably SID or any other special fx code)
+			if (!JmpBinary(pc, 1))	// execute the timer code until RTE (probably SID or any other special fx code)
+				out = 0;		// output 0 in case something bad happen during emulation of the timer code
 			m_ym2149.InsideTimerIrq(false);
 		}
 	}
