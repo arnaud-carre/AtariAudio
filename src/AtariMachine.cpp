@@ -70,7 +70,14 @@ void M68k_Reset_Callback(void* user)
 
 int M68k_Illegal_Callback(void* user, int opcode)
 {
-	assert(false);
+	//	assert(false);
+	return 1;
+}
+
+int M68k_TrapN_Callback(void* user, int n)
+{
+	AtariMachine* mch = (AtariMachine*)user;
+	mch->TrapInstructionCallback(n);
 	return 1;
 }
 
