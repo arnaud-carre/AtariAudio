@@ -135,6 +135,7 @@
     <ClCompile Include="..\..\src\SteDac.cpp" />
     <ClCompile Include="..\..\src\timedb.cpp" />
     <ClCompile Include="..\..\src\ym2149c.cpp" />
+    <ClCompile Include="jobSystem.cpp" />
     <ClCompile Include="Sndh2Wav.cpp" />
     <ClCompile Include="wavwriter.cpp" />
   </ItemGroup>
@@ -153,6 +154,7 @@
     <ClInclude Include="..\..\src\timedb.h" />
     <ClInclude Include="..\..\src\ym2149c.h" />
     <ClInclude Include="..\..\src\ym2149_tables.h" />
+    <ClInclude Include="jobSystem.h" />
     <ClInclude Include="wavwriter.h" />
   </ItemGroup>
   <ItemGroup>
