@@ -87,7 +87,10 @@ unsigned int  AtariMachine::memRead8(unsigned int address)
 	assert(0 == (address & 0xff000000));
 	uint8_t r = ~0;
 	if (address < RAM_SIZE)
+	{
+		assert(m_RAM);
 		return m_RAM[address];
+	}
 	if ((address >= 0xff8800) && (address < 0xff8900))
 		r = m_ym2149.ReadPort(address & 255);
 	else if (0xff8260 == address)
@@ -113,7 +116,10 @@ unsigned int  AtariMachine::memRead16(unsigned int address)
 	assert(0 == (address & 0xff000000));
 	uint16_t r = ~0;
 	if (address < RAM_SIZE - 1)
+	{
+		assert(m_RAM);
 		return uint16_t((m_RAM[address] << 8) | (m_RAM[address + 1]));
+	}
 	if ((address >= 0xff8800) && (address < 0xff8900))
 		r = m_ym2149.ReadPort(address & 0xfe) << 8;
 	else if ((address >= 0xfffa00) && (address < 0xfffa26))
@@ -141,6 +147,7 @@ void AtariMachine::memWrite8(unsigned int address, unsigned int value)
 	assert(0 == (address & 0xff000000));
 	if (address < RAM_SIZE)
 	{
+		assert(m_RAM);
 		m_RAM[address] = value;
 		return;
 	}
@@ -164,6 +171,7 @@ void AtariMachine::memWrite16(unsigned int address, unsigned int value)
 	assert(0 == (address & 0xff000000));
 	if (address < RAM_SIZE - 1)
 	{
+		assert(m_RAM);
 		m_RAM[address] = uint8_t(value >> 8);
 		m_RAM[address + 1] = uint8_t(value);
 		return;
@@ -185,16 +193,12 @@ void AtariMachine::memWrite16(unsigned int address, unsigned int value)
 
 AtariMachine::AtariMachine()
 {
-	m_RAM = (uint8_t*)malloc(RAM_SIZE);
+	m_RAM = nullptr;
 }
 
 AtariMachine::~AtariMachine()
 {
-	if (m_RAM)
-	{
-		free(m_RAM);
-		m_RAM = nullptr;
-	}
+	free(m_RAM);
 }
 
 void	AtariMachine::Gemdos(int func, uint32_t a7)
@@ -308,7 +312,9 @@ void	AtariMachine::TrapInstructionCallback(int v)
 
 void	AtariMachine::Startup(uint32_t hostReplayRate)
 {
-	assert(m_RAM);
+	if ( nullptr == m_RAM )
+		m_RAM = (uint8_t*)malloc(RAM_SIZE);
+
 	memset(m_RAM, 0, RAM_SIZE);
 
 	m_ym2149.Reset(hostReplayRate);
@@ -345,6 +351,7 @@ bool	AtariMachine::Upload(const void* src, uint32_t addr, uint32_t size)
 	if ((nullptr == src) || (0 == size))
 		return false;
 
+	assert(m_RAM);
 	memcpy(m_RAM + addr, src, size);
 	return true;
 }
@@ -424,6 +431,7 @@ void AtariMachine::MuteVoices(uint32_t muteMask)
 int16_t	AtariMachine::ComputeNextSample()
 {
 	int32_t level = m_ym2149.ComputeNextSample();
+	assert(m_RAM);
 	int32_t steLevel = m_steDac.ComputeNextSample((const int8_t*)m_RAM, RAM_SIZE, m_mfp);
 	if ( 0 == (m_muteMask&(1<<3)))
 		level += steLevel;
