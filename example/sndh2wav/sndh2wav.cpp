@@ -11,6 +11,7 @@ static int16_t audioBuffer[kAudioBufferLen];
 
 static const int kJobCount = 8;
 
+// WARNING: For this MT test to work, do NOT forget to remove the non deterministic ym2149 random init state! ( ie m_toneEdges = stdLibRand() )
 
 struct Job
 {
