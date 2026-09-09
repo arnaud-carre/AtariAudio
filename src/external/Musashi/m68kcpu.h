@@ -427,7 +427,7 @@ typedef uint32 uint64;
 #endif /* M68K_ILLG_HAS_CALLBACK */
 
 #if M68K_TRAP_HAS_CALLBACK
-	fail
+	#define m68ki_trap_callback(n)  M68k_TrapN_Callback(m_user, n)
 #else
 	#define m68ki_trap_callback(opcode) 0 // Default is 0 = not handled, exception will occur
 #endif /* M68K_TRAP_HAS_CALLBACK */
@@ -709,6 +709,7 @@ extern void M68k_Write32(void* user, unsigned int address, unsigned int value);
 
 extern int M68k_Illegal_Callback(void* user, int);
 extern void M68k_Reset_Callback(void* user);
+extern int M68k_TrapN_Callback(void* user, int n);
 
 
 
