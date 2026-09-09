@@ -470,6 +470,7 @@ void M68k::m68ki_stack_frame_3word(uint pc, uint sr)
 	*/
 void M68k::m68ki_stack_frame_0000(uint pc, uint sr, uint vector)
 {
+	(void)vector;
 	m68ki_stack_frame_3word(pc, sr);
 }
 
@@ -896,7 +897,7 @@ void M68k::m68ki_store_bitfield(uint32 addr, unsigned offset, unsigned width,uin
 }
 
 /* Access the internals of the CPU */
-unsigned int M68k::m68k_get_reg(void* context, m68k_register_t regnum)
+unsigned int M68k::m68k_get_reg(m68k_register_t regnum)
 {
 	m68ki_cpu_core* cpu = &m68ki_cpu;
 	switch(regnum)

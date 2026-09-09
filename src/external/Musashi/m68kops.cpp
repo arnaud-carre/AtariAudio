@@ -5315,10 +5315,7 @@ void M68k::op_bfchg_32_ai(void)
 		sint offset = (word2>>6)&31;
 		uint width = word2;
 		uint mask_base;
-		//uint data_long;
 		m68ki_bitfield_t data;
-		uint data_byte = 0;
-		uint mask_byte = 0;
 		uint ea = EA_AY_AI_8();
 
 
@@ -5355,10 +5352,7 @@ void M68k::op_bfchg_32_di(void)
 		sint offset = (word2>>6)&31;
 		uint width = word2;
 		uint mask_base;
-		//uint data_long;
 		m68ki_bitfield_t data;
-		uint data_byte = 0;
-		uint mask_byte = 0;
 		uint ea = EA_AY_DI_8();
 
 
@@ -5395,10 +5389,7 @@ void M68k::op_bfchg_32_ix(void)
 		sint offset = (word2>>6)&31;
 		uint width = word2;
 		uint mask_base;
-		//uint data_long;
 		m68ki_bitfield_t data;
-		uint data_byte = 0;
-		uint mask_byte = 0;
 		uint ea = EA_AY_IX_8();
 
 
@@ -5435,10 +5426,7 @@ void M68k::op_bfchg_32_aw(void)
 		sint offset = (word2>>6)&31;
 		uint width = word2;
 		uint mask_base;
-		//uint data_long;
 		m68ki_bitfield_t data;
-		uint data_byte = 0;
-		uint mask_byte = 0;
 		uint ea = EA_AW_8();
 
 
@@ -5475,10 +5463,7 @@ void M68k::op_bfchg_32_al(void)
 		sint offset = (word2>>6)&31;
 		uint width = word2;
 		uint mask_base;
-		//uint data_long;
 		m68ki_bitfield_t data;
-		uint data_byte = 0;
-		uint mask_byte = 0;
 		uint ea = EA_AL_8();
 
 

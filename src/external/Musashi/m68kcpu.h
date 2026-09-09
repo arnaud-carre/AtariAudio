@@ -805,9 +805,6 @@ extern const uint     m68ki_shift_32_table[];
 extern const uint8    m68ki_exception_cycle_table[][256];
 extern const uint8    m68ki_ea_idx_cycle_table[];
 
-/* Forward declarations to keep some of the macros happy */
-static inline void m68ki_check_interrupts(void);            /* ASG: check for interrupts */
-
 /* ======================================================================== */
 /* =========================== UTILITY FUNCTIONS ========================== */
 /* ======================================================================== */

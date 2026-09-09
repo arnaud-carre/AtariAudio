@@ -273,7 +273,7 @@ void	AtariMachine::XBios(int func, uint32_t a7)
 			uint32_t callbackAddr = m_cpu.MemRead32(a7 + 2);
 
 			// push PC on stack (so future RTS will get back right after the TRAP)
-			uint32_t pc = m_cpu.m68k_get_reg(nullptr, M68K_REG_PC);
+			uint32_t pc = m_cpu.m68k_get_reg(M68K_REG_PC);
 			a7 -= 4;
 			m_cpu.MemWrite32(a7, pc);
 			m_cpu.m68k_set_reg(M68K_REG_SP, a7);
@@ -288,7 +288,7 @@ void	AtariMachine::XBios(int func, uint32_t a7)
 
 void	AtariMachine::TrapInstructionCallback(int v)
 {
-	int a7 = m_cpu.m68k_get_reg(nullptr, M68K_REG_SP);
+	int a7 = m_cpu.m68k_get_reg(M68K_REG_SP);
 	int func = m_cpu.MemRead16(a7);
 
 	switch (v)
