@@ -370,10 +370,9 @@ typedef uint32 uint64;
 #define m68k_read_pcrelative_16(A) m68ki_read_program_16(A)
 #define m68k_read_pcrelative_32(A) m68ki_read_program_32(A)
 
-
-#define m68ki_read_8_fc(A, F, V) m68ki_read_8(A)
-#define m68ki_read_16_fc(A, F, V) m68ki_read_16(A)
-#define m68ki_read_32_fc(A, F, V) m68ki_read_32(A)
+#define m68ki_read_8_fc(A, V) m68ki_read_8(A)
+#define m68ki_read_16_fc(A, V) m68ki_read_16(A)
+#define m68ki_read_32_fc(A, V) m68ki_read_32(A)
 #define m68ki_write_8_fc(A, F, V) m68ki_write_8(A, V)
 #define m68ki_write_16_fc(A, F, V) m68ki_write_16(A, V)
 #define m68ki_write_32_fc(A, F, V) m68ki_write_32(A, V)
@@ -587,7 +586,7 @@ typedef uint32 uint64;
 
 #define NFLAG_8(A) (A)
 #define NFLAG_16(A) ((A)>>8)
-#define NFLAG_32(A) ((A)>>24)
+#define NFLAG_32(A) ((uint32)((A)>>24))
 #define NFLAG_64(A) ((A)>>56)
 
 #define ZFLAG_8(A) MASK_OUT_ABOVE_8(A)
