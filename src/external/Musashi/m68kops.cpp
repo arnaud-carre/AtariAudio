@@ -2251,7 +2251,7 @@ void M68k::op_addx_32_rr(void)
 	res = MASK_OUT_ABOVE_32(res);
 	FLAG_Z |= res;
 
-	*r_dst = res;
+	*r_dst = (uint)res;
 }
 
 
@@ -2943,7 +2943,7 @@ void M68k::op_and_32_re_ai(void)
 	uint res = DX & m68ki_read_32(ea);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -2957,7 +2957,7 @@ void M68k::op_and_32_re_pi(void)
 	uint res = DX & m68ki_read_32(ea);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -2971,7 +2971,7 @@ void M68k::op_and_32_re_pd(void)
 	uint res = DX & m68ki_read_32(ea);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -2985,7 +2985,7 @@ void M68k::op_and_32_re_di(void)
 	uint res = DX & m68ki_read_32(ea);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -2999,7 +2999,7 @@ void M68k::op_and_32_re_ix(void)
 	uint res = DX & m68ki_read_32(ea);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3013,7 +3013,7 @@ void M68k::op_and_32_re_aw(void)
 	uint res = DX & m68ki_read_32(ea);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3027,7 +3027,7 @@ void M68k::op_and_32_re_al(void)
 	uint res = DX & m68ki_read_32(ea);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3052,7 +3052,7 @@ void M68k::op_andi_8_ai(void)
 	uint res = src & m68ki_read_8(ea);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3067,7 +3067,7 @@ void M68k::op_andi_8_pi(void)
 	uint res = src & m68ki_read_8(ea);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3082,7 +3082,7 @@ void M68k::op_andi_8_pi7(void)
 	uint res = src & m68ki_read_8(ea);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3097,7 +3097,7 @@ void M68k::op_andi_8_pd(void)
 	uint res = src & m68ki_read_8(ea);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3112,7 +3112,7 @@ void M68k::op_andi_8_pd7(void)
 	uint res = src & m68ki_read_8(ea);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3127,7 +3127,7 @@ void M68k::op_andi_8_di(void)
 	uint res = src & m68ki_read_8(ea);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3142,7 +3142,7 @@ void M68k::op_andi_8_ix(void)
 	uint res = src & m68ki_read_8(ea);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3157,7 +3157,7 @@ void M68k::op_andi_8_aw(void)
 	uint res = src & m68ki_read_8(ea);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3172,7 +3172,7 @@ void M68k::op_andi_8_al(void)
 	uint res = src & m68ki_read_8(ea);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3197,7 +3197,7 @@ void M68k::op_andi_16_ai(void)
 	uint res = src & m68ki_read_16(ea);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3212,7 +3212,7 @@ void M68k::op_andi_16_pi(void)
 	uint res = src & m68ki_read_16(ea);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3227,7 +3227,7 @@ void M68k::op_andi_16_pd(void)
 	uint res = src & m68ki_read_16(ea);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3242,7 +3242,7 @@ void M68k::op_andi_16_di(void)
 	uint res = src & m68ki_read_16(ea);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3257,7 +3257,7 @@ void M68k::op_andi_16_ix(void)
 	uint res = src & m68ki_read_16(ea);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3272,7 +3272,7 @@ void M68k::op_andi_16_aw(void)
 	uint res = src & m68ki_read_16(ea);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3287,7 +3287,7 @@ void M68k::op_andi_16_al(void)
 	uint res = src & m68ki_read_16(ea);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3312,7 +3312,7 @@ void M68k::op_andi_32_ai(void)
 	uint res = src & m68ki_read_32(ea);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3327,7 +3327,7 @@ void M68k::op_andi_32_pi(void)
 	uint res = src & m68ki_read_32(ea);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3342,7 +3342,7 @@ void M68k::op_andi_32_pd(void)
 	uint res = src & m68ki_read_32(ea);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3357,7 +3357,7 @@ void M68k::op_andi_32_di(void)
 	uint res = src & m68ki_read_32(ea);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3372,7 +3372,7 @@ void M68k::op_andi_32_ix(void)
 	uint res = src & m68ki_read_32(ea);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3387,7 +3387,7 @@ void M68k::op_andi_32_aw(void)
 	uint res = src & m68ki_read_32(ea);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3402,7 +3402,7 @@ void M68k::op_andi_32_al(void)
 	uint res = src & m68ki_read_32(ea);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 
@@ -3445,7 +3445,7 @@ void M68k::op_asr_8_s(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_X = FLAG_C = src << (9-shift);
 }
@@ -3467,7 +3467,7 @@ void M68k::op_asr_16_s(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_X = FLAG_C = src << (9-shift);
 }
@@ -3489,7 +3489,7 @@ void M68k::op_asr_32_s(void)
 	*r_dst = res;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_X = FLAG_C = src << (9-shift);
 }
@@ -3516,7 +3516,7 @@ void M68k::op_asr_8_r(void)
 
 			FLAG_X = FLAG_C = src << (9-shift);
 			FLAG_N = NFLAG_8(res);
-			FLAG_Z = res;
+			FLAG_Z = (uint)res;
 			FLAG_V = VFLAG_CLEAR;
 			return;
 		}
@@ -3569,7 +3569,7 @@ void M68k::op_asr_16_r(void)
 
 			FLAG_C = FLAG_X = (src >> (shift - 1))<<8;
 			FLAG_N = NFLAG_16(res);
-			FLAG_Z = res;
+			FLAG_Z = (uint)res;
 			FLAG_V = VFLAG_CLEAR;
 			return;
 		}
@@ -3622,7 +3622,7 @@ void M68k::op_asr_32_r(void)
 
 			FLAG_C = FLAG_X = (src >> (shift - 1))<<8;
 			FLAG_N = NFLAG_32(res);
-			FLAG_Z = res;
+			FLAG_Z = (uint)res;
 			FLAG_V = VFLAG_CLEAR;
 			return;
 		}
@@ -3666,7 +3666,7 @@ void M68k::op_asr_16_ai(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = FLAG_X = src << 8;
 }
@@ -3684,7 +3684,7 @@ void M68k::op_asr_16_pi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = FLAG_X = src << 8;
 }
@@ -3702,7 +3702,7 @@ void M68k::op_asr_16_pd(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = FLAG_X = src << 8;
 }
@@ -3720,7 +3720,7 @@ void M68k::op_asr_16_di(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = FLAG_X = src << 8;
 }
@@ -3738,7 +3738,7 @@ void M68k::op_asr_16_ix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = FLAG_X = src << 8;
 }
@@ -3756,7 +3756,7 @@ void M68k::op_asr_16_aw(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = FLAG_X = src << 8;
 }
@@ -3774,7 +3774,7 @@ void M68k::op_asr_16_al(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = FLAG_X = src << 8;
 }
@@ -3794,7 +3794,7 @@ void M68k::op_asl_8_s(void)
 
 	FLAG_X = FLAG_C = src << shift;
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	src &= m68ki_shift_8_table[shift + 1];
 	FLAG_V = (!(src == 0 || (src == m68ki_shift_8_table[shift + 1] && shift < 8)))<<7;
 }
@@ -3813,7 +3813,7 @@ void M68k::op_asl_16_s(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src >> (8-shift);
 	src &= m68ki_shift_16_table[shift + 1];
 	FLAG_V = (!(src == 0 || src == m68ki_shift_16_table[shift + 1]))<<7;
@@ -3833,7 +3833,7 @@ void M68k::op_asl_32_s(void)
 	*r_dst = res;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src >> (24-shift);
 	src &= m68ki_shift_32_table[shift + 1];
 	FLAG_V = (!(src == 0 || src == m68ki_shift_32_table[shift + 1]))<<7;
@@ -3857,7 +3857,7 @@ void M68k::op_asl_8_r(void)
 			*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 			FLAG_X = FLAG_C = src << shift;
 			FLAG_N = NFLAG_8(res);
-			FLAG_Z = res;
+			FLAG_Z = (uint)res;
 			src &= m68ki_shift_8_table[shift + 1];
 			FLAG_V = (!(src == 0 || src == m68ki_shift_8_table[shift + 1]))<<7;
 			return;
@@ -3895,7 +3895,7 @@ void M68k::op_asl_16_r(void)
 			*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 			FLAG_X = FLAG_C = (src << shift) >> 8;
 			FLAG_N = NFLAG_16(res);
-			FLAG_Z = res;
+			FLAG_Z = (uint)res;
 			src &= m68ki_shift_16_table[shift + 1];
 			FLAG_V = (!(src == 0 || src == m68ki_shift_16_table[shift + 1]))<<7;
 			return;
@@ -3933,7 +3933,7 @@ void M68k::op_asl_32_r(void)
 			*r_dst = res;
 			FLAG_X = FLAG_C = (src >> (32 - shift)) << 8;
 			FLAG_N = NFLAG_32(res);
-			FLAG_Z = res;
+			FLAG_Z = (uint)res;
 			src &= m68ki_shift_32_table[shift + 1];
 			FLAG_V = (!(src == 0 || src == m68ki_shift_32_table[shift + 1]))<<7;
 			return;
@@ -3963,7 +3963,7 @@ void M68k::op_asl_16_ai(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src >> 7;
 	src &= 0xc000;
 	FLAG_V = (!(src == 0 || src == 0xc000))<<7;
@@ -3979,7 +3979,7 @@ void M68k::op_asl_16_pi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src >> 7;
 	src &= 0xc000;
 	FLAG_V = (!(src == 0 || src == 0xc000))<<7;
@@ -3995,7 +3995,7 @@ void M68k::op_asl_16_pd(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src >> 7;
 	src &= 0xc000;
 	FLAG_V = (!(src == 0 || src == 0xc000))<<7;
@@ -4011,7 +4011,7 @@ void M68k::op_asl_16_di(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src >> 7;
 	src &= 0xc000;
 	FLAG_V = (!(src == 0 || src == 0xc000))<<7;
@@ -4027,7 +4027,7 @@ void M68k::op_asl_16_ix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src >> 7;
 	src &= 0xc000;
 	FLAG_V = (!(src == 0 || src == 0xc000))<<7;
@@ -4043,7 +4043,7 @@ void M68k::op_asl_16_aw(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src >> 7;
 	src &= 0xc000;
 	FLAG_V = (!(src == 0 || src == 0xc000))<<7;
@@ -4059,7 +4059,7 @@ void M68k::op_asl_16_al(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src >> 7;
 	src &= 0xc000;
 	FLAG_V = (!(src == 0 || src == 0xc000))<<7;
@@ -5315,10 +5315,7 @@ void M68k::op_bfchg_32_ai(void)
 		sint offset = (word2>>6)&31;
 		uint width = word2;
 		uint mask_base;
-		uint data_long;
 		m68ki_bitfield_t data;
-		uint data_byte = 0;
-		uint mask_byte = 0;
 		uint ea = EA_AY_AI_8();
 
 
@@ -5355,10 +5352,7 @@ void M68k::op_bfchg_32_di(void)
 		sint offset = (word2>>6)&31;
 		uint width = word2;
 		uint mask_base;
-		uint data_long;
 		m68ki_bitfield_t data;
-		uint data_byte = 0;
-		uint mask_byte = 0;
 		uint ea = EA_AY_DI_8();
 
 
@@ -5395,10 +5389,7 @@ void M68k::op_bfchg_32_ix(void)
 		sint offset = (word2>>6)&31;
 		uint width = word2;
 		uint mask_base;
-		uint data_long;
 		m68ki_bitfield_t data;
-		uint data_byte = 0;
-		uint mask_byte = 0;
 		uint ea = EA_AY_IX_8();
 
 
@@ -5435,10 +5426,7 @@ void M68k::op_bfchg_32_aw(void)
 		sint offset = (word2>>6)&31;
 		uint width = word2;
 		uint mask_base;
-		uint data_long;
 		m68ki_bitfield_t data;
-		uint data_byte = 0;
-		uint mask_byte = 0;
 		uint ea = EA_AW_8();
 
 
@@ -5475,10 +5463,7 @@ void M68k::op_bfchg_32_al(void)
 		sint offset = (word2>>6)&31;
 		uint width = word2;
 		uint mask_base;
-		uint data_long;
 		m68ki_bitfield_t data;
-		uint data_byte = 0;
-		uint mask_byte = 0;
 		uint ea = EA_AL_8();
 
 
@@ -5553,7 +5538,6 @@ void M68k::op_bfclr_32_ai(void)
 		uint width = word2;
 		uint mask_base;
 		m68ki_bitfield_t data;
-		uint mask_byte = 0;
 		uint ea = EA_AY_AI_8();
 
 
@@ -5591,7 +5575,6 @@ void M68k::op_bfclr_32_di(void)
 		uint width = word2;
 		uint mask_base;
 		m68ki_bitfield_t data;
-		uint mask_byte = 0;
 		uint ea = EA_AY_DI_8();
 
 
@@ -5629,7 +5612,6 @@ void M68k::op_bfclr_32_ix(void)
 		uint width = word2;
 		uint mask_base;
 		m68ki_bitfield_t data;
-		uint mask_byte = 0;
 		uint ea = EA_AY_IX_8();
 
 
@@ -5667,7 +5649,6 @@ void M68k::op_bfclr_32_aw(void)
 		uint width = word2;
 		uint mask_base;
 		m68ki_bitfield_t data;
-		uint mask_byte = 0;
 		uint ea = EA_AW_8();
 
 
@@ -5705,7 +5686,6 @@ void M68k::op_bfclr_32_al(void)
 		uint width = word2;
 		uint mask_base;
 		m68ki_bitfield_t data;
-		uint mask_byte = 0;
 		uint ea = EA_AL_8();
 
 
@@ -5756,11 +5736,11 @@ void M68k::op_bfexts_32_d(void)
 		FLAG_N = NFLAG_32(data);
 		data = MAKE_INT_32(data) >> (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
-		REG_D[(word2>>12)&7] = data;
+		REG_D[(word2>>12)&7] = (uint)data;
 
 		return;
 	}
@@ -5804,7 +5784,7 @@ void M68k::op_bfexts_32_ai(void)
 		FLAG_N = NFLAG_32(data);
 		data  = MAKE_INT_32(data) >> (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -5852,7 +5832,7 @@ void M68k::op_bfexts_32_di(void)
 		FLAG_N = NFLAG_32(data);
 		data  = MAKE_INT_32(data) >> (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -5900,7 +5880,7 @@ void M68k::op_bfexts_32_ix(void)
 		FLAG_N = NFLAG_32(data);
 		data  = MAKE_INT_32(data) >> (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -5948,7 +5928,7 @@ void M68k::op_bfexts_32_aw(void)
 		FLAG_N = NFLAG_32(data);
 		data  = MAKE_INT_32(data) >> (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -5996,7 +5976,7 @@ void M68k::op_bfexts_32_al(void)
 		FLAG_N = NFLAG_32(data);
 		data  = MAKE_INT_32(data) >> (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -6044,7 +6024,7 @@ void M68k::op_bfexts_32_pcdi(void)
 		FLAG_N = NFLAG_32(data);
 		data  = MAKE_INT_32(data) >> (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -6092,7 +6072,7 @@ void M68k::op_bfexts_32_pcix(void)
 		FLAG_N = NFLAG_32(data);
 		data  = MAKE_INT_32(data) >> (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -6126,11 +6106,11 @@ void M68k::op_bfextu_32_d(void)
 		FLAG_N = NFLAG_32(data);
 		data >>= 32 - width;
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
-		REG_D[(word2>>12)&7] = data;
+		REG_D[(word2>>12)&7] = (uint)data;
 
 		return;
 	}
@@ -6173,7 +6153,7 @@ void M68k::op_bfextu_32_ai(void)
 		FLAG_N = NFLAG_32(data);
 		data  >>= (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -6220,7 +6200,7 @@ void M68k::op_bfextu_32_di(void)
 		FLAG_N = NFLAG_32(data);
 		data  >>= (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -6267,7 +6247,7 @@ void M68k::op_bfextu_32_ix(void)
 		FLAG_N = NFLAG_32(data);
 		data  >>= (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -6314,7 +6294,7 @@ void M68k::op_bfextu_32_aw(void)
 		FLAG_N = NFLAG_32(data);
 		data  >>= (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -6361,7 +6341,7 @@ void M68k::op_bfextu_32_al(void)
 		FLAG_N = NFLAG_32(data);
 		data  >>= (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -6408,7 +6388,7 @@ void M68k::op_bfextu_32_pcdi(void)
 		FLAG_N = NFLAG_32(data);
 		data  >>= (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -6455,7 +6435,7 @@ void M68k::op_bfextu_32_pcix(void)
 		FLAG_N = NFLAG_32(data);
 		data  >>= (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -6490,7 +6470,7 @@ void M68k::op_bfffo_32_d(void)
 		FLAG_N = NFLAG_32(data);
 		data >>= 32 - width;
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -6542,7 +6522,7 @@ void M68k::op_bfffo_32_ai(void)
 		FLAG_N = NFLAG_32(data);
 		data  >>= (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -6594,7 +6574,7 @@ void M68k::op_bfffo_32_di(void)
 		FLAG_N = NFLAG_32(data);
 		data  >>= (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -6646,7 +6626,7 @@ void M68k::op_bfffo_32_ix(void)
 		FLAG_N = NFLAG_32(data);
 		data  >>= (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -6698,7 +6678,7 @@ void M68k::op_bfffo_32_aw(void)
 		FLAG_N = NFLAG_32(data);
 		data  >>= (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -6750,7 +6730,7 @@ void M68k::op_bfffo_32_al(void)
 		FLAG_N = NFLAG_32(data);
 		data  >>= (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -6802,7 +6782,7 @@ void M68k::op_bfffo_32_pcdi(void)
 		FLAG_N = NFLAG_32(data);
 		data  >>= (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -6854,7 +6834,7 @@ void M68k::op_bfffo_32_pcix(void)
 		FLAG_N = NFLAG_32(data);
 		data  >>= (32 - width);
 
-		FLAG_Z = data;
+		FLAG_Z = (uint)data;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 
@@ -6896,7 +6876,7 @@ void M68k::op_bfins_32_d(void)
 
 		insert = MASK_OUT_ABOVE_32(insert << (32 - width));
 		FLAG_N = NFLAG_32(insert);
-		FLAG_Z = insert;
+		FLAG_Z = (uint)insert;
 		insert = ROR_32(insert, offset);
 
 		FLAG_V = VFLAG_CLEAR;
@@ -12131,7 +12111,7 @@ void M68k::op_divs_16_d(void)
 
 		if(quotient == MAKE_INT_16(quotient))
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12169,7 +12149,7 @@ void M68k::op_divs_16_ai(void)
 
 		if(quotient == MAKE_INT_16(quotient))
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12207,7 +12187,7 @@ void M68k::op_divs_16_pi(void)
 
 		if(quotient == MAKE_INT_16(quotient))
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12245,7 +12225,7 @@ void M68k::op_divs_16_pd(void)
 
 		if(quotient == MAKE_INT_16(quotient))
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12283,7 +12263,7 @@ void M68k::op_divs_16_di(void)
 
 		if(quotient == MAKE_INT_16(quotient))
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12321,7 +12301,7 @@ void M68k::op_divs_16_ix(void)
 
 		if(quotient == MAKE_INT_16(quotient))
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12359,7 +12339,7 @@ void M68k::op_divs_16_aw(void)
 
 		if(quotient == MAKE_INT_16(quotient))
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12397,7 +12377,7 @@ void M68k::op_divs_16_al(void)
 
 		if(quotient == MAKE_INT_16(quotient))
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12435,7 +12415,7 @@ void M68k::op_divs_16_pcdi(void)
 
 		if(quotient == MAKE_INT_16(quotient))
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12473,7 +12453,7 @@ void M68k::op_divs_16_pcix(void)
 
 		if(quotient == MAKE_INT_16(quotient))
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12511,7 +12491,7 @@ void M68k::op_divs_16_i(void)
 
 		if(quotient == MAKE_INT_16(quotient))
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12537,7 +12517,7 @@ void M68k::op_divu_16_d(void)
 
 		if(quotient < 0x10000)
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12563,7 +12543,7 @@ void M68k::op_divu_16_ai(void)
 
 		if(quotient < 0x10000)
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12589,7 +12569,7 @@ void M68k::op_divu_16_pi(void)
 
 		if(quotient < 0x10000)
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12615,7 +12595,7 @@ void M68k::op_divu_16_pd(void)
 
 		if(quotient < 0x10000)
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12641,7 +12621,7 @@ void M68k::op_divu_16_di(void)
 
 		if(quotient < 0x10000)
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12667,7 +12647,7 @@ void M68k::op_divu_16_ix(void)
 
 		if(quotient < 0x10000)
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12693,7 +12673,7 @@ void M68k::op_divu_16_aw(void)
 
 		if(quotient < 0x10000)
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12719,7 +12699,7 @@ void M68k::op_divu_16_al(void)
 
 		if(quotient < 0x10000)
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12745,7 +12725,7 @@ void M68k::op_divu_16_pcdi(void)
 
 		if(quotient < 0x10000)
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12771,7 +12751,7 @@ void M68k::op_divu_16_pcix(void)
 
 		if(quotient < 0x10000)
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12797,7 +12777,7 @@ void M68k::op_divu_16_i(void)
 
 		if(quotient < 0x10000)
 		{
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_N = NFLAG_16(quotient);
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
@@ -12867,11 +12847,11 @@ void M68k::op_divl_32_d(void)
 				}
 			}
 
-			REG_D[word2 & 7] = remainder;
-			REG_D[(word2 >> 12) & 7] = quotient;
+			REG_D[word2 & 7] = (uint)remainder;
+			REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -12974,11 +12954,11 @@ void M68k::op_divl_32_d(void)
 						quotient = (uint)MASK_OUT_ABOVE_32(-(sint)quotient);
 				}
 
-				REG_D[word2 & 7] = remainder;
-				REG_D[(word2 >> 12) & 7] = quotient;
+				REG_D[word2 & 7] = (uint)remainder;
+				REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 				FLAG_N = NFLAG_32(quotient);
-				FLAG_Z = quotient;
+				FLAG_Z = (uint)quotient;
 				FLAG_V = VFLAG_CLEAR;
 				FLAG_C = CFLAG_CLEAR;
 				return;
@@ -13008,7 +12988,7 @@ void M68k::op_divl_32_d(void)
 			}
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -13078,11 +13058,11 @@ void M68k::op_divl_32_ai(void)
 				}
 			}
 
-			REG_D[word2 & 7] = remainder;
-			REG_D[(word2 >> 12) & 7] = quotient;
+			REG_D[word2 & 7] = (uint)remainder;
+			REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -13185,11 +13165,11 @@ void M68k::op_divl_32_ai(void)
 						quotient = (uint)MASK_OUT_ABOVE_32(-(sint)quotient);
 				}
 
-				REG_D[word2 & 7] = remainder;
-				REG_D[(word2 >> 12) & 7] = quotient;
+				REG_D[word2 & 7] = (uint)remainder;
+				REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 				FLAG_N = NFLAG_32(quotient);
-				FLAG_Z = quotient;
+				FLAG_Z = (uint)quotient;
 				FLAG_V = VFLAG_CLEAR;
 				FLAG_C = CFLAG_CLEAR;
 				return;
@@ -13219,7 +13199,7 @@ void M68k::op_divl_32_ai(void)
 			}
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -13289,11 +13269,11 @@ void M68k::op_divl_32_pi(void)
 				}
 			}
 
-			REG_D[word2 & 7] = remainder;
-			REG_D[(word2 >> 12) & 7] = quotient;
+			REG_D[word2 & 7] = (uint)remainder;
+			REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -13396,11 +13376,11 @@ void M68k::op_divl_32_pi(void)
 						quotient = (uint)MASK_OUT_ABOVE_32(-(sint)quotient);
 				}
 
-				REG_D[word2 & 7] = remainder;
-				REG_D[(word2 >> 12) & 7] = quotient;
+				REG_D[word2 & 7] = (uint)remainder;
+				REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 				FLAG_N = NFLAG_32(quotient);
-				FLAG_Z = quotient;
+				FLAG_Z = (uint)quotient;
 				FLAG_V = VFLAG_CLEAR;
 				FLAG_C = CFLAG_CLEAR;
 				return;
@@ -13430,7 +13410,7 @@ void M68k::op_divl_32_pi(void)
 			}
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -13500,11 +13480,11 @@ void M68k::op_divl_32_pd(void)
 				}
 			}
 
-			REG_D[word2 & 7] = remainder;
-			REG_D[(word2 >> 12) & 7] = quotient;
+			REG_D[word2 & 7] = (uint)remainder;
+			REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -13607,11 +13587,11 @@ void M68k::op_divl_32_pd(void)
 						quotient = (uint)MASK_OUT_ABOVE_32(-(sint)quotient);
 				}
 
-				REG_D[word2 & 7] = remainder;
-				REG_D[(word2 >> 12) & 7] = quotient;
+				REG_D[word2 & 7] = (uint)remainder;
+				REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 				FLAG_N = NFLAG_32(quotient);
-				FLAG_Z = quotient;
+				FLAG_Z = (uint)quotient;
 				FLAG_V = VFLAG_CLEAR;
 				FLAG_C = CFLAG_CLEAR;
 				return;
@@ -13641,7 +13621,7 @@ void M68k::op_divl_32_pd(void)
 			}
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -13711,11 +13691,11 @@ void M68k::op_divl_32_di(void)
 				}
 			}
 
-			REG_D[word2 & 7] = remainder;
-			REG_D[(word2 >> 12) & 7] = quotient;
+			REG_D[word2 & 7] = (uint)remainder;
+			REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -13818,11 +13798,11 @@ void M68k::op_divl_32_di(void)
 						quotient = (uint)MASK_OUT_ABOVE_32(-(sint)quotient);
 				}
 
-				REG_D[word2 & 7] = remainder;
-				REG_D[(word2 >> 12) & 7] = quotient;
+				REG_D[word2 & 7] = (uint)remainder;
+				REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 				FLAG_N = NFLAG_32(quotient);
-				FLAG_Z = quotient;
+				FLAG_Z = (uint)quotient;
 				FLAG_V = VFLAG_CLEAR;
 				FLAG_C = CFLAG_CLEAR;
 				return;
@@ -13852,7 +13832,7 @@ void M68k::op_divl_32_di(void)
 			}
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -13922,11 +13902,11 @@ void M68k::op_divl_32_ix(void)
 				}
 			}
 
-			REG_D[word2 & 7] = remainder;
-			REG_D[(word2 >> 12) & 7] = quotient;
+			REG_D[word2 & 7] = (uint)remainder;
+			REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -14029,11 +14009,11 @@ void M68k::op_divl_32_ix(void)
 						quotient = (uint)MASK_OUT_ABOVE_32(-(sint)quotient);
 				}
 
-				REG_D[word2 & 7] = remainder;
-				REG_D[(word2 >> 12) & 7] = quotient;
+				REG_D[word2 & 7] = (uint)remainder;
+				REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 				FLAG_N = NFLAG_32(quotient);
-				FLAG_Z = quotient;
+				FLAG_Z = (uint)quotient;
 				FLAG_V = VFLAG_CLEAR;
 				FLAG_C = CFLAG_CLEAR;
 				return;
@@ -14063,7 +14043,7 @@ void M68k::op_divl_32_ix(void)
 			}
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -14133,11 +14113,11 @@ void M68k::op_divl_32_aw(void)
 				}
 			}
 
-			REG_D[word2 & 7] = remainder;
-			REG_D[(word2 >> 12) & 7] = quotient;
+			REG_D[word2 & 7] = (uint)remainder;
+			REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -14240,11 +14220,11 @@ void M68k::op_divl_32_aw(void)
 						quotient = (uint)MASK_OUT_ABOVE_32(-(sint)quotient);
 				}
 
-				REG_D[word2 & 7] = remainder;
-				REG_D[(word2 >> 12) & 7] = quotient;
+				REG_D[word2 & 7] = (uint)remainder;
+				REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 				FLAG_N = NFLAG_32(quotient);
-				FLAG_Z = quotient;
+				FLAG_Z = (uint)quotient;
 				FLAG_V = VFLAG_CLEAR;
 				FLAG_C = CFLAG_CLEAR;
 				return;
@@ -14274,7 +14254,7 @@ void M68k::op_divl_32_aw(void)
 			}
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -14344,11 +14324,11 @@ void M68k::op_divl_32_al(void)
 				}
 			}
 
-			REG_D[word2 & 7] = remainder;
-			REG_D[(word2 >> 12) & 7] = quotient;
+			REG_D[word2 & 7] = (uint)remainder;
+			REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -14451,11 +14431,11 @@ void M68k::op_divl_32_al(void)
 						quotient = (uint)MASK_OUT_ABOVE_32(-(sint)quotient);
 				}
 
-				REG_D[word2 & 7] = remainder;
-				REG_D[(word2 >> 12) & 7] = quotient;
+				REG_D[word2 & 7] = (uint)remainder;
+				REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 				FLAG_N = NFLAG_32(quotient);
-				FLAG_Z = quotient;
+				FLAG_Z = (uint)quotient;
 				FLAG_V = VFLAG_CLEAR;
 				FLAG_C = CFLAG_CLEAR;
 				return;
@@ -14485,7 +14465,7 @@ void M68k::op_divl_32_al(void)
 			}
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -14555,11 +14535,11 @@ void M68k::op_divl_32_pcdi(void)
 				}
 			}
 
-			REG_D[word2 & 7] = remainder;
-			REG_D[(word2 >> 12) & 7] = quotient;
+			REG_D[word2 & 7] = (uint)remainder;
+			REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -14662,11 +14642,11 @@ void M68k::op_divl_32_pcdi(void)
 						quotient = (uint)MASK_OUT_ABOVE_32(-(sint)quotient);
 				}
 
-				REG_D[word2 & 7] = remainder;
-				REG_D[(word2 >> 12) & 7] = quotient;
+				REG_D[word2 & 7] = (uint)remainder;
+				REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 				FLAG_N = NFLAG_32(quotient);
-				FLAG_Z = quotient;
+				FLAG_Z = (uint)quotient;
 				FLAG_V = VFLAG_CLEAR;
 				FLAG_C = CFLAG_CLEAR;
 				return;
@@ -14696,7 +14676,7 @@ void M68k::op_divl_32_pcdi(void)
 			}
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -14766,11 +14746,11 @@ void M68k::op_divl_32_pcix(void)
 				}
 			}
 
-			REG_D[word2 & 7] = remainder;
-			REG_D[(word2 >> 12) & 7] = quotient;
+			REG_D[word2 & 7] = (uint)remainder;
+			REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -14873,11 +14853,11 @@ void M68k::op_divl_32_pcix(void)
 						quotient = (uint)MASK_OUT_ABOVE_32(-(sint)quotient);
 				}
 
-				REG_D[word2 & 7] = remainder;
-				REG_D[(word2 >> 12) & 7] = quotient;
+				REG_D[word2 & 7] = (uint)remainder;
+				REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 				FLAG_N = NFLAG_32(quotient);
-				FLAG_Z = quotient;
+				FLAG_Z = (uint)quotient;
 				FLAG_V = VFLAG_CLEAR;
 				FLAG_C = CFLAG_CLEAR;
 				return;
@@ -14907,7 +14887,7 @@ void M68k::op_divl_32_pcix(void)
 			}
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -14977,11 +14957,11 @@ void M68k::op_divl_32_i(void)
 				}
 			}
 
-			REG_D[word2 & 7] = remainder;
-			REG_D[(word2 >> 12) & 7] = quotient;
+			REG_D[word2 & 7] = (uint)remainder;
+			REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -15084,11 +15064,11 @@ void M68k::op_divl_32_i(void)
 						quotient = (uint)MASK_OUT_ABOVE_32(-(sint)quotient);
 				}
 
-				REG_D[word2 & 7] = remainder;
-				REG_D[(word2 >> 12) & 7] = quotient;
+				REG_D[word2 & 7] = (uint)remainder;
+				REG_D[(word2 >> 12) & 7] = (uint)quotient;
 
 				FLAG_N = NFLAG_32(quotient);
-				FLAG_Z = quotient;
+				FLAG_Z = (uint)quotient;
 				FLAG_V = VFLAG_CLEAR;
 				FLAG_C = CFLAG_CLEAR;
 				return;
@@ -15118,7 +15098,7 @@ void M68k::op_divl_32_i(void)
 			}
 
 			FLAG_N = NFLAG_32(quotient);
-			FLAG_Z = quotient;
+			FLAG_Z = (uint)quotient;
 			FLAG_V = VFLAG_CLEAR;
 			FLAG_C = CFLAG_CLEAR;
 			return;
@@ -15137,7 +15117,7 @@ void M68k::op_eor_8_d(void)
 	uint res = MASK_OUT_ABOVE_8(DY ^= MASK_OUT_ABOVE_8(DX));
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15151,7 +15131,7 @@ void M68k::op_eor_8_ai(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15165,7 +15145,7 @@ void M68k::op_eor_8_pi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15179,7 +15159,7 @@ void M68k::op_eor_8_pi7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15193,7 +15173,7 @@ void M68k::op_eor_8_pd(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15207,7 +15187,7 @@ void M68k::op_eor_8_pd7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15221,7 +15201,7 @@ void M68k::op_eor_8_di(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15235,7 +15215,7 @@ void M68k::op_eor_8_ix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15249,7 +15229,7 @@ void M68k::op_eor_8_aw(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15263,7 +15243,7 @@ void M68k::op_eor_8_al(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15274,7 +15254,7 @@ void M68k::op_eor_16_d(void)
 	uint res = MASK_OUT_ABOVE_16(DY ^= MASK_OUT_ABOVE_16(DX));
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15288,7 +15268,7 @@ void M68k::op_eor_16_ai(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15302,7 +15282,7 @@ void M68k::op_eor_16_pi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15316,7 +15296,7 @@ void M68k::op_eor_16_pd(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15330,7 +15310,7 @@ void M68k::op_eor_16_di(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15344,7 +15324,7 @@ void M68k::op_eor_16_ix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15358,7 +15338,7 @@ void M68k::op_eor_16_aw(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15372,7 +15352,7 @@ void M68k::op_eor_16_al(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15383,7 +15363,7 @@ void M68k::op_eor_32_d(void)
 	uint res = DY ^= DX;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15397,7 +15377,7 @@ void M68k::op_eor_32_ai(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15411,7 +15391,7 @@ void M68k::op_eor_32_pi(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15425,7 +15405,7 @@ void M68k::op_eor_32_pd(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15439,7 +15419,7 @@ void M68k::op_eor_32_di(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15453,7 +15433,7 @@ void M68k::op_eor_32_ix(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15467,7 +15447,7 @@ void M68k::op_eor_32_aw(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15481,7 +15461,7 @@ void M68k::op_eor_32_al(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15492,7 +15472,7 @@ void M68k::op_eori_8_d(void)
 	uint res = MASK_OUT_ABOVE_8(DY ^= OPER_I_8());
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15507,7 +15487,7 @@ void M68k::op_eori_8_ai(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15522,7 +15502,7 @@ void M68k::op_eori_8_pi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15537,7 +15517,7 @@ void M68k::op_eori_8_pi7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15552,7 +15532,7 @@ void M68k::op_eori_8_pd(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15567,7 +15547,7 @@ void M68k::op_eori_8_pd7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15582,7 +15562,7 @@ void M68k::op_eori_8_di(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15597,7 +15577,7 @@ void M68k::op_eori_8_ix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15612,7 +15592,7 @@ void M68k::op_eori_8_aw(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15627,7 +15607,7 @@ void M68k::op_eori_8_al(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15638,7 +15618,7 @@ void M68k::op_eori_16_d(void)
 	uint res = MASK_OUT_ABOVE_16(DY ^= OPER_I_16());
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15653,7 +15633,7 @@ void M68k::op_eori_16_ai(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15668,7 +15648,7 @@ void M68k::op_eori_16_pi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15683,7 +15663,7 @@ void M68k::op_eori_16_pd(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15698,7 +15678,7 @@ void M68k::op_eori_16_di(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15713,7 +15693,7 @@ void M68k::op_eori_16_ix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15728,7 +15708,7 @@ void M68k::op_eori_16_aw(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15743,7 +15723,7 @@ void M68k::op_eori_16_al(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15754,7 +15734,7 @@ void M68k::op_eori_32_d(void)
 	uint res = DY ^= OPER_I_32();
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15769,7 +15749,7 @@ void M68k::op_eori_32_ai(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15784,7 +15764,7 @@ void M68k::op_eori_32_pi(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15799,7 +15779,7 @@ void M68k::op_eori_32_pd(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15814,7 +15794,7 @@ void M68k::op_eori_32_di(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15829,7 +15809,7 @@ void M68k::op_eori_32_ix(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15844,7 +15824,7 @@ void M68k::op_eori_32_aw(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -15859,7 +15839,7 @@ void M68k::op_eori_32_al(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16191,7 +16171,7 @@ void M68k::op_lsr_8_s(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_CLEAR;
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src << (9-shift);
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16210,7 +16190,7 @@ void M68k::op_lsr_16_s(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_CLEAR;
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src << (9-shift);
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16229,7 +16209,7 @@ void M68k::op_lsr_32_s(void)
 	*r_dst = res;
 
 	FLAG_N = NFLAG_CLEAR;
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src << (9-shift);
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16252,7 +16232,7 @@ void M68k::op_lsr_8_r(void)
 			*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 			FLAG_X = FLAG_C = src << (9-shift);
 			FLAG_N = NFLAG_CLEAR;
-			FLAG_Z = res;
+			FLAG_Z = (uint)res;
 			FLAG_V = VFLAG_CLEAR;
 			return;
 		}
@@ -16290,7 +16270,7 @@ void M68k::op_lsr_16_r(void)
 			*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 			FLAG_C = FLAG_X = (src >> (shift - 1))<<8;
 			FLAG_N = NFLAG_CLEAR;
-			FLAG_Z = res;
+			FLAG_Z = (uint)res;
 			FLAG_V = VFLAG_CLEAR;
 			return;
 		}
@@ -16328,7 +16308,7 @@ void M68k::op_lsr_32_r(void)
 			*r_dst = res;
 			FLAG_C = FLAG_X = (src >> (shift - 1))<<8;
 			FLAG_N = NFLAG_CLEAR;
-			FLAG_Z = res;
+			FLAG_Z = (uint)res;
 			FLAG_V = VFLAG_CLEAR;
 			return;
 		}
@@ -16357,7 +16337,7 @@ void M68k::op_lsr_16_ai(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_CLEAR;
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = FLAG_X = src << 8;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16372,7 +16352,7 @@ void M68k::op_lsr_16_pi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_CLEAR;
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = FLAG_X = src << 8;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16387,7 +16367,7 @@ void M68k::op_lsr_16_pd(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_CLEAR;
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = FLAG_X = src << 8;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16402,7 +16382,7 @@ void M68k::op_lsr_16_di(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_CLEAR;
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = FLAG_X = src << 8;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16417,7 +16397,7 @@ void M68k::op_lsr_16_ix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_CLEAR;
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = FLAG_X = src << 8;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16432,7 +16412,7 @@ void M68k::op_lsr_16_aw(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_CLEAR;
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = FLAG_X = src << 8;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16447,7 +16427,7 @@ void M68k::op_lsr_16_al(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_CLEAR;
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = FLAG_X = src << 8;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16466,7 +16446,7 @@ void M68k::op_lsl_8_s(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src << shift;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16485,7 +16465,7 @@ void M68k::op_lsl_16_s(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src >> (8-shift);
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16504,7 +16484,7 @@ void M68k::op_lsl_32_s(void)
 	*r_dst = res;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src >> (24-shift);
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16527,7 +16507,7 @@ void M68k::op_lsl_8_r(void)
 			*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 			FLAG_X = FLAG_C = src << shift;
 			FLAG_N = NFLAG_8(res);
-			FLAG_Z = res;
+			FLAG_Z = (uint)res;
 			FLAG_V = VFLAG_CLEAR;
 			return;
 		}
@@ -16565,7 +16545,7 @@ void M68k::op_lsl_16_r(void)
 			*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 			FLAG_X = FLAG_C = (src << shift) >> 8;
 			FLAG_N = NFLAG_16(res);
-			FLAG_Z = res;
+			FLAG_Z = (uint)res;
 			FLAG_V = VFLAG_CLEAR;
 			return;
 		}
@@ -16603,7 +16583,7 @@ void M68k::op_lsl_32_r(void)
 			*r_dst = res;
 			FLAG_X = FLAG_C = (src >> (32 - shift)) << 8;
 			FLAG_N = NFLAG_32(res);
-			FLAG_Z = res;
+			FLAG_Z = (uint)res;
 			FLAG_V = VFLAG_CLEAR;
 			return;
 		}
@@ -16632,7 +16612,7 @@ void M68k::op_lsl_16_ai(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src >> 7;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16647,7 +16627,7 @@ void M68k::op_lsl_16_pi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src >> 7;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16662,7 +16642,7 @@ void M68k::op_lsl_16_pd(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src >> 7;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16677,7 +16657,7 @@ void M68k::op_lsl_16_di(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src >> 7;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16692,7 +16672,7 @@ void M68k::op_lsl_16_ix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src >> 7;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16707,7 +16687,7 @@ void M68k::op_lsl_16_aw(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src >> 7;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16722,7 +16702,7 @@ void M68k::op_lsl_16_al(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_X = FLAG_C = src >> 7;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -16736,7 +16716,7 @@ void M68k::op_move_8_d_d(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -16750,7 +16730,7 @@ void M68k::op_move_8_d_ai(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -16764,7 +16744,7 @@ void M68k::op_move_8_d_pi(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -16778,7 +16758,7 @@ void M68k::op_move_8_d_pi7(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -16792,7 +16772,7 @@ void M68k::op_move_8_d_pd(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -16806,7 +16786,7 @@ void M68k::op_move_8_d_pd7(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -16820,7 +16800,7 @@ void M68k::op_move_8_d_di(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -16834,7 +16814,7 @@ void M68k::op_move_8_d_ix(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -16848,7 +16828,7 @@ void M68k::op_move_8_d_aw(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -16862,7 +16842,7 @@ void M68k::op_move_8_d_al(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -16876,7 +16856,7 @@ void M68k::op_move_8_d_pcdi(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -16890,7 +16870,7 @@ void M68k::op_move_8_d_pcix(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -16904,7 +16884,7 @@ void M68k::op_move_8_d_i(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -16918,7 +16898,7 @@ void M68k::op_move_8_ai_d(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -16932,7 +16912,7 @@ void M68k::op_move_8_ai_ai(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -16946,7 +16926,7 @@ void M68k::op_move_8_ai_pi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -16960,7 +16940,7 @@ void M68k::op_move_8_ai_pi7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -16974,7 +16954,7 @@ void M68k::op_move_8_ai_pd(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -16988,7 +16968,7 @@ void M68k::op_move_8_ai_pd7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17002,7 +16982,7 @@ void M68k::op_move_8_ai_di(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17016,7 +16996,7 @@ void M68k::op_move_8_ai_ix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17030,7 +17010,7 @@ void M68k::op_move_8_ai_aw(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17044,7 +17024,7 @@ void M68k::op_move_8_ai_al(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17058,7 +17038,7 @@ void M68k::op_move_8_ai_pcdi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17072,7 +17052,7 @@ void M68k::op_move_8_ai_pcix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17086,7 +17066,7 @@ void M68k::op_move_8_ai_i(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17100,7 +17080,7 @@ void M68k::op_move_8_pi7_d(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17114,7 +17094,7 @@ void M68k::op_move_8_pi_d(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17128,7 +17108,7 @@ void M68k::op_move_8_pi7_ai(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17142,7 +17122,7 @@ void M68k::op_move_8_pi7_pi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17156,7 +17136,7 @@ void M68k::op_move_8_pi7_pi7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17170,7 +17150,7 @@ void M68k::op_move_8_pi7_pd(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17184,7 +17164,7 @@ void M68k::op_move_8_pi7_pd7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17198,7 +17178,7 @@ void M68k::op_move_8_pi7_di(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17212,7 +17192,7 @@ void M68k::op_move_8_pi7_ix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17226,7 +17206,7 @@ void M68k::op_move_8_pi7_aw(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17240,7 +17220,7 @@ void M68k::op_move_8_pi7_al(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17254,7 +17234,7 @@ void M68k::op_move_8_pi7_pcdi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17268,7 +17248,7 @@ void M68k::op_move_8_pi7_pcix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17282,7 +17262,7 @@ void M68k::op_move_8_pi7_i(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17296,7 +17276,7 @@ void M68k::op_move_8_pi_ai(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17310,7 +17290,7 @@ void M68k::op_move_8_pi_pi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17324,7 +17304,7 @@ void M68k::op_move_8_pi_pi7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17338,7 +17318,7 @@ void M68k::op_move_8_pi_pd(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17352,7 +17332,7 @@ void M68k::op_move_8_pi_pd7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17366,7 +17346,7 @@ void M68k::op_move_8_pi_di(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17380,7 +17360,7 @@ void M68k::op_move_8_pi_ix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17394,7 +17374,7 @@ void M68k::op_move_8_pi_aw(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17408,7 +17388,7 @@ void M68k::op_move_8_pi_al(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17422,7 +17402,7 @@ void M68k::op_move_8_pi_pcdi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17436,7 +17416,7 @@ void M68k::op_move_8_pi_pcix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17450,7 +17430,7 @@ void M68k::op_move_8_pi_i(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17464,7 +17444,7 @@ void M68k::op_move_8_pd7_d(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17478,7 +17458,7 @@ void M68k::op_move_8_pd_d(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17492,7 +17472,7 @@ void M68k::op_move_8_pd7_ai(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17506,7 +17486,7 @@ void M68k::op_move_8_pd7_pi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17520,7 +17500,7 @@ void M68k::op_move_8_pd7_pi7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17534,7 +17514,7 @@ void M68k::op_move_8_pd7_pd(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17548,7 +17528,7 @@ void M68k::op_move_8_pd7_pd7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17562,7 +17542,7 @@ void M68k::op_move_8_pd7_di(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17576,7 +17556,7 @@ void M68k::op_move_8_pd7_ix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17590,7 +17570,7 @@ void M68k::op_move_8_pd7_aw(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17604,7 +17584,7 @@ void M68k::op_move_8_pd7_al(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17618,7 +17598,7 @@ void M68k::op_move_8_pd7_pcdi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17632,7 +17612,7 @@ void M68k::op_move_8_pd7_pcix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17646,7 +17626,7 @@ void M68k::op_move_8_pd7_i(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17660,7 +17640,7 @@ void M68k::op_move_8_pd_ai(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17674,7 +17654,7 @@ void M68k::op_move_8_pd_pi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17688,7 +17668,7 @@ void M68k::op_move_8_pd_pi7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17702,7 +17682,7 @@ void M68k::op_move_8_pd_pd(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17716,7 +17696,7 @@ void M68k::op_move_8_pd_pd7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17730,7 +17710,7 @@ void M68k::op_move_8_pd_di(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17744,7 +17724,7 @@ void M68k::op_move_8_pd_ix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17758,7 +17738,7 @@ void M68k::op_move_8_pd_aw(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17772,7 +17752,7 @@ void M68k::op_move_8_pd_al(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17786,7 +17766,7 @@ void M68k::op_move_8_pd_pcdi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17800,7 +17780,7 @@ void M68k::op_move_8_pd_pcix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17814,7 +17794,7 @@ void M68k::op_move_8_pd_i(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17828,7 +17808,7 @@ void M68k::op_move_8_di_d(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17842,7 +17822,7 @@ void M68k::op_move_8_di_ai(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17856,7 +17836,7 @@ void M68k::op_move_8_di_pi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17870,7 +17850,7 @@ void M68k::op_move_8_di_pi7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17884,7 +17864,7 @@ void M68k::op_move_8_di_pd(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17898,7 +17878,7 @@ void M68k::op_move_8_di_pd7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17912,7 +17892,7 @@ void M68k::op_move_8_di_di(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17926,7 +17906,7 @@ void M68k::op_move_8_di_ix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17940,7 +17920,7 @@ void M68k::op_move_8_di_aw(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17954,7 +17934,7 @@ void M68k::op_move_8_di_al(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17968,7 +17948,7 @@ void M68k::op_move_8_di_pcdi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17982,7 +17962,7 @@ void M68k::op_move_8_di_pcix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -17996,7 +17976,7 @@ void M68k::op_move_8_di_i(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18010,7 +17990,7 @@ void M68k::op_move_8_ix_d(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18024,7 +18004,7 @@ void M68k::op_move_8_ix_ai(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18038,7 +18018,7 @@ void M68k::op_move_8_ix_pi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18052,7 +18032,7 @@ void M68k::op_move_8_ix_pi7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18066,7 +18046,7 @@ void M68k::op_move_8_ix_pd(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18080,7 +18060,7 @@ void M68k::op_move_8_ix_pd7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18094,7 +18074,7 @@ void M68k::op_move_8_ix_di(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18108,7 +18088,7 @@ void M68k::op_move_8_ix_ix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18122,7 +18102,7 @@ void M68k::op_move_8_ix_aw(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18136,7 +18116,7 @@ void M68k::op_move_8_ix_al(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18150,7 +18130,7 @@ void M68k::op_move_8_ix_pcdi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18164,7 +18144,7 @@ void M68k::op_move_8_ix_pcix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18178,7 +18158,7 @@ void M68k::op_move_8_ix_i(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18192,7 +18172,7 @@ void M68k::op_move_8_aw_d(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18206,7 +18186,7 @@ void M68k::op_move_8_aw_ai(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18220,7 +18200,7 @@ void M68k::op_move_8_aw_pi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18234,7 +18214,7 @@ void M68k::op_move_8_aw_pi7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18248,7 +18228,7 @@ void M68k::op_move_8_aw_pd(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18262,7 +18242,7 @@ void M68k::op_move_8_aw_pd7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18276,7 +18256,7 @@ void M68k::op_move_8_aw_di(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18290,7 +18270,7 @@ void M68k::op_move_8_aw_ix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18304,7 +18284,7 @@ void M68k::op_move_8_aw_aw(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18318,7 +18298,7 @@ void M68k::op_move_8_aw_al(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18332,7 +18312,7 @@ void M68k::op_move_8_aw_pcdi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18346,7 +18326,7 @@ void M68k::op_move_8_aw_pcix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18360,7 +18340,7 @@ void M68k::op_move_8_aw_i(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18374,7 +18354,7 @@ void M68k::op_move_8_al_d(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18388,7 +18368,7 @@ void M68k::op_move_8_al_ai(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18402,7 +18382,7 @@ void M68k::op_move_8_al_pi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18416,7 +18396,7 @@ void M68k::op_move_8_al_pi7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18430,7 +18410,7 @@ void M68k::op_move_8_al_pd(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18444,7 +18424,7 @@ void M68k::op_move_8_al_pd7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18458,7 +18438,7 @@ void M68k::op_move_8_al_di(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18472,7 +18452,7 @@ void M68k::op_move_8_al_ix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18486,7 +18466,7 @@ void M68k::op_move_8_al_aw(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18500,7 +18480,7 @@ void M68k::op_move_8_al_al(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18514,7 +18494,7 @@ void M68k::op_move_8_al_pcdi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18528,7 +18508,7 @@ void M68k::op_move_8_al_pcix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18542,7 +18522,7 @@ void M68k::op_move_8_al_i(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18556,7 +18536,7 @@ void M68k::op_move_16_d_d(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18570,7 +18550,7 @@ void M68k::op_move_16_d_a(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18584,7 +18564,7 @@ void M68k::op_move_16_d_ai(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18598,7 +18578,7 @@ void M68k::op_move_16_d_pi(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18612,7 +18592,7 @@ void M68k::op_move_16_d_pd(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18626,7 +18606,7 @@ void M68k::op_move_16_d_di(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18640,7 +18620,7 @@ void M68k::op_move_16_d_ix(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18654,7 +18634,7 @@ void M68k::op_move_16_d_aw(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18668,7 +18648,7 @@ void M68k::op_move_16_d_al(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18682,7 +18662,7 @@ void M68k::op_move_16_d_pcdi(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18696,7 +18676,7 @@ void M68k::op_move_16_d_pcix(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18710,7 +18690,7 @@ void M68k::op_move_16_d_i(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18724,7 +18704,7 @@ void M68k::op_move_16_ai_d(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18738,7 +18718,7 @@ void M68k::op_move_16_ai_a(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18752,7 +18732,7 @@ void M68k::op_move_16_ai_ai(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18766,7 +18746,7 @@ void M68k::op_move_16_ai_pi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18780,7 +18760,7 @@ void M68k::op_move_16_ai_pd(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18794,7 +18774,7 @@ void M68k::op_move_16_ai_di(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18808,7 +18788,7 @@ void M68k::op_move_16_ai_ix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18822,7 +18802,7 @@ void M68k::op_move_16_ai_aw(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18836,7 +18816,7 @@ void M68k::op_move_16_ai_al(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18850,7 +18830,7 @@ void M68k::op_move_16_ai_pcdi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18864,7 +18844,7 @@ void M68k::op_move_16_ai_pcix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18878,7 +18858,7 @@ void M68k::op_move_16_ai_i(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18892,7 +18872,7 @@ void M68k::op_move_16_pi_d(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18906,7 +18886,7 @@ void M68k::op_move_16_pi_a(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18920,7 +18900,7 @@ void M68k::op_move_16_pi_ai(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18934,7 +18914,7 @@ void M68k::op_move_16_pi_pi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18948,7 +18928,7 @@ void M68k::op_move_16_pi_pd(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18962,7 +18942,7 @@ void M68k::op_move_16_pi_di(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18976,7 +18956,7 @@ void M68k::op_move_16_pi_ix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -18990,7 +18970,7 @@ void M68k::op_move_16_pi_aw(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19004,7 +18984,7 @@ void M68k::op_move_16_pi_al(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19018,7 +18998,7 @@ void M68k::op_move_16_pi_pcdi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19032,7 +19012,7 @@ void M68k::op_move_16_pi_pcix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19046,7 +19026,7 @@ void M68k::op_move_16_pi_i(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19060,7 +19040,7 @@ void M68k::op_move_16_pd_d(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19074,7 +19054,7 @@ void M68k::op_move_16_pd_a(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19088,7 +19068,7 @@ void M68k::op_move_16_pd_ai(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19102,7 +19082,7 @@ void M68k::op_move_16_pd_pi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19116,7 +19096,7 @@ void M68k::op_move_16_pd_pd(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19130,7 +19110,7 @@ void M68k::op_move_16_pd_di(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19144,7 +19124,7 @@ void M68k::op_move_16_pd_ix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19158,7 +19138,7 @@ void M68k::op_move_16_pd_aw(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19172,7 +19152,7 @@ void M68k::op_move_16_pd_al(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19186,7 +19166,7 @@ void M68k::op_move_16_pd_pcdi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19200,7 +19180,7 @@ void M68k::op_move_16_pd_pcix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19214,7 +19194,7 @@ void M68k::op_move_16_pd_i(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19228,7 +19208,7 @@ void M68k::op_move_16_di_d(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19242,7 +19222,7 @@ void M68k::op_move_16_di_a(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19256,7 +19236,7 @@ void M68k::op_move_16_di_ai(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19270,7 +19250,7 @@ void M68k::op_move_16_di_pi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19284,7 +19264,7 @@ void M68k::op_move_16_di_pd(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19298,7 +19278,7 @@ void M68k::op_move_16_di_di(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19312,7 +19292,7 @@ void M68k::op_move_16_di_ix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19326,7 +19306,7 @@ void M68k::op_move_16_di_aw(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19340,7 +19320,7 @@ void M68k::op_move_16_di_al(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19354,7 +19334,7 @@ void M68k::op_move_16_di_pcdi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19368,7 +19348,7 @@ void M68k::op_move_16_di_pcix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19382,7 +19362,7 @@ void M68k::op_move_16_di_i(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19396,7 +19376,7 @@ void M68k::op_move_16_ix_d(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19410,7 +19390,7 @@ void M68k::op_move_16_ix_a(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19424,7 +19404,7 @@ void M68k::op_move_16_ix_ai(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19438,7 +19418,7 @@ void M68k::op_move_16_ix_pi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19452,7 +19432,7 @@ void M68k::op_move_16_ix_pd(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19466,7 +19446,7 @@ void M68k::op_move_16_ix_di(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19480,7 +19460,7 @@ void M68k::op_move_16_ix_ix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19494,7 +19474,7 @@ void M68k::op_move_16_ix_aw(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19508,7 +19488,7 @@ void M68k::op_move_16_ix_al(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19522,7 +19502,7 @@ void M68k::op_move_16_ix_pcdi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19536,7 +19516,7 @@ void M68k::op_move_16_ix_pcix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19550,7 +19530,7 @@ void M68k::op_move_16_ix_i(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19564,7 +19544,7 @@ void M68k::op_move_16_aw_d(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19578,7 +19558,7 @@ void M68k::op_move_16_aw_a(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19592,7 +19572,7 @@ void M68k::op_move_16_aw_ai(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19606,7 +19586,7 @@ void M68k::op_move_16_aw_pi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19620,7 +19600,7 @@ void M68k::op_move_16_aw_pd(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19634,7 +19614,7 @@ void M68k::op_move_16_aw_di(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19648,7 +19628,7 @@ void M68k::op_move_16_aw_ix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19662,7 +19642,7 @@ void M68k::op_move_16_aw_aw(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19676,7 +19656,7 @@ void M68k::op_move_16_aw_al(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19690,7 +19670,7 @@ void M68k::op_move_16_aw_pcdi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19704,7 +19684,7 @@ void M68k::op_move_16_aw_pcix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19718,7 +19698,7 @@ void M68k::op_move_16_aw_i(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19732,7 +19712,7 @@ void M68k::op_move_16_al_d(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19746,7 +19726,7 @@ void M68k::op_move_16_al_a(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19760,7 +19740,7 @@ void M68k::op_move_16_al_ai(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19774,7 +19754,7 @@ void M68k::op_move_16_al_pi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19788,7 +19768,7 @@ void M68k::op_move_16_al_pd(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19802,7 +19782,7 @@ void M68k::op_move_16_al_di(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19816,7 +19796,7 @@ void M68k::op_move_16_al_ix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19830,7 +19810,7 @@ void M68k::op_move_16_al_aw(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19844,7 +19824,7 @@ void M68k::op_move_16_al_al(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19858,7 +19838,7 @@ void M68k::op_move_16_al_pcdi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19872,7 +19852,7 @@ void M68k::op_move_16_al_pcix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19886,7 +19866,7 @@ void M68k::op_move_16_al_i(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19900,7 +19880,7 @@ void M68k::op_move_32_d_d(void)
 	*r_dst = res;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19914,7 +19894,7 @@ void M68k::op_move_32_d_a(void)
 	*r_dst = res;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19928,7 +19908,7 @@ void M68k::op_move_32_d_ai(void)
 	*r_dst = res;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19942,7 +19922,7 @@ void M68k::op_move_32_d_pi(void)
 	*r_dst = res;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19956,7 +19936,7 @@ void M68k::op_move_32_d_pd(void)
 	*r_dst = res;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19970,7 +19950,7 @@ void M68k::op_move_32_d_di(void)
 	*r_dst = res;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19984,7 +19964,7 @@ void M68k::op_move_32_d_ix(void)
 	*r_dst = res;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -19998,7 +19978,7 @@ void M68k::op_move_32_d_aw(void)
 	*r_dst = res;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20012,7 +19992,7 @@ void M68k::op_move_32_d_al(void)
 	*r_dst = res;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20026,7 +20006,7 @@ void M68k::op_move_32_d_pcdi(void)
 	*r_dst = res;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20040,7 +20020,7 @@ void M68k::op_move_32_d_pcix(void)
 	*r_dst = res;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20054,7 +20034,7 @@ void M68k::op_move_32_d_i(void)
 	*r_dst = res;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20068,7 +20048,7 @@ void M68k::op_move_32_ai_d(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20082,7 +20062,7 @@ void M68k::op_move_32_ai_a(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20096,7 +20076,7 @@ void M68k::op_move_32_ai_ai(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20110,7 +20090,7 @@ void M68k::op_move_32_ai_pi(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20124,7 +20104,7 @@ void M68k::op_move_32_ai_pd(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20138,7 +20118,7 @@ void M68k::op_move_32_ai_di(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20152,7 +20132,7 @@ void M68k::op_move_32_ai_ix(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20166,7 +20146,7 @@ void M68k::op_move_32_ai_aw(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20180,7 +20160,7 @@ void M68k::op_move_32_ai_al(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20194,7 +20174,7 @@ void M68k::op_move_32_ai_pcdi(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20208,7 +20188,7 @@ void M68k::op_move_32_ai_pcix(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20222,7 +20202,7 @@ void M68k::op_move_32_ai_i(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20236,7 +20216,7 @@ void M68k::op_move_32_pi_d(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20250,7 +20230,7 @@ void M68k::op_move_32_pi_a(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20264,7 +20244,7 @@ void M68k::op_move_32_pi_ai(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20278,7 +20258,7 @@ void M68k::op_move_32_pi_pi(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20292,7 +20272,7 @@ void M68k::op_move_32_pi_pd(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20306,7 +20286,7 @@ void M68k::op_move_32_pi_di(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20320,7 +20300,7 @@ void M68k::op_move_32_pi_ix(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20334,7 +20314,7 @@ void M68k::op_move_32_pi_aw(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20348,7 +20328,7 @@ void M68k::op_move_32_pi_al(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20362,7 +20342,7 @@ void M68k::op_move_32_pi_pcdi(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20376,7 +20356,7 @@ void M68k::op_move_32_pi_pcix(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20390,7 +20370,7 @@ void M68k::op_move_32_pi_i(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20405,7 +20385,7 @@ void M68k::op_move_32_pd_d(void)
 	m68ki_write_16(ea, (res >> 16) & 0xFFFF );
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20420,7 +20400,7 @@ void M68k::op_move_32_pd_a(void)
 	m68ki_write_16(ea, (res >> 16) & 0xFFFF );
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20435,7 +20415,7 @@ void M68k::op_move_32_pd_ai(void)
 	m68ki_write_16(ea, (res >> 16) & 0xFFFF );
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20450,7 +20430,7 @@ void M68k::op_move_32_pd_pi(void)
 	m68ki_write_16(ea, (res >> 16) & 0xFFFF );
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20465,7 +20445,7 @@ void M68k::op_move_32_pd_pd(void)
 	m68ki_write_16(ea, (res >> 16) & 0xFFFF );
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20480,7 +20460,7 @@ void M68k::op_move_32_pd_di(void)
 	m68ki_write_16(ea, (res >> 16) & 0xFFFF );
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20495,7 +20475,7 @@ void M68k::op_move_32_pd_ix(void)
 	m68ki_write_16(ea, (res >> 16) & 0xFFFF );
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20510,7 +20490,7 @@ void M68k::op_move_32_pd_aw(void)
 	m68ki_write_16(ea, (res >> 16) & 0xFFFF );
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20525,7 +20505,7 @@ void M68k::op_move_32_pd_al(void)
 	m68ki_write_16(ea, (res >> 16) & 0xFFFF );
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20540,7 +20520,7 @@ void M68k::op_move_32_pd_pcdi(void)
 	m68ki_write_16(ea, (res >> 16) & 0xFFFF );
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20555,7 +20535,7 @@ void M68k::op_move_32_pd_pcix(void)
 	m68ki_write_16(ea, (res >> 16) & 0xFFFF );
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20570,7 +20550,7 @@ void M68k::op_move_32_pd_i(void)
 	m68ki_write_16(ea, (res >> 16) & 0xFFFF );
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20584,7 +20564,7 @@ void M68k::op_move_32_di_d(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20598,7 +20578,7 @@ void M68k::op_move_32_di_a(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20612,7 +20592,7 @@ void M68k::op_move_32_di_ai(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20626,7 +20606,7 @@ void M68k::op_move_32_di_pi(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20640,7 +20620,7 @@ void M68k::op_move_32_di_pd(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20654,7 +20634,7 @@ void M68k::op_move_32_di_di(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20668,7 +20648,7 @@ void M68k::op_move_32_di_ix(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20682,7 +20662,7 @@ void M68k::op_move_32_di_aw(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20696,7 +20676,7 @@ void M68k::op_move_32_di_al(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20710,7 +20690,7 @@ void M68k::op_move_32_di_pcdi(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20724,7 +20704,7 @@ void M68k::op_move_32_di_pcix(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20738,7 +20718,7 @@ void M68k::op_move_32_di_i(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20752,7 +20732,7 @@ void M68k::op_move_32_ix_d(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20766,7 +20746,7 @@ void M68k::op_move_32_ix_a(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20780,7 +20760,7 @@ void M68k::op_move_32_ix_ai(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20794,7 +20774,7 @@ void M68k::op_move_32_ix_pi(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20808,7 +20788,7 @@ void M68k::op_move_32_ix_pd(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20822,7 +20802,7 @@ void M68k::op_move_32_ix_di(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20836,7 +20816,7 @@ void M68k::op_move_32_ix_ix(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20850,7 +20830,7 @@ void M68k::op_move_32_ix_aw(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20864,7 +20844,7 @@ void M68k::op_move_32_ix_al(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20878,7 +20858,7 @@ void M68k::op_move_32_ix_pcdi(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20892,7 +20872,7 @@ void M68k::op_move_32_ix_pcix(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20906,7 +20886,7 @@ void M68k::op_move_32_ix_i(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20920,7 +20900,7 @@ void M68k::op_move_32_aw_d(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20934,7 +20914,7 @@ void M68k::op_move_32_aw_a(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20948,7 +20928,7 @@ void M68k::op_move_32_aw_ai(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20962,7 +20942,7 @@ void M68k::op_move_32_aw_pi(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20976,7 +20956,7 @@ void M68k::op_move_32_aw_pd(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -20990,7 +20970,7 @@ void M68k::op_move_32_aw_di(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -21004,7 +20984,7 @@ void M68k::op_move_32_aw_ix(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -21018,7 +20998,7 @@ void M68k::op_move_32_aw_aw(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -21032,7 +21012,7 @@ void M68k::op_move_32_aw_al(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -21046,7 +21026,7 @@ void M68k::op_move_32_aw_pcdi(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -21060,7 +21040,7 @@ void M68k::op_move_32_aw_pcix(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -21074,7 +21054,7 @@ void M68k::op_move_32_aw_i(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -21088,7 +21068,7 @@ void M68k::op_move_32_al_d(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -21102,7 +21082,7 @@ void M68k::op_move_32_al_a(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -21116,7 +21096,7 @@ void M68k::op_move_32_al_ai(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -21130,7 +21110,7 @@ void M68k::op_move_32_al_pi(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -21144,7 +21124,7 @@ void M68k::op_move_32_al_pd(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -21158,7 +21138,7 @@ void M68k::op_move_32_al_di(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -21172,7 +21152,7 @@ void M68k::op_move_32_al_ix(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -21186,7 +21166,7 @@ void M68k::op_move_32_al_aw(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -21200,7 +21180,7 @@ void M68k::op_move_32_al_al(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -21214,7 +21194,7 @@ void M68k::op_move_32_al_pcdi(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -21228,7 +21208,7 @@ void M68k::op_move_32_al_pcix(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -21242,7 +21222,7 @@ void M68k::op_move_32_al_i(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -23442,7 +23422,7 @@ void M68k::op_moveq_32(void)
 	uint res = DX = MAKE_INT_8(MASK_OUT_ABOVE_8(REG_IR));
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -23483,7 +23463,7 @@ void M68k::op_muls_16_d(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -23508,7 +23488,7 @@ void M68k::op_muls_16_ai(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -23533,7 +23513,7 @@ void M68k::op_muls_16_pi(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -23558,7 +23538,7 @@ void M68k::op_muls_16_pd(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -23583,7 +23563,7 @@ void M68k::op_muls_16_di(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -23608,7 +23588,7 @@ void M68k::op_muls_16_ix(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -23633,7 +23613,7 @@ void M68k::op_muls_16_aw(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -23658,7 +23638,7 @@ void M68k::op_muls_16_al(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -23683,7 +23663,7 @@ void M68k::op_muls_16_pcdi(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -23708,7 +23688,7 @@ void M68k::op_muls_16_pcix(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -23733,7 +23713,7 @@ void M68k::op_muls_16_i(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -23757,7 +23737,7 @@ void M68k::op_mulu_16_d(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -23782,7 +23762,7 @@ void M68k::op_mulu_16_ai(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -23807,7 +23787,7 @@ void M68k::op_mulu_16_pi(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -23832,7 +23812,7 @@ void M68k::op_mulu_16_pd(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -23857,7 +23837,7 @@ void M68k::op_mulu_16_di(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -23882,7 +23862,7 @@ void M68k::op_mulu_16_ix(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -23907,7 +23887,7 @@ void M68k::op_mulu_16_aw(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -23932,7 +23912,7 @@ void M68k::op_mulu_16_al(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -23957,7 +23937,7 @@ void M68k::op_mulu_16_pcdi(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -23982,7 +23962,7 @@ void M68k::op_mulu_16_pcix(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -24007,7 +23987,7 @@ void M68k::op_mulu_16_i(void)
 
 	*r_dst = res;
 
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_N = NFLAG_32(res);
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
@@ -26548,7 +26528,7 @@ void M68k::op_not_8_d(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26562,7 +26542,7 @@ void M68k::op_not_8_ai(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26576,7 +26556,7 @@ void M68k::op_not_8_pi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26590,7 +26570,7 @@ void M68k::op_not_8_pi7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26604,7 +26584,7 @@ void M68k::op_not_8_pd(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26618,7 +26598,7 @@ void M68k::op_not_8_pd7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26632,7 +26612,7 @@ void M68k::op_not_8_di(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26646,7 +26626,7 @@ void M68k::op_not_8_ix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26660,7 +26640,7 @@ void M68k::op_not_8_aw(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26674,7 +26654,7 @@ void M68k::op_not_8_al(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26688,7 +26668,7 @@ void M68k::op_not_16_d(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26702,7 +26682,7 @@ void M68k::op_not_16_ai(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26716,7 +26696,7 @@ void M68k::op_not_16_pi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26730,7 +26710,7 @@ void M68k::op_not_16_pd(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26744,7 +26724,7 @@ void M68k::op_not_16_di(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26758,7 +26738,7 @@ void M68k::op_not_16_ix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26772,7 +26752,7 @@ void M68k::op_not_16_aw(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26786,7 +26766,7 @@ void M68k::op_not_16_al(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26798,7 +26778,7 @@ void M68k::op_not_32_d(void)
 	uint res = *r_dst = MASK_OUT_ABOVE_32(~*r_dst);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26812,7 +26792,7 @@ void M68k::op_not_32_ai(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26826,7 +26806,7 @@ void M68k::op_not_32_pi(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26840,7 +26820,7 @@ void M68k::op_not_32_pd(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26854,7 +26834,7 @@ void M68k::op_not_32_di(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26868,7 +26848,7 @@ void M68k::op_not_32_ix(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26882,7 +26862,7 @@ void M68k::op_not_32_aw(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26896,7 +26876,7 @@ void M68k::op_not_32_al(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26907,7 +26887,7 @@ void M68k::op_or_8_er_d(void)
 	uint res = MASK_OUT_ABOVE_8((DX |= MASK_OUT_ABOVE_8(DY)));
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26918,7 +26898,7 @@ void M68k::op_or_8_er_ai(void)
 	uint res = MASK_OUT_ABOVE_8((DX |= OPER_AY_AI_8()));
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26929,7 +26909,7 @@ void M68k::op_or_8_er_pi(void)
 	uint res = MASK_OUT_ABOVE_8((DX |= OPER_AY_PI_8()));
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26940,7 +26920,7 @@ void M68k::op_or_8_er_pi7(void)
 	uint res = MASK_OUT_ABOVE_8((DX |= OPER_A7_PI_8()));
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26951,7 +26931,7 @@ void M68k::op_or_8_er_pd(void)
 	uint res = MASK_OUT_ABOVE_8((DX |= OPER_AY_PD_8()));
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26962,7 +26942,7 @@ void M68k::op_or_8_er_pd7(void)
 	uint res = MASK_OUT_ABOVE_8((DX |= OPER_A7_PD_8()));
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26973,7 +26953,7 @@ void M68k::op_or_8_er_di(void)
 	uint res = MASK_OUT_ABOVE_8((DX |= OPER_AY_DI_8()));
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26984,7 +26964,7 @@ void M68k::op_or_8_er_ix(void)
 	uint res = MASK_OUT_ABOVE_8((DX |= OPER_AY_IX_8()));
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -26995,7 +26975,7 @@ void M68k::op_or_8_er_aw(void)
 	uint res = MASK_OUT_ABOVE_8((DX |= OPER_AW_8()));
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27006,7 +26986,7 @@ void M68k::op_or_8_er_al(void)
 	uint res = MASK_OUT_ABOVE_8((DX |= OPER_AL_8()));
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27017,7 +26997,7 @@ void M68k::op_or_8_er_pcdi(void)
 	uint res = MASK_OUT_ABOVE_8((DX |= OPER_PCDI_8()));
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27028,7 +27008,7 @@ void M68k::op_or_8_er_pcix(void)
 	uint res = MASK_OUT_ABOVE_8((DX |= OPER_PCIX_8()));
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27039,7 +27019,7 @@ void M68k::op_or_8_er_i(void)
 	uint res = MASK_OUT_ABOVE_8((DX |= OPER_I_8()));
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27050,7 +27030,7 @@ void M68k::op_or_16_er_d(void)
 	uint res = MASK_OUT_ABOVE_16((DX |= MASK_OUT_ABOVE_16(DY)));
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27061,7 +27041,7 @@ void M68k::op_or_16_er_ai(void)
 	uint res = MASK_OUT_ABOVE_16((DX |= OPER_AY_AI_16()));
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27072,7 +27052,7 @@ void M68k::op_or_16_er_pi(void)
 	uint res = MASK_OUT_ABOVE_16((DX |= OPER_AY_PI_16()));
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27083,7 +27063,7 @@ void M68k::op_or_16_er_pd(void)
 	uint res = MASK_OUT_ABOVE_16((DX |= OPER_AY_PD_16()));
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27094,7 +27074,7 @@ void M68k::op_or_16_er_di(void)
 	uint res = MASK_OUT_ABOVE_16((DX |= OPER_AY_DI_16()));
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27105,7 +27085,7 @@ void M68k::op_or_16_er_ix(void)
 	uint res = MASK_OUT_ABOVE_16((DX |= OPER_AY_IX_16()));
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27116,7 +27096,7 @@ void M68k::op_or_16_er_aw(void)
 	uint res = MASK_OUT_ABOVE_16((DX |= OPER_AW_16()));
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27127,7 +27107,7 @@ void M68k::op_or_16_er_al(void)
 	uint res = MASK_OUT_ABOVE_16((DX |= OPER_AL_16()));
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27138,7 +27118,7 @@ void M68k::op_or_16_er_pcdi(void)
 	uint res = MASK_OUT_ABOVE_16((DX |= OPER_PCDI_16()));
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27149,7 +27129,7 @@ void M68k::op_or_16_er_pcix(void)
 	uint res = MASK_OUT_ABOVE_16((DX |= OPER_PCIX_16()));
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27160,7 +27140,7 @@ void M68k::op_or_16_er_i(void)
 	uint res = MASK_OUT_ABOVE_16((DX |= OPER_I_16()));
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27171,7 +27151,7 @@ void M68k::op_or_32_er_d(void)
 	uint res = DX |= DY;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27182,7 +27162,7 @@ void M68k::op_or_32_er_ai(void)
 	uint res = DX |= OPER_AY_AI_32();
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27193,7 +27173,7 @@ void M68k::op_or_32_er_pi(void)
 	uint res = DX |= OPER_AY_PI_32();
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27204,7 +27184,7 @@ void M68k::op_or_32_er_pd(void)
 	uint res = DX |= OPER_AY_PD_32();
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27215,7 +27195,7 @@ void M68k::op_or_32_er_di(void)
 	uint res = DX |= OPER_AY_DI_32();
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27226,7 +27206,7 @@ void M68k::op_or_32_er_ix(void)
 	uint res = DX |= OPER_AY_IX_32();
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27237,7 +27217,7 @@ void M68k::op_or_32_er_aw(void)
 	uint res = DX |= OPER_AW_32();
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27248,7 +27228,7 @@ void M68k::op_or_32_er_al(void)
 	uint res = DX |= OPER_AL_32();
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27259,7 +27239,7 @@ void M68k::op_or_32_er_pcdi(void)
 	uint res = DX |= OPER_PCDI_32();
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27270,7 +27250,7 @@ void M68k::op_or_32_er_pcix(void)
 	uint res = DX |= OPER_PCIX_32();
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27281,7 +27261,7 @@ void M68k::op_or_32_er_i(void)
 	uint res = DX |= OPER_I_32();
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27295,7 +27275,7 @@ void M68k::op_or_8_re_ai(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27309,7 +27289,7 @@ void M68k::op_or_8_re_pi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27323,7 +27303,7 @@ void M68k::op_or_8_re_pi7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27337,7 +27317,7 @@ void M68k::op_or_8_re_pd(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27351,7 +27331,7 @@ void M68k::op_or_8_re_pd7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27365,7 +27345,7 @@ void M68k::op_or_8_re_di(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27379,7 +27359,7 @@ void M68k::op_or_8_re_ix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27393,7 +27373,7 @@ void M68k::op_or_8_re_aw(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27407,7 +27387,7 @@ void M68k::op_or_8_re_al(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27421,7 +27401,7 @@ void M68k::op_or_16_re_ai(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27435,7 +27415,7 @@ void M68k::op_or_16_re_pi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27449,7 +27429,7 @@ void M68k::op_or_16_re_pd(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27463,7 +27443,7 @@ void M68k::op_or_16_re_di(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27477,7 +27457,7 @@ void M68k::op_or_16_re_ix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27491,7 +27471,7 @@ void M68k::op_or_16_re_aw(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27505,7 +27485,7 @@ void M68k::op_or_16_re_al(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27519,7 +27499,7 @@ void M68k::op_or_32_re_ai(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27533,7 +27513,7 @@ void M68k::op_or_32_re_pi(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27547,7 +27527,7 @@ void M68k::op_or_32_re_pd(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27561,7 +27541,7 @@ void M68k::op_or_32_re_di(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27575,7 +27555,7 @@ void M68k::op_or_32_re_ix(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27589,7 +27569,7 @@ void M68k::op_or_32_re_aw(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27603,7 +27583,7 @@ void M68k::op_or_32_re_al(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27614,7 +27594,7 @@ void M68k::op_ori_8_d(void)
 	uint res = MASK_OUT_ABOVE_8((DY |= OPER_I_8()));
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27629,7 +27609,7 @@ void M68k::op_ori_8_ai(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27644,7 +27624,7 @@ void M68k::op_ori_8_pi(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27659,7 +27639,7 @@ void M68k::op_ori_8_pi7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27674,7 +27654,7 @@ void M68k::op_ori_8_pd(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27689,7 +27669,7 @@ void M68k::op_ori_8_pd7(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27704,7 +27684,7 @@ void M68k::op_ori_8_di(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27719,7 +27699,7 @@ void M68k::op_ori_8_ix(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27734,7 +27714,7 @@ void M68k::op_ori_8_aw(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27749,7 +27729,7 @@ void M68k::op_ori_8_al(void)
 	m68ki_write_8(ea, res);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27760,7 +27740,7 @@ void M68k::op_ori_16_d(void)
 	uint res = MASK_OUT_ABOVE_16(DY |= OPER_I_16());
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27775,7 +27755,7 @@ void M68k::op_ori_16_ai(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27790,7 +27770,7 @@ void M68k::op_ori_16_pi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27805,7 +27785,7 @@ void M68k::op_ori_16_pd(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27820,7 +27800,7 @@ void M68k::op_ori_16_di(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27835,7 +27815,7 @@ void M68k::op_ori_16_ix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27850,7 +27830,7 @@ void M68k::op_ori_16_aw(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27865,7 +27845,7 @@ void M68k::op_ori_16_al(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27876,7 +27856,7 @@ void M68k::op_ori_32_d(void)
 	uint res = DY |= OPER_I_32();
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27891,7 +27871,7 @@ void M68k::op_ori_32_ai(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27906,7 +27886,7 @@ void M68k::op_ori_32_pi(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27921,7 +27901,7 @@ void M68k::op_ori_32_pd(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27936,7 +27916,7 @@ void M68k::op_ori_32_di(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27951,7 +27931,7 @@ void M68k::op_ori_32_ix(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27966,7 +27946,7 @@ void M68k::op_ori_32_aw(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -27981,7 +27961,7 @@ void M68k::op_ori_32_al(void)
 	m68ki_write_32(ea, res);
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -28196,7 +28176,7 @@ void M68k::op_ror_8_s(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = src << (9-orig_shift);
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -28215,7 +28195,7 @@ void M68k::op_ror_16_s(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = src << (9-shift);
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -28234,8 +28214,8 @@ void M68k::op_ror_32_s(void)
 	*r_dst = res;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
-	FLAG_C = src << (9-shift);
+	FLAG_Z = (uint)res;
+	FLAG_C = (uint)(src << (9-shift));
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -28255,7 +28235,7 @@ void M68k::op_ror_8_r(void)
 		*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 		FLAG_C = src << (8-((shift-1)&7));
 		FLAG_N = NFLAG_8(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		return;
 	}
@@ -28282,7 +28262,7 @@ void M68k::op_ror_16_r(void)
 		*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 		FLAG_C = (src >> ((shift - 1) & 15)) << 8;
 		FLAG_N = NFLAG_16(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		return;
 	}
@@ -28307,16 +28287,16 @@ void M68k::op_ror_32_r(void)
 		USE_CYCLES(orig_shift<<CYC_SHIFT);
 
 		*r_dst = res;
-		FLAG_C = (src >> ((shift - 1) & 31)) << 8;
+		FLAG_C = (uint)((src >> ((shift - 1) & 31)) << 8);
 		FLAG_N = NFLAG_32(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		return;
 	}
 
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_N = NFLAG_32(src);
-	FLAG_Z = src;
+	FLAG_Z = (uint)src;
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -28330,7 +28310,7 @@ void M68k::op_ror_16_ai(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = src << 8;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -28345,7 +28325,7 @@ void M68k::op_ror_16_pi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = src << 8;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -28360,7 +28340,7 @@ void M68k::op_ror_16_pd(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = src << 8;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -28375,7 +28355,7 @@ void M68k::op_ror_16_di(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = src << 8;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -28390,7 +28370,7 @@ void M68k::op_ror_16_ix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = src << 8;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -28405,7 +28385,7 @@ void M68k::op_ror_16_aw(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = src << 8;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -28420,7 +28400,7 @@ void M68k::op_ror_16_al(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = src << 8;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -28440,7 +28420,7 @@ void M68k::op_rol_8_s(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = src << orig_shift;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -28459,7 +28439,7 @@ void M68k::op_rol_16_s(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = src >> (8-shift);
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -28478,8 +28458,8 @@ void M68k::op_rol_32_s(void)
 	*r_dst = res;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
-	FLAG_C = src >> (24-shift);
+	FLAG_Z = (uint)res;
+	FLAG_C = (uint)(src >> (24-shift));
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -28501,7 +28481,7 @@ void M68k::op_rol_8_r(void)
 			*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 			FLAG_C = src << shift;
 			FLAG_N = NFLAG_8(res);
-			FLAG_Z = res;
+			FLAG_Z = (uint)res;
 			FLAG_V = VFLAG_CLEAR;
 			return;
 		}
@@ -28536,7 +28516,7 @@ void M68k::op_rol_16_r(void)
 			*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 			FLAG_C = (src << shift) >> 8;
 			FLAG_N = NFLAG_16(res);
-			FLAG_Z = res;
+			FLAG_Z = (uint)res;
 			FLAG_V = VFLAG_CLEAR;
 			return;
 		}
@@ -28568,16 +28548,16 @@ void M68k::op_rol_32_r(void)
 
 		*r_dst = res;
 
-		FLAG_C = (src >> ((32 - shift) & 0x1f)) << 8;
+		FLAG_C = (uint)((src >> ((32 - shift) & 0x1f)) << 8);
 		FLAG_N = NFLAG_32(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		return;
 	}
 
 	FLAG_C = CFLAG_CLEAR;
 	FLAG_N = NFLAG_32(src);
-	FLAG_Z = src;
+	FLAG_Z = (uint)src;
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -28591,7 +28571,7 @@ void M68k::op_rol_16_ai(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = src >> 7;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -28606,7 +28586,7 @@ void M68k::op_rol_16_pi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = src >> 7;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -28621,7 +28601,7 @@ void M68k::op_rol_16_pd(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = src >> 7;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -28636,7 +28616,7 @@ void M68k::op_rol_16_di(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = src >> 7;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -28651,7 +28631,7 @@ void M68k::op_rol_16_ix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = src >> 7;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -28666,7 +28646,7 @@ void M68k::op_rol_16_aw(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = src >> 7;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -28681,7 +28661,7 @@ void M68k::op_rol_16_al(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_C = src >> 7;
 	FLAG_V = VFLAG_CLEAR;
 }
@@ -28703,7 +28683,7 @@ void M68k::op_roxr_8_s(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -28724,7 +28704,7 @@ void M68k::op_roxr_16_s(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -28743,13 +28723,13 @@ void M68k::op_roxr_32_s(void)
 
 	res = ROR_33_64(res, shift);
 
-	FLAG_C = FLAG_X = res >> 24;
+	FLAG_C = FLAG_X = (uint)(res >> 24);
 	res = MASK_OUT_ABOVE_32(res);
 
-	*r_dst =  res;
+	*r_dst =  (uint)res;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 
 #else
@@ -28767,7 +28747,7 @@ void M68k::op_roxr_32_s(void)
 
 	FLAG_C = FLAG_X = (new_x_flag != 0)<<8;
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 
 #endif
@@ -28792,7 +28772,7 @@ void M68k::op_roxr_8_r(void)
 
 		*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 		FLAG_N = NFLAG_8(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		return;
 	}
@@ -28822,7 +28802,7 @@ void M68k::op_roxr_16_r(void)
 
 		*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 		FLAG_N = NFLAG_16(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		return;
 	}
@@ -28851,12 +28831,12 @@ void M68k::op_roxr_32_r(void)
 
 		USE_CYCLES(orig_shift<<CYC_SHIFT);
 
-		FLAG_C = FLAG_X = res >> 24;
+		FLAG_C = FLAG_X = (uint)(res >> 24);
 		res = MASK_OUT_ABOVE_32(res);
 
-		*r_dst = res;
+		*r_dst = (uint)res;
 		FLAG_N = NFLAG_32(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		return;
 	}
@@ -28887,7 +28867,7 @@ void M68k::op_roxr_32_r(void)
 		res = src;
 	FLAG_C = FLAG_X;
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 
 #endif
@@ -28906,7 +28886,7 @@ void M68k::op_roxr_16_ai(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -28923,7 +28903,7 @@ void M68k::op_roxr_16_pi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -28940,7 +28920,7 @@ void M68k::op_roxr_16_pd(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -28957,7 +28937,7 @@ void M68k::op_roxr_16_di(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -28974,7 +28954,7 @@ void M68k::op_roxr_16_ix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -28991,7 +28971,7 @@ void M68k::op_roxr_16_aw(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -29008,7 +28988,7 @@ void M68k::op_roxr_16_al(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -29029,7 +29009,7 @@ void M68k::op_roxl_8_s(void)
 	*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -29050,7 +29030,7 @@ void M68k::op_roxl_16_s(void)
 	*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -29069,13 +29049,13 @@ void M68k::op_roxl_32_s(void)
 
 	res = ROL_33_64(res, shift);
 
-	FLAG_C = FLAG_X = res >> 24;
+	FLAG_C = FLAG_X = (uint)(res >> 24);
 	res = MASK_OUT_ABOVE_32(res);
 
-	*r_dst = res;
+	*r_dst = (uint)res;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 
 #else
@@ -29093,7 +29073,7 @@ void M68k::op_roxl_32_s(void)
 
 	FLAG_C = FLAG_X = (new_x_flag != 0)<<8;
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 
 #endif
@@ -29119,7 +29099,7 @@ void M68k::op_roxl_8_r(void)
 
 		*r_dst = MASK_OUT_BELOW_8(*r_dst) | res;
 		FLAG_N = NFLAG_8(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		return;
 	}
@@ -29149,7 +29129,7 @@ void M68k::op_roxl_16_r(void)
 
 		*r_dst = MASK_OUT_BELOW_16(*r_dst) | res;
 		FLAG_N = NFLAG_16(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		return;
 	}
@@ -29178,12 +29158,12 @@ void M68k::op_roxl_32_r(void)
 
 		USE_CYCLES(orig_shift<<CYC_SHIFT);
 
-		FLAG_C = FLAG_X = res >> 24;
+		FLAG_C = FLAG_X = (uint)(res >> 24);
 		res = MASK_OUT_ABOVE_32(res);
 
-		*r_dst = res;
+		*r_dst = (uint)res;
 		FLAG_N = NFLAG_32(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		return;
 	}
@@ -29214,7 +29194,7 @@ void M68k::op_roxl_32_r(void)
 		res = src;
 	FLAG_C = FLAG_X;
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 
 #endif
@@ -29233,7 +29213,7 @@ void M68k::op_roxl_16_ai(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -29250,7 +29230,7 @@ void M68k::op_roxl_16_pi(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -29267,7 +29247,7 @@ void M68k::op_roxl_16_pd(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -29284,7 +29264,7 @@ void M68k::op_roxl_16_di(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -29301,7 +29281,7 @@ void M68k::op_roxl_16_ix(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -29318,7 +29298,7 @@ void M68k::op_roxl_16_aw(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -29335,7 +29315,7 @@ void M68k::op_roxl_16_al(void)
 	m68ki_write_16(ea, res);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 }
 
@@ -33804,7 +33784,7 @@ void M68k::op_tst_8_d(void)
 	uint res = MASK_OUT_ABOVE_8(DY);
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -33815,7 +33795,7 @@ void M68k::op_tst_8_ai(void)
 	uint res = OPER_AY_AI_8();
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -33826,7 +33806,7 @@ void M68k::op_tst_8_pi(void)
 	uint res = OPER_AY_PI_8();
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -33837,7 +33817,7 @@ void M68k::op_tst_8_pi7(void)
 	uint res = OPER_A7_PI_8();
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -33848,7 +33828,7 @@ void M68k::op_tst_8_pd(void)
 	uint res = OPER_AY_PD_8();
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -33859,7 +33839,7 @@ void M68k::op_tst_8_pd7(void)
 	uint res = OPER_A7_PD_8();
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -33870,7 +33850,7 @@ void M68k::op_tst_8_di(void)
 	uint res = OPER_AY_DI_8();
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -33881,7 +33861,7 @@ void M68k::op_tst_8_ix(void)
 	uint res = OPER_AY_IX_8();
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -33892,7 +33872,7 @@ void M68k::op_tst_8_aw(void)
 	uint res = OPER_AW_8();
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -33903,7 +33883,7 @@ void M68k::op_tst_8_al(void)
 	uint res = OPER_AL_8();
 
 	FLAG_N = NFLAG_8(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -33916,7 +33896,7 @@ void M68k::op_tst_8_pcdi(void)
 		uint res = OPER_PCDI_8();
 
 		FLAG_N = NFLAG_8(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 		return;
@@ -33932,7 +33912,7 @@ void M68k::op_tst_8_pcix(void)
 		uint res = OPER_PCIX_8();
 
 		FLAG_N = NFLAG_8(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 		return;
@@ -33948,7 +33928,7 @@ void M68k::op_tst_8_i(void)
 		uint res = OPER_I_8();
 
 		FLAG_N = NFLAG_8(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 		return;
@@ -33962,7 +33942,7 @@ void M68k::op_tst_16_d(void)
 	uint res = MASK_OUT_ABOVE_16(DY);
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -33975,7 +33955,7 @@ void M68k::op_tst_16_a(void)
 		uint res = MAKE_INT_16(AY);
 
 		FLAG_N = NFLAG_16(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 		return;
@@ -33989,7 +33969,7 @@ void M68k::op_tst_16_ai(void)
 	uint res = OPER_AY_AI_16();
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -34000,7 +33980,7 @@ void M68k::op_tst_16_pi(void)
 	uint res = OPER_AY_PI_16();
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -34011,7 +33991,7 @@ void M68k::op_tst_16_pd(void)
 	uint res = OPER_AY_PD_16();
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -34022,7 +34002,7 @@ void M68k::op_tst_16_di(void)
 	uint res = OPER_AY_DI_16();
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -34033,7 +34013,7 @@ void M68k::op_tst_16_ix(void)
 	uint res = OPER_AY_IX_16();
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -34044,7 +34024,7 @@ void M68k::op_tst_16_aw(void)
 	uint res = OPER_AW_16();
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -34055,7 +34035,7 @@ void M68k::op_tst_16_al(void)
 	uint res = OPER_AL_16();
 
 	FLAG_N = NFLAG_16(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -34068,7 +34048,7 @@ void M68k::op_tst_16_pcdi(void)
 		uint res = OPER_PCDI_16();
 
 		FLAG_N = NFLAG_16(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 		return;
@@ -34084,7 +34064,7 @@ void M68k::op_tst_16_pcix(void)
 		uint res = OPER_PCIX_16();
 
 		FLAG_N = NFLAG_16(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 		return;
@@ -34100,7 +34080,7 @@ void M68k::op_tst_16_i(void)
 		uint res = OPER_I_16();
 
 		FLAG_N = NFLAG_16(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 		return;
@@ -34114,7 +34094,7 @@ void M68k::op_tst_32_d(void)
 	uint res = DY;
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -34127,7 +34107,7 @@ void M68k::op_tst_32_a(void)
 		uint res = AY;
 
 		FLAG_N = NFLAG_32(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 		return;
@@ -34141,7 +34121,7 @@ void M68k::op_tst_32_ai(void)
 	uint res = OPER_AY_AI_32();
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -34152,7 +34132,7 @@ void M68k::op_tst_32_pi(void)
 	uint res = OPER_AY_PI_32();
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -34163,7 +34143,7 @@ void M68k::op_tst_32_pd(void)
 	uint res = OPER_AY_PD_32();
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -34174,7 +34154,7 @@ void M68k::op_tst_32_di(void)
 	uint res = OPER_AY_DI_32();
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -34185,7 +34165,7 @@ void M68k::op_tst_32_ix(void)
 	uint res = OPER_AY_IX_32();
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -34196,7 +34176,7 @@ void M68k::op_tst_32_aw(void)
 	uint res = OPER_AW_32();
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -34207,7 +34187,7 @@ void M68k::op_tst_32_al(void)
 	uint res = OPER_AL_32();
 
 	FLAG_N = NFLAG_32(res);
-	FLAG_Z = res;
+	FLAG_Z = (uint)res;
 	FLAG_V = VFLAG_CLEAR;
 	FLAG_C = CFLAG_CLEAR;
 }
@@ -34220,7 +34200,7 @@ void M68k::op_tst_32_pcdi(void)
 		uint res = OPER_PCDI_32();
 
 		FLAG_N = NFLAG_32(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 		return;
@@ -34236,7 +34216,7 @@ void M68k::op_tst_32_pcix(void)
 		uint res = OPER_PCIX_32();
 
 		FLAG_N = NFLAG_32(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 		return;
@@ -34252,7 +34232,7 @@ void M68k::op_tst_32_i(void)
 		uint res = OPER_I_32();
 
 		FLAG_N = NFLAG_32(res);
-		FLAG_Z = res;
+		FLAG_Z = (uint)res;
 		FLAG_V = VFLAG_CLEAR;
 		FLAG_C = CFLAG_CLEAR;
 		return;
@@ -36374,7 +36354,7 @@ static const opcode_handler_struct m68k_opcode_handler_table[] =
 void m68ki_build_opcode_table(void)
 {
 	const opcode_handler_struct *ostruct;
-	int cycle_cost;
+	//int cycle_cost;
 	int instr;
 	int i;
 	int j;

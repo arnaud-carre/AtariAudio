@@ -157,7 +157,7 @@ public:
 	void m68ki_exception_interrupt(uint int_level);
 	void m68ki_check_interrupts(void);
 
-	unsigned int m68k_get_reg(void* context, m68k_register_t regnum);
+	unsigned int m68k_get_reg(m68k_register_t regnum);
 	void m68k_set_reg(m68k_register_t regnum, unsigned int value);
 	void m68k_set_cpu_type(unsigned int cpu_type);
 

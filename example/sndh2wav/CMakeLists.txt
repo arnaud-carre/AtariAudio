@@ -7,8 +7,9 @@ target_sources(sndh2wav
     PRIVATE
         ../../src/AtariMachine.cpp
         ../../src/external/ice_24.c
-        ../../src/external/Musashi/m68kcpu.c
-        ../../src/external/Musashi/m68kops.c
+        ../../src/external/Musashi/m68k.cpp
+        ../../src/external/Musashi/m68kcpu.cpp
+        ../../src/external/Musashi/m68kops.cpp
         ../../src/Mk68901.cpp
         ../../src/SndhRenderer.cpp
         ../../src/SteDac.cpp

@@ -40,7 +40,6 @@ void	WavWriter::AddAudioData(const int16_t* data, int sampleCount)
 {
 	if (m_h)
 	{
-		const int rawSize = sizeof(int16_t) * sampleCount * m_channelCount;
 		fwrite(data, sizeof(int16_t)*m_channelCount, sampleCount, m_h);
 		m_sampleCount += sampleCount;
 	}

@@ -470,6 +470,7 @@ void M68k::m68ki_stack_frame_3word(uint pc, uint sr)
 	*/
 void M68k::m68ki_stack_frame_0000(uint pc, uint sr, uint vector)
 {
+	(void)vector;
 	m68ki_stack_frame_3word(pc, sr);
 }
 
@@ -571,6 +572,9 @@ void M68k::m68ki_exception_privilege_violation(void)
 /* Exception for bus error */
 void M68k::m68ki_exception_bus_error(void)
 {
+#if 1
+	assert(false);
+#else
 	int i;
 
 	/* If we were processing a bus error, address error, or reset,
@@ -579,7 +583,7 @@ void M68k::m68ki_exception_bus_error(void)
 		*/
 	if(CPU_RUN_MODE == RUN_MODE_BERR_AERR_RESET_WSF)
 	{
-//		m68k_read_memory_8(0x00ffff01);
+		m68k_read_memory_8(0x00ffff01);
 		assert(false);
 		CPU_STOPPED = STOP_LEVEL_HALT;
 		return;
@@ -599,8 +603,8 @@ void M68k::m68ki_exception_bus_error(void)
 
 	CPU_RUN_MODE = RUN_MODE_BERR_AERR_RESET;
 
-	assert(false);
-//	longjmp(m68ki_bus_error_jmp_buf, 1);
+	longjmp(m68ki_bus_error_jmp_buf, 1);
+#endif
 }
 
 /* Exception for A-Line instructions */
@@ -668,11 +672,11 @@ void M68k::m68ki_exception_illegal(void)
 	}
 	#endif /* M68K_EMULATE_ADDRESS_ERROR */
 
-	m68ki_stack_frame_0000(REG_PPC, sr, EXCEPTION_ILLEGAL_INSTRUCTION);
-	m68ki_jump_vector(EXCEPTION_ILLEGAL_INSTRUCTION);
+	m68ki_stack_frame_0000(REG_PPC, sr, M68K_EXCEPTION_ILLEGAL_INSTRUCTION);
+	m68ki_jump_vector(M68K_EXCEPTION_ILLEGAL_INSTRUCTION);
 
 	/* Use up some clock cycles and undo the instruction's cycles */
-	USE_CYCLES(CYC_EXCEPTION[EXCEPTION_ILLEGAL_INSTRUCTION] - CYC_INSTRUCTION[REG_IR]);
+	USE_CYCLES(CYC_EXCEPTION[M68K_EXCEPTION_ILLEGAL_INSTRUCTION] - CYC_INSTRUCTION[REG_IR]);
 }
 
 /* Exception for format errror in RTE */
@@ -896,7 +900,7 @@ void M68k::m68ki_store_bitfield(uint32 addr, unsigned offset, unsigned width,uin
 }
 
 /* Access the internals of the CPU */
-unsigned int M68k::m68k_get_reg(void* context, m68k_register_t regnum)
+unsigned int M68k::m68k_get_reg(m68k_register_t regnum)
 {
 	m68ki_cpu_core* cpu = &m68ki_cpu;
 	switch(regnum)
