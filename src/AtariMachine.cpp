@@ -288,8 +288,6 @@ void	AtariMachine::XBios(int func, uint32_t a7)
 
 void	AtariMachine::TrapInstructionCallback(int v)
 {
-	assert(false);
-
 	int a7 = m_cpu.m68k_get_reg(nullptr, M68K_REG_SP);
 	int func = m_cpu.MemRead16(a7);
 
