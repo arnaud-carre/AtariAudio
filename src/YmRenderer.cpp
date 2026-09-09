@@ -50,9 +50,9 @@ extern const char* AUskipNTString(const char* r);
 
 uint16_t YmRenderer::Read16(const char** r)
 {
-	const char* r8 = *r;
+	const uint8_t* r8 = (const uint8_t*)*r;
 	uint16_t v = (r8[0] << 8) | (r8[1]);
-	*r = r8+2;
+	*r = (const char*)(r8+2);
 	return v;
 }
 
@@ -68,6 +68,11 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 
 	bool ret = false;
 	m_hostReplayRate = hostReplayRate;
+	m_innerSamplePos = 0;
+	m_samplePerTick = 0;
+	m_songLenInTick = 0;
+	m_tick = 0;
+
 	SongInfo& si = m_songInfo;
 
 	if (LzhDepacker::IsLzhPacked(rawYmFile, ymFileSize))
@@ -123,5 +128,96 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 		break;
 	}
 
+	if (ret)
+	{
+		assert(ymClock > 0);
+		assert(m_songInfo.playerTickRate > 0);
+
+		m_samplePerTick = m_hostReplayRate / m_songInfo.playerTickRate;
+		m_ym2149.Reset(m_hostReplayRate, ymClock);
+	}
+	else
+	{
+		free((void*)m_songInfo.rawBinaryData);
+		m_songInfo.rawBinaryData = nullptr;
+	}
+
 	return ret;
+}
+
+uint32_t YmRenderer::GetSongDurationSample() const
+{
+	return m_songLenInTick * m_samplePerTick;
+}
+
+int16_t YmRenderer::ComputeNextSample()
+{
+	return m_ym2149.ComputeNextSample();
+}
+
+void YmRenderer::AudioRender(int16_t* buffer, uint32_t count)
+{
+	AudioRenderInternal(buffer, count, nullptr);
+}
+
+void YmRenderer::YmWrite(int reg, uint8_t d)
+{
+	m_ym2149.WritePort(0, reg);	// select reg
+	m_ym2149.WritePort(2, d);	// write data
+}
+
+void YmRenderer::PlayerTick()
+{
+	for (int r = 0; r <= 12; r++)
+		YmWrite(r, ReadInterleaved(r));
+
+	uint8_t r13 = ReadInterleaved(13);
+	if (r13 != 0xff)
+		YmWrite(13, r13);
+
+	m_tick++;
+	if (m_tick >= m_songLenInTick)
+		m_tick = 0;
+}
+
+void	YmRenderer::AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t* pSampleViewInfo)
+{
+
+	while (count > 0)
+	{
+		if (0 == m_innerSamplePos)
+		{
+			PlayerTick();
+			m_innerSamplePos = m_samplePerTick;
+		}
+
+		uint32_t todo = (m_innerSamplePos <= count) ? m_innerSamplePos : count;
+		assert(m_innerSamplePos >= todo);
+
+		if (buffer)
+		{
+			if (nullptr == pSampleViewInfo)
+			{
+				for (uint32_t s = 0; s < todo; s++)
+					*buffer++ = ComputeNextSample();
+			}
+			else
+			{
+				for (uint32_t s = 0; s < todo; s++)
+				{
+					*buffer++ = ComputeNextSample();
+					*pSampleViewInfo++ = 0; //ComputeCurrentVisualLevels();
+				}
+			}
+		}
+		else
+		{
+			// fast forward
+			for (uint32_t s = 0; s < todo; s++)
+				ComputeNextSample();
+		}
+
+		count -= todo;
+		m_innerSamplePos -= todo;
+	}
 }

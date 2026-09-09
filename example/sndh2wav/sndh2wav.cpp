@@ -91,6 +91,22 @@ int	main(int argc, char* argv[])
 			YmRenderer* yr = YmRenderer::Create(sndhFileBuffer, sndhFileSize, kHostReplayRate);
 			if (yr)
 			{
+				uint32_t sampleCount = yr->GetSongDurationSample();
+				if (0 == sampleCount)
+				{
+					// a subsong of duration 0 means SNDH file doesn't provide any duration
+					sampleCount = 3*60*kHostReplayRate;		// so decide to play 3 minutes by default
+				}
+				const int durationInSec = sampleCount / kHostReplayRate;
+				printf("Rendering %d:%02d sec\n", durationInSec / 60, durationInSec % 60);
+
+				while (sampleCount > 0)
+				{
+					uint32_t todo = (sampleCount > kAudioBufferLen) ? kAudioBufferLen : sampleCount;
+					yr->AudioRender(audioBuffer, todo);
+					wavWriter.AddAudioData(audioBuffer, todo);
+					sampleCount -= todo;
+				}
 				YmRenderer::Destroy(yr);
 			}
 			#endif

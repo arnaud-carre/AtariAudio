@@ -84,8 +84,12 @@ private:
 		e_YMT2 = ('Y' << 24) | ('M' << 16) | ('T' << 8) | ('2'),	//'YMT2'
 	};
 
+	void PlayerTick();
+	int16_t ComputeNextSample(void);
 	bool	Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostReplayRate);
 	void		AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t* pSampleViewInfo);
+	uint8_t ReadInterleaved(int reg) const { return m_dataStream[m_songLenInTick*reg + m_tick]; }
+	void YmWrite(int reg, uint8_t d);
 
 	uint16_t Read16(const char** r);
 	uint32_t Read32(const char** r);
@@ -94,6 +98,7 @@ private:
 	Ym2149c m_ym2149;
 	Mk68901 m_mfp;
 
+	uint32_t m_tick;
 	uint32_t	m_songLenInTick;
 	uint32_t m_songLoopTick;
 	uint32_t	m_samplePerTick;
