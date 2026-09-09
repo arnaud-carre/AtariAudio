@@ -20,8 +20,15 @@ void* LoadFile(const char* sFilename, uint32_t& sizeOut)
 		size_t sndhSize = ftell(h);
 		buffer = malloc(sndhSize);
 		fseek(h, 0, SEEK_SET);
-		fread(buffer, 1, sndhSize, h);
-		sizeOut = uint32_t(sndhSize);
+		if (sndhSize == fread(buffer, 1, sndhSize, h))
+		{
+			sizeOut = uint32_t(sndhSize);
+		}
+		else
+		{
+			free(buffer);
+			buffer = nullptr;
+		}
 		fclose(h);
 	}
 	return buffer;

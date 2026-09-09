@@ -5538,7 +5538,6 @@ void M68k::op_bfclr_32_ai(void)
 		uint width = word2;
 		uint mask_base;
 		m68ki_bitfield_t data;
-		uint mask_byte = 0;
 		uint ea = EA_AY_AI_8();
 
 
@@ -5576,7 +5575,6 @@ void M68k::op_bfclr_32_di(void)
 		uint width = word2;
 		uint mask_base;
 		m68ki_bitfield_t data;
-		uint mask_byte = 0;
 		uint ea = EA_AY_DI_8();
 
 
@@ -5614,7 +5612,6 @@ void M68k::op_bfclr_32_ix(void)
 		uint width = word2;
 		uint mask_base;
 		m68ki_bitfield_t data;
-		uint mask_byte = 0;
 		uint ea = EA_AY_IX_8();
 
 
@@ -5652,7 +5649,6 @@ void M68k::op_bfclr_32_aw(void)
 		uint width = word2;
 		uint mask_base;
 		m68ki_bitfield_t data;
-		uint mask_byte = 0;
 		uint ea = EA_AW_8();
 
 
@@ -5690,7 +5686,6 @@ void M68k::op_bfclr_32_al(void)
 		uint width = word2;
 		uint mask_base;
 		m68ki_bitfield_t data;
-		uint mask_byte = 0;
 		uint ea = EA_AL_8();
 
 

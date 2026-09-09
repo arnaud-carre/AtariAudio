@@ -70,7 +70,8 @@ void M68k_Reset_Callback(void* user)
 
 int M68k_Illegal_Callback(void* user, int opcode)
 {
-	//	assert(false);
+	(void)user;
+	(void)opcode;
 	return 1;
 }
 
@@ -320,9 +321,9 @@ void	AtariMachine::Startup(uint32_t hostReplayRate)
 	m_cpu.m68k_set_cpu_type(M68K_CPU_TYPE_68000);
 
 	// setup some cookie jar for MaxyMizer player!
-	m_cpu.MemWrite32(0x900, '_SND');
+	m_cpu.MemWrite32(0x900, 0x5f534e44);	// '_SND'
 	m_cpu.MemWrite32(0x904, 0x3);		// soundchip+STE DMA
-	m_cpu.MemWrite32(0x908, '_MCH');
+	m_cpu.MemWrite32(0x908, 0x5f4d4348);	// '_MCH'
 	m_cpu.MemWrite32(0x90c, 0x00010000);	// STE
 	m_cpu.MemWrite32(0x910, 0);			// end
 	m_cpu.MemWrite32(0x5a0, 0x900);		// cookie jar start

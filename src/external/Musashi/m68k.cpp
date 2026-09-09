@@ -572,6 +572,9 @@ void M68k::m68ki_exception_privilege_violation(void)
 /* Exception for bus error */
 void M68k::m68ki_exception_bus_error(void)
 {
+#if 1
+	assert(false);
+#else
 	int i;
 
 	/* If we were processing a bus error, address error, or reset,
@@ -580,7 +583,7 @@ void M68k::m68ki_exception_bus_error(void)
 		*/
 	if(CPU_RUN_MODE == RUN_MODE_BERR_AERR_RESET_WSF)
 	{
-//		m68k_read_memory_8(0x00ffff01);
+		m68k_read_memory_8(0x00ffff01);
 		assert(false);
 		CPU_STOPPED = STOP_LEVEL_HALT;
 		return;
@@ -600,8 +603,8 @@ void M68k::m68ki_exception_bus_error(void)
 
 	CPU_RUN_MODE = RUN_MODE_BERR_AERR_RESET;
 
-	assert(false);
-//	longjmp(m68ki_bus_error_jmp_buf, 1);
+	longjmp(m68ki_bus_error_jmp_buf, 1);
+#endif
 }
 
 /* Exception for A-Line instructions */
