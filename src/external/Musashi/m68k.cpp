@@ -672,11 +672,11 @@ void M68k::m68ki_exception_illegal(void)
 	}
 	#endif /* M68K_EMULATE_ADDRESS_ERROR */
 
-	m68ki_stack_frame_0000(REG_PPC, sr, EXCEPTION_ILLEGAL_INSTRUCTION);
-	m68ki_jump_vector(EXCEPTION_ILLEGAL_INSTRUCTION);
+	m68ki_stack_frame_0000(REG_PPC, sr, M68K_EXCEPTION_ILLEGAL_INSTRUCTION);
+	m68ki_jump_vector(M68K_EXCEPTION_ILLEGAL_INSTRUCTION);
 
 	/* Use up some clock cycles and undo the instruction's cycles */
-	USE_CYCLES(CYC_EXCEPTION[EXCEPTION_ILLEGAL_INSTRUCTION] - CYC_INSTRUCTION[REG_IR]);
+	USE_CYCLES(CYC_EXCEPTION[M68K_EXCEPTION_ILLEGAL_INSTRUCTION] - CYC_INSTRUCTION[REG_IR]);
 }
 
 /* Exception for format errror in RTE */
