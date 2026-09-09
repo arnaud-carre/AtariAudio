@@ -3,7 +3,7 @@
 src/ contains all files needed to compile AtariAudio library. It allows you to play ATARI SNDH music files. You can also directly use YM2149 emulator if you want to write your own YM tracker.
 The libray doesn't use any dependency, and should compile on any platform, including embeded systems (it doesn't even use float )
 
-NOTE: Since 1.10 AtariAudio library is thread safe! Any thread could create any amount of SndhRenderer instances. (obviously two different threads can't use the same instance of SndhRenderer)
+**NOTE: Since 1.10 AtariAudio library is thread safe! Any thread could create any amount of SndhRenderer instances. (obviously two different threads can't use the same instance of SndhRenderer)**
 
 # Playing SNDH file in your own app
 
