@@ -8,8 +8,23 @@
 #include <string.h>
 #include <assert.h>
 #include "SndhRenderer.h"
+#include "YmRenderer.h"
 #include "external/ice_24.h"
 #include "timedb.h"
+
+AtariAudioRenderer* AtariAudioRenderer::Create(const void* fileMemoryData, uint32_t fileMemorySize, uint32_t hostReplayRate)
+{
+	SndhRenderer* sr = SndhRenderer::Create(fileMemoryData, fileMemorySize, hostReplayRate);
+	if (sr)
+		return sr;
+
+	YmRenderer* yr = YmRenderer::Create(fileMemoryData, fileMemorySize, hostReplayRate);
+	if (yr)
+		return yr;
+
+	return nullptr;
+}
+
 
 SndhRenderer*	SndhRenderer::Create(const void* sndhMemoryData, uint32_t sndhMemorySize, uint32_t hostReplayRate)
 {
@@ -211,7 +226,11 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 		}
 	}
 
-	m_samplePerTick = m_hostReplayRate / m_songInfo.playerTickRate;
+	if (ret)
+	{
+		assert(m_songInfo.playerTickRate > 0);
+		m_samplePerTick = m_hostReplayRate / m_songInfo.playerTickRate;
+	}
 
 	return ret;
 }

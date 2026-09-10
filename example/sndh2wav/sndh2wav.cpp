@@ -88,10 +88,10 @@ int	main(int argc, char* argv[])
 				SndhRenderer::Destroy(sr);
 			}
 			#else
-			YmRenderer* yr = YmRenderer::Create(sndhFileBuffer, sndhFileSize, kHostReplayRate);
+			AtariAudioRenderer* yr = AtariAudioRenderer::Create(sndhFileBuffer, sndhFileSize, kHostReplayRate);
 			if (yr)
 			{
-				uint32_t sampleCount = yr->GetSongDurationSample();
+				uint32_t sampleCount = 0; //yr->GetSongDurationSample();
 				if (0 == sampleCount)
 				{
 					// a subsong of duration 0 means SNDH file doesn't provide any duration
@@ -107,7 +107,7 @@ int	main(int argc, char* argv[])
 					wavWriter.AddAudioData(audioBuffer, todo);
 					sampleCount -= todo;
 				}
-				YmRenderer::Destroy(yr);
+//				YmRenderer::Destroy(yr);
 			}
 			#endif
 			wavWriter.Close();

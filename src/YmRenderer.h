@@ -6,10 +6,10 @@
 --------------------------------------------------------------------*/
 #pragma once
 #include <stdint.h>
-#include "ym2149c.h"
+#include "AtariAudio.h"
 #include "Mk68901.h"
 
-class YmRenderer
+class YmRenderer : public AtariAudioRenderer
 {
 public:
 	struct SongInfo

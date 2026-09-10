@@ -6,24 +6,12 @@
 --------------------------------------------------------------------*/
 #pragma once
 #include <stdint.h>
-#include "AtariMachine.h"
+#include "AtariAudio.h"
+//#include "AtariMachine.h"
 
-class SndhRenderer
+class SndhRenderer : public AtariAudioRenderer
 {
 public:
-	struct SongInfo
-	{
-		int subsongCount;
-		int defaultSubsong;
-		int playerTickRate;
-		const char* musicName;
-		const char* musicAuthor;
-		const char* ripper;
-		const char* converter;
-		const char* year;
-		const void* rawBinaryPlayer;
-		uint32_t rawBinaryPlayerSize;
-	};
 
 	// Create a SndhRenderer instance from a SNDH file data located in memory
 	// The input SNDH data could be ICE! packed
