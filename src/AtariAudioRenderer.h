@@ -35,10 +35,10 @@ public:
 		uint32_t rawBinaryDataSize;
 	};
 
-	// Create a SndhRenderer instance from a SNDH file data located in memory
-	// The input SNDH data could be ICE! packed
-	// hostReplayRate is the rate you want to render audio stream ( ie 44100 or 44.1Khz )
-	// After create you can free sndhMemoryData if needed (SndhRenderer keep an internal copy of the required data)
+	// Create a AtariAudioRenderer instance from a .SNDH or .YM file data located in memory
+	// The input SNDH data could be ICE! packed and .YM could be LHA packed
+	// hostReplayRate is the rate you want to render audio stream ( ie 48000 for 48Khz )
+	// After create you can free fileMemoryData if needed (AtariAudioRenderer keep an internal copy of the required data)
 	static AtariAudioRenderer* Create(const void* fileMemoryData, uint32_t fileMemorySize, uint32_t hostReplayRate);
 	static void Destroy(AtariAudioRenderer* ar);
 	
