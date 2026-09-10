@@ -10,17 +10,27 @@
 class AtariAudioRenderer
 {
 public:
+	enum class eFileType
+	{
+		eUnknown,
+		eSndh,
+		eYm,
+	};
+
 	struct SongInfo
 	{
 		int subsongCount;
 		int defaultSubsong;
 		int playerTickRate;
 		uint32_t 	hostReplayRate;
+		uint32_t ym2149Clock;
+		eFileType fileType;
 		const char* musicName;
 		const char* musicAuthor;
 		const char* ripper;
 		const char* converter;
 		const char* year;
+
 		const void* rawBinaryData;
 		uint32_t rawBinaryDataSize;
 	};
@@ -52,6 +62,11 @@ protected:
 	AtariAudioRenderer();
     AtariAudioRenderer(const AtariAudioRenderer&) = delete;            // Prevent copy construction
     AtariAudioRenderer& operator=(const AtariAudioRenderer&) = delete; // Prevent copy assignment
+
+	static eFileType QuickFileTypeCheck(const void* rawMemory, uint32_t rawSize);
+	uint16_t ReadBE16(const char* r);
+	uint32_t ReadBE32(const char* r);
+	const char* AUskipNTString(const char* r);
 
 	SongInfo m_songInfo;
 	uint32_t	m_subSongLenInTick[kSubsongCountMax];

@@ -10,17 +10,16 @@
 #include "AtariAudioRenderer.h"
 #include "SndhRenderer.h"
 #include "YmRenderer.h"
+#include "external/lzh.h"
+#include "external/ice_24.h"
 
 AtariAudioRenderer* AtariAudioRenderer::Create(const void* fileMemoryData, uint32_t fileMemorySize, uint32_t hostReplayRate)
 {
-	SndhRenderer* sr = SndhRenderer::Create(fileMemoryData, fileMemorySize, hostReplayRate);
-	if (sr)
-		return sr;
-
-	YmRenderer* yr = YmRenderer::Create(fileMemoryData, fileMemorySize, hostReplayRate);
-	if (yr)
-		return yr;
-
+	switch (QuickFileTypeCheck(fileMemoryData, fileMemorySize))
+	{
+		case eFileType::eSndh: return SndhRenderer::Create(fileMemoryData, fileMemorySize, hostReplayRate);
+		case eFileType::eYm: return YmRenderer::Create(fileMemoryData, fileMemorySize, hostReplayRate);
+	}
 	return nullptr;
 }
 
@@ -43,4 +42,43 @@ AtariAudioRenderer::AtariAudioRenderer()
 AtariAudioRenderer::~AtariAudioRenderer()
 {
 	free((void*)m_songInfo.rawBinaryData);
+}
+
+AtariAudioRenderer::eFileType AtariAudioRenderer::QuickFileTypeCheck(const void* rawMemory, uint32_t rawSize)
+{
+	if (rawSize > 16)
+	{
+		if (LzhDepacker::IsLzhPacked(rawMemory, rawSize))
+			return eFileType::eYm;
+
+		if (0 == strncmp(((const char*)rawMemory) + 4, "LeOnArD!", 8))
+			return eFileType::eYm;
+
+		if (ice_24_header((unsigned char*)rawMemory))
+			return eFileType::eSndh;
+
+		const char* read8 = (const char*)rawMemory;
+		if ((0x60 == read8[0]) && (0 == strncmp(read8 + 12, "SNDH", 4)))
+			return eFileType::eSndh;
+	}
+	return eFileType::eUnknown;
+}
+
+uint16_t	AtariAudioRenderer::ReadBE16(const char* r)
+{
+	const uint8_t* r8 = (const uint8_t*)r;
+	uint16_t v = (r8[0] << 8) | (r8[1]);
+	return v;
+}
+
+uint32_t	AtariAudioRenderer::ReadBE32(const char* r)
+{
+	uint32_t v = (ReadBE16(r) << 16) | ReadBE16(r + 2);
+	return v;
+}
+
+const char* AtariAudioRenderer::AUskipNTString(const char* r)
+{
+	r += strlen(r) + 1;
+	return r;
 }

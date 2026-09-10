@@ -326,7 +326,7 @@ void	AtariMachine::Startup(uint32_t hostReplayRate)
 
 	memset(m_RAM, 0, RAM_SIZE);
 
-	m_ym2149.Reset(hostReplayRate);
+	m_ym2149.Reset(hostReplayRate, 2000000);
 	m_mfp.Reset(hostReplayRate);
 	m_steDac.Reset(hostReplayRate);
 	m_nextGemdosMallocAd = GEMDOS_MALLOC_EMUL_BUFFER;

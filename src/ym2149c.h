@@ -11,7 +11,9 @@ class Ym2149c
 {
 public:
 
-	void	Reset(uint32_t hostReplayRate, uint32_t ymClock = 2000000);
+	static const uint32_t kDefaultAtariYmClock = 2000000;
+
+	void	Reset(uint32_t hostReplayRate, uint32_t ymClock = kDefaultAtariYmClock);
 	void	WritePort(uint8_t port, uint8_t value);
 	uint8_t ReadPort(uint8_t port) const;
 	int16_t	ComputeNextSample();
