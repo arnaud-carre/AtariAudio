@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <memory.h>
 #include <string.h>
-#include "lzh.H"
+#include "lzh.h"
 
 bool LzhDepacker::IsLzhPacked(const void* data, uint32_t size)
 {
