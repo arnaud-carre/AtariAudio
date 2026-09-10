@@ -15,11 +15,11 @@
 
 AtariAudioRenderer* AtariAudioRenderer::Create(const void* fileMemoryData, uint32_t fileMemorySize, uint32_t hostReplayRate)
 {
-	switch (QuickFileTypeCheck(fileMemoryData, fileMemorySize))
-	{
-		case eFileType::eSndh: return SndhRenderer::Create(fileMemoryData, fileMemorySize, hostReplayRate);
-		case eFileType::eYm: return YmRenderer::Create(fileMemoryData, fileMemorySize, hostReplayRate);
-	}
+	const eFileType t = QuickFileTypeCheck(fileMemoryData, fileMemorySize);
+	if ( eFileType::eSndh == t )
+		return SndhRenderer::Create(fileMemoryData, fileMemorySize, hostReplayRate);
+	if ( eFileType::eYm == t )
+		return YmRenderer::Create(fileMemoryData, fileMemorySize, hostReplayRate);
 	return nullptr;
 }
 
