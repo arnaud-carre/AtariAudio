@@ -5,16 +5,19 @@ add_executable(sndh2wav)
 
 target_sources(sndh2wav
     PRIVATE
-        ../../src/AtariMachine.cpp
         ../../src/external/ice_24.c
+        ../../src/external/lzh.cpp
         ../../src/external/Musashi/m68k.cpp
         ../../src/external/Musashi/m68kcpu.cpp
         ../../src/external/Musashi/m68kops.cpp
+        ../../src/AtariAudioRenderer.cpp
+        ../../src/AtariMachine.cpp
         ../../src/Mk68901.cpp
         ../../src/SndhRenderer.cpp
         ../../src/SteDac.cpp
         ../../src/timedb.cpp
         ../../src/ym2149c.cpp
+        ../../src/YmRenderer.cpp
         sndh2wav.cpp
         wavwriter.cpp
 )
