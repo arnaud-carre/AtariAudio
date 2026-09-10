@@ -421,11 +421,7 @@ static const uint32_t	s_ViewVolTab[16*2] =
 
 uint32_t AtariMachine::ComputeCurrentVisualLevels() const
 {
-	const uint32_t ymVisual = m_ym2149.GetCurrentVisualLevels();
-	const unsigned int indexA = (ymVisual >> 0) & 31;
-	const unsigned int indexB = (ymVisual >> 5) & 31;
-	const unsigned int indexC = (ymVisual >> 10) & 31;
-	uint32_t visualLevels = (s_ViewVolTab[indexA] << 0) | (s_ViewVolTab[indexB] << 8) | (s_ViewVolTab[indexC] << 16);
+	uint32_t visualLevels = m_ym2149.ComputeCurrentVisualLevels();
 	if ( 0 == (m_muteMask&(1<<3)))
 		visualLevels |= (m_steDac.GetCurrentVisualLevel()<<24);
 	return visualLevels;

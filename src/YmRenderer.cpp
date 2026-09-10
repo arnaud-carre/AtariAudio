@@ -57,10 +57,10 @@ void YmRenderer::ConvertTo4Bits(void)
 	for (int s = 0; s < m_sampleCount; s++)
 	{
 		YmSample& smp = m_samples[s];
-		uint8_t* w8 = (uint8_t *)smp.data;	// we can write, we're using our own copy of the data
+		uint8_t* w8 = (uint8_t *)smp.data;	// we can overwrite, we're using our own copy of the data
 		for (uint32_t i = 0; i < smp.len; i++)
 		{
-			uint8_t v = (w8[i]^0x80)>>4;
+			uint8_t v = (smp.data[i])>>4;
 			w8[i] = sMadMax4BitsTable[v&15];
 		}
 	}
@@ -235,6 +235,12 @@ void YmRenderer::AudioRender(int16_t* buffer, uint32_t count)
 	AudioRenderInternal(buffer, count, nullptr);
 }
 
+void YmRenderer::AudioRenderWithVisualInfos(int16_t* buffer, uint32_t sampleCount, uint32_t* pVisualSamples)
+{
+	AudioRenderInternal(buffer, sampleCount, pVisualSamples);
+}
+
+
 void YmRenderer::YmWrite(int reg, uint8_t d)
 {
 	m_ym2149.WritePort(0, reg);	// select reg
@@ -252,7 +258,7 @@ void YmRenderer::SetTimer(int slot, int prediv, int count)
 
 uint32_t YmRenderer::YmFxDecode(int fxSlot, int regCode, int regPrediv, int regCount)
 {
-	uint32_t disableMask = 0;
+	uint32_t skipMask = 0;
 
 	YmFx& fx = m_ymFx[fxSlot];
 
@@ -290,7 +296,7 @@ uint32_t YmRenderer::YmFxDecode(int fxSlot, int regCode, int regPrediv, int regC
 			case 0x00:		// SID
 				fx.type = eSid;
 				fx.sidVol = ReadInterleaved(fx.ymVoice + 8) & 15;
-				disableMask = 1 << (fx.ymVoice + 8);
+				skipMask = 1 << (fx.ymVoice + 8);
 				SetTimer(fxSlot, prediv, count);
 				break;
 
@@ -299,7 +305,7 @@ uint32_t YmRenderer::YmFxDecode(int fxSlot, int regCode, int regPrediv, int regC
 				if ((fx.drumId>=0) && (fx.drumId<m_sampleCount))
 				{
 					fx.type = eDigidrum;
-					disableMask = 1 << (fx.ymVoice + 8);
+					skipMask = 1 << (fx.ymVoice + 8);
 					fx.fxPhase = 0;
 					SetTimer(fxSlot, prediv, count);
 				}
@@ -308,7 +314,7 @@ uint32_t YmRenderer::YmFxDecode(int fxSlot, int regCode, int regPrediv, int regC
 			case 0xc0:		// Sync-Buzzer.
 				fx.type = eSyncBuzzer;
 				fx.syncBuzzShape = ReadInterleaved(fx.ymVoice + 8) & 15;
-				disableMask = 1 << (fx.ymVoice + 8);
+				skipMask = 1 << (fx.ymVoice + 8);
 				SetTimer(fxSlot, prediv, count);
 				break;
 
@@ -328,7 +334,7 @@ uint32_t YmRenderer::YmFxDecode(int fxSlot, int regCode, int regPrediv, int regC
 		}
 	}
 
-	return disableMask;
+	return skipMask;
 }
 
 
@@ -342,17 +348,27 @@ void YmRenderer::PlayerTick()
 		skipMask |= YmFxDecode(1, 3, 8, 15);
 	}
 
+	// very specific to ym format: if digidrm is running, switch off noise+tone on the voice
+	uint8_t r7 = ReadInterleaved(7);
+	for (int fx = 0; fx < 2; fx++)
+	{
+		if (m_ymFx[fx].type == eDigidrum)
+			r7 |= ((1 << 0) | (1 << 3)) << m_ymFx[fx].ymVoice;
+	}
+	YmWrite(7, r7);
+	skipMask |= (1 << 7);
+
+	// send data to YM
 	for (int r = 0; r <= 12; r++)
 	{
 		if (0 == (skipMask&(1 << r)))
 			YmWrite(r, ReadInterleaved(r));
 	}
-
 	uint8_t r13 = ReadInterleaved(13);
 	if (r13 != 0xff)
 		YmWrite(13, r13);
 
-
+	// next ym music frame
 	m_tick++;
 	if (m_tick >= m_subSongLenInTick[0])
 		m_tick = 0;
@@ -384,7 +400,7 @@ void	YmRenderer::AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t* 
 				for (uint32_t s = 0; s < todo; s++)
 				{
 					*buffer++ = ComputeNextSample();
-					*pSampleViewInfo++ = 0; //ComputeCurrentVisualLevels();
+					*pSampleViewInfo++ = m_ym2149.ComputeCurrentVisualLevels();
 				}
 			}
 		}

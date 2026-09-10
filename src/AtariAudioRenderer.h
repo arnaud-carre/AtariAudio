@@ -54,6 +54,15 @@ public:
 	// use GetSubsongDurationSample() upfront to get exact amount of samples.
 	virtual void AudioRender(int16_t* buffer, uint32_t count) = 0;
 
+	//-------------------------------------------------------------------------
+	// Additional functions for high level players
+	//-------------------------------------------------------------------------
+
+	// Same as AudioRender but also fills pVisualSamples buffer with 1 32bits per sample
+	// the 32bits contains vu meter values for 3 ym voices and STE DAC in form of 8888
+	// Use it if you want to draw some per voice vu meter in a player
+	virtual void AudioRenderWithVisualInfos(int16_t* buffer, uint32_t sampleCount, uint32_t* pVisualSamples) = 0;
+
 protected:
 	static	const	int		kSubsongCountMax = 128;
 

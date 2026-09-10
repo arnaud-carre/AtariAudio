@@ -222,6 +222,28 @@ int16_t Ym2149c::ComputeNextSample()
 	return dcAdjust(levelA + levelB + levelC);
 }
 
+#define	k15toS8(a)	((((a*127)>>15)+63)^0x80)	// signed 8bits value for oscillators viewing display per voice
+static const uint32_t	s_ViewVolTab[16*2] =
+{
+	k15toS8(152),k15toS8(181),k15toS8(215),k15toS8(255),
+	k15toS8(304),k15toS8(362),k15toS8(430),k15toS8(511),
+	k15toS8(608),k15toS8(724),k15toS8(861),k15toS8(1023),
+	k15toS8(1217),k15toS8(1448),k15toS8(1722),k15toS8(2047),
+	k15toS8(2435),k15toS8(2896),k15toS8(3444),k15toS8(4095),
+	k15toS8(4870),k15toS8(5792),k15toS8(6888),k15toS8(8191),
+	k15toS8(9741),k15toS8(11584),k15toS8(13776),k15toS8(16383),
+	k15toS8(19483),k15toS8(23169),k15toS8(27553),k15toS8(32767)
+};
+
+uint32_t Ym2149c::ComputeCurrentVisualLevels() const
+{
+	const unsigned int indexA = (m_currentVisualLevels >> 0) & 31;
+	const unsigned int indexB = (m_currentVisualLevels >> 5) & 31;
+	const unsigned int indexC = (m_currentVisualLevels >> 10) & 31;
+	uint32_t visualLevels = (s_ViewVolTab[indexA] << 0) | (s_ViewVolTab[indexB] << 8) | (s_ViewVolTab[indexC] << 16);
+	return visualLevels;
+}
+
 void	Ym2149c::InsideTimerIrq(bool inside)
 {
 	if (!inside)

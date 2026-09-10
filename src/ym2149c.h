@@ -19,7 +19,8 @@ public:
 	int16_t	ComputeNextSample();
 	void	InsideTimerIrq(bool inside);
 
-	uint16_t GetCurrentVisualLevels() const { return m_currentVisualLevels; } // only used for some player visual, contains 3 YM voices volume and STE DAC in 8888 format
+	uint32_t ComputeCurrentVisualLevels() const; // only used for some player visual, contains 3 YM voices volume and STE DAC in 8888 format
+
 	void MuteVoices(uint32_t muteMask);
 
 private:
