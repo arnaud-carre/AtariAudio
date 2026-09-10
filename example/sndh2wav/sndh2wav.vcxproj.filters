@@ -66,6 +66,9 @@
     <ClCompile Include="..\..\src\external\lzh.cpp">
       <Filter>Source Files\AtariAudio\external</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\AtariAudioRenderer.cpp">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="wavwriter.h">
@@ -118,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\external\lzh.h">
       <Filter>Source Files\AtariAudio\external</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AtariAudioRenderer.h">
+      <Filter>Source Files\AtariAudio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

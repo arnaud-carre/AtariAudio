@@ -48,6 +48,9 @@ int	main(int argc, char* argv[])
 		return -1;
 	}
 
+
+
+
 	uint32_t sndhFileSize;
 	void* sndhFileBuffer = LoadFile(argv[1], sndhFileSize);
 	if ( sndhFileBuffer )
@@ -55,23 +58,22 @@ int	main(int argc, char* argv[])
 		WavWriter wavWriter;
 		if (wavWriter.Open(argv[2], kHostReplayRate, 1))
 		{
-			#if 0
-			SndhRenderer* sr = SndhRenderer::Create(sndhFileBuffer, sndhFileSize, kHostReplayRate);
-			if (sr)
+			AtariAudioRenderer* ar = AtariAudioRenderer::Create(sndhFileBuffer, sndhFileSize, kHostReplayRate);
+			if (ar)
 			{
-				const SndhRenderer::SongInfo& si = sr->GetSongInfo();
+				const AtariAudioRenderer::SongInfo& si = ar->GetSongInfo();
 				printf("\"%s\" by %s\n", si.musicName, si.musicAuthor);
 
 				// Loop over all subsongs
 				for (int s = 1; s <= si.subsongCount; s++)
 				{
-					uint32_t sampleCount = sr->GetSubsongDurationSample(s);
+					uint32_t sampleCount = ar->GetSubsongDurationSample(s);
 					if (0 == sampleCount)
 					{
 						// a subsong of duration 0 means SNDH file doesn't provide any duration
 						sampleCount = 3*60*kHostReplayRate;		// so decide to play 3 minutes by default
 					}
-					if (sr->InitSubSong(s))
+					if (ar->InitSubSong(s))
 					{
 						const int durationInSec = sampleCount / kHostReplayRate;
 						printf("Rendering %d:%02d sec of subsong #%d/#%d (%dHz player)\n", durationInSec / 60, durationInSec % 60, s, si.subsongCount, si.playerTickRate);
@@ -79,37 +81,14 @@ int	main(int argc, char* argv[])
 						while (sampleCount > 0)
 						{
 							uint32_t todo = (sampleCount > kAudioBufferLen) ? kAudioBufferLen : sampleCount;
-							sr->AudioRender(audioBuffer, todo);
+							ar->AudioRender(audioBuffer, todo);
 							wavWriter.AddAudioData(audioBuffer, todo);
 							sampleCount -= todo;
 						}
 					}
 				}
-				SndhRenderer::Destroy(sr);
+				AtariAudioRenderer::Destroy(ar);
 			}
-			#else
-			AtariAudioRenderer* yr = AtariAudioRenderer::Create(sndhFileBuffer, sndhFileSize, kHostReplayRate);
-			if (yr)
-			{
-				uint32_t sampleCount = 0; //yr->GetSongDurationSample();
-				if (0 == sampleCount)
-				{
-					// a subsong of duration 0 means SNDH file doesn't provide any duration
-					sampleCount = 3*60*kHostReplayRate;		// so decide to play 3 minutes by default
-				}
-				const int durationInSec = sampleCount / kHostReplayRate;
-				printf("Rendering %d:%02d sec\n", durationInSec / 60, durationInSec % 60);
-
-				while (sampleCount > 0)
-				{
-					uint32_t todo = (sampleCount > kAudioBufferLen) ? kAudioBufferLen : sampleCount;
-					yr->AudioRender(audioBuffer, todo);
-					wavWriter.AddAudioData(audioBuffer, todo);
-					sampleCount -= todo;
-				}
-//				YmRenderer::Destroy(yr);
-			}
-			#endif
 			wavWriter.Close();
 		}
 	}

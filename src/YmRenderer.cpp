@@ -19,29 +19,14 @@ YmRenderer*	YmRenderer::Create(const void* ymMemoryData, uint32_t ymMemorySize, 
 	return nullptr;
 }
 
-void YmRenderer::Destroy(YmRenderer* yr)
-{
-	delete yr;
-}
-
 YmRenderer::YmRenderer()
 {
-	static const char* sEmptyString = "";
-	memset(&m_songInfo, 0, sizeof(m_songInfo));
-	m_hostReplayRate = 0;
-	m_songInfo.musicName = sEmptyString;
-	m_songInfo.musicAuthor = sEmptyString;
-	m_songInfo.ripper = sEmptyString;
-	m_songInfo.converter = sEmptyString;
-	m_songInfo.year = sEmptyString;
 	m_dataStream = nullptr;
 	m_dataStreamStride = 0;
-
 }
 
 YmRenderer::~YmRenderer()
 {
-	free((void*)m_songInfo.rawBinaryData);
 }
 
 extern uint16_t AURead16(const char* r);
@@ -67,13 +52,13 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 {
 
 	bool ret = false;
-	m_hostReplayRate = hostReplayRate;
 	m_innerSamplePos = 0;
 	m_samplePerTick = 0;
-	m_songLenInTick = 0;
+	m_subSongLenInTick[0] = 0;
 	m_tick = 0;
 
 	SongInfo& si = m_songInfo;
+	si.hostReplayRate = hostReplayRate;
 
 	if (LzhDepacker::IsLzhPacked(rawYmFile, ymFileSize))
 	{
@@ -100,7 +85,7 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 			if (0 == strncmp(r8 + 4, "LeOnArD!", 8))
 			{
 				r8 += 12;
-				m_songLenInTick = Read32(&r8);
+				m_subSongLenInTick[0] = Read32(&r8);
 				m_flags = Read32(&r8);
 				m_sampleCount = Read16(&r8);
 				ymClock = Read32(&r8);
@@ -133,8 +118,10 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 		assert(ymClock > 0);
 		assert(m_songInfo.playerTickRate > 0);
 
-		m_samplePerTick = m_hostReplayRate / m_songInfo.playerTickRate;
-		m_ym2149.Reset(m_hostReplayRate, ymClock);
+		m_samplePerTick = si.hostReplayRate / m_songInfo.playerTickRate;
+		m_ym2149.Reset(si.hostReplayRate, ymClock);
+		si.subsongCount = 1;
+		si.defaultSubsong = 1;
 	}
 	else
 	{
@@ -145,9 +132,25 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 	return ret;
 }
 
-uint32_t YmRenderer::GetSongDurationSample() const
+uint32_t YmRenderer::GetSubsongDurationSample(int subsongId) const
 {
-	return m_songLenInTick * m_samplePerTick;
+	if ((subsongId <= 0) || (subsongId > m_songInfo.subsongCount))
+		return 0;
+
+	assert(1 == subsongId);
+	return m_subSongLenInTick[0] * m_samplePerTick;
+}
+
+bool YmRenderer::InitSubSong(int subSongId)
+{
+	bool ret = false;
+	if ((subSongId >= 1) && (subSongId <= m_songInfo.subsongCount))
+	{
+		m_innerSamplePos = 0;
+		m_tick = 0;
+		ret = true;
+	}
+	return ret;
 }
 
 int16_t YmRenderer::ComputeNextSample()
@@ -176,7 +179,7 @@ void YmRenderer::PlayerTick()
 		YmWrite(13, r13);
 
 	m_tick++;
-	if (m_tick >= m_songLenInTick)
+	if (m_tick >= m_subSongLenInTick[0])
 		m_tick = 0;
 }
 

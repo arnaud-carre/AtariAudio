@@ -6,8 +6,8 @@
 --------------------------------------------------------------------*/
 #pragma once
 #include <stdint.h>
-#include "AtariAudio.h"
-//#include "AtariMachine.h"
+#include "AtariAudioRenderer.h"
+#include "AtariMachine.h"
 
 class SndhRenderer : public AtariAudioRenderer
 {
@@ -19,17 +19,9 @@ public:
 	// After create you can free sndhMemoryData if needed (SndhRenderer keep an internal copy of the required data)
 	static SndhRenderer*	Create(const void* sndhMemoryData, uint32_t sndhMemorySize, uint32_t hostReplayRate);
 
-	// Destroy SndhRenderer object
-	static void Destroy(SndhRenderer* sr);
-
-	// Get information about the SNDH (like song name, author, amount of subsong, etc.)
-	const 	SongInfo&	GetSongInfo() const { return m_songInfo; };
 
 	// Get a subsong duration in samples. 0 means there is no information about duration for this subsong
 	uint32_t GetSubsongDurationSample(int subsongId) const;
-
-	// Same as GetSubsongDurationSample, but returned value is in millisec
-	uint32_t GetSubsongDurationMs(int subsongId) const;
 
 	// Initialize music driver to play a sub-song. By convention, subsongId starts at 1 (not 0)
 	// You must call InitSubSong before any call to AudioRender
@@ -40,10 +32,6 @@ public:
 	// by default the song will loop. If you want to stop at the perfect end, you can
 	// use GetSubsongDurationSample() upfront to get exact amount of samples.
 	void	AudioRender(int16_t* buffer, uint32_t sampleCount);
-
-	// Fast forward sampleCount in the song
-	void 	FastForward(uint32_t sampleCount);
-
 
 	//-------------------------------------------------------------------------
 	// Additional functions for high level players
@@ -63,7 +51,6 @@ public:
 	void MuteVoices(uint32_t muteVoiceMask) { m_atariMachine.MuteVoices(muteVoiceMask); }
 
 private:
-	static	const	int		kSubsongCountMax = 128;
 	static	const	uint32_t	SNDH_UPLOAD_ADDR = 0x10002;		// some SNDH can't play below (ie SynthDream2) Also some driver crash if loaded at 64KiB bound ( metal planet by Floopy at 1:44 )
 
     // Private constructors prevent direct instantiation
@@ -75,13 +62,6 @@ private:
 	bool	Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t hostReplayRate);
 	void		AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t* pSampleViewInfo);
 
-	SongInfo m_songInfo;
 	AtariMachine m_atariMachine;
-
-	uint32_t	m_subSongLenInTick[kSubsongCountMax];
-	uint32_t	m_samplePerTick;
-	uint32_t	m_innerSamplePos;
-	bool 		m_subsongInit;
-	uint32_t 	m_hostReplayRate;
 };
 

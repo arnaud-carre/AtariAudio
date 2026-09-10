@@ -125,6 +125,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\AtariAudioRenderer.cpp" />
     <ClCompile Include="..\..\src\AtariMachine.cpp" />
     <ClCompile Include="..\..\src\external\ice_24.c" />
     <ClCompile Include="..\..\src\external\lzh.cpp" />
@@ -142,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\AtariAudio.h" />
+    <ClInclude Include="..\..\src\AtariAudioRenderer.h" />
     <ClInclude Include="..\..\src\AtariMachine.h" />
     <ClInclude Include="..\..\src\external\ice_24.h" />
     <ClInclude Include="..\..\src\external\lzh.h" />

@@ -12,20 +12,6 @@
 #include "external/ice_24.h"
 #include "timedb.h"
 
-AtariAudioRenderer* AtariAudioRenderer::Create(const void* fileMemoryData, uint32_t fileMemorySize, uint32_t hostReplayRate)
-{
-	SndhRenderer* sr = SndhRenderer::Create(fileMemoryData, fileMemorySize, hostReplayRate);
-	if (sr)
-		return sr;
-
-	YmRenderer* yr = YmRenderer::Create(fileMemoryData, fileMemorySize, hostReplayRate);
-	if (yr)
-		return yr;
-
-	return nullptr;
-}
-
-
 SndhRenderer*	SndhRenderer::Create(const void* sndhMemoryData, uint32_t sndhMemorySize, uint32_t hostReplayRate)
 {
 	SndhRenderer* sr = new SndhRenderer();
@@ -35,28 +21,14 @@ SndhRenderer*	SndhRenderer::Create(const void* sndhMemoryData, uint32_t sndhMemo
 	return nullptr;
 }
 
-void SndhRenderer::Destroy(SndhRenderer* sr)
-{
-	delete sr;
-}
-
 SndhRenderer::SndhRenderer()
 {
-	static const char* sEmptyString = "";
-	m_songInfo.rawBinaryPlayer = nullptr;
-	memset(&m_songInfo, 0, sizeof(m_songInfo));
-	m_hostReplayRate = 0;
-	m_songInfo.musicName = sEmptyString;
-	m_songInfo.musicAuthor = sEmptyString;
-	m_songInfo.ripper = sEmptyString;
-	m_songInfo.converter = sEmptyString;
-	m_songInfo.year = sEmptyString;
 	m_subsongInit = false;
 }
 
 SndhRenderer::~SndhRenderer()
 {
-	free((void*)m_songInfo.rawBinaryPlayer);
+	int z = 0;
 }
 
 uint16_t	AURead16(const char* r)
@@ -81,34 +53,34 @@ const char* AUskipNTString(const char* r)
 bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t hostReplayRate)
 {
 
-	m_hostReplayRate = hostReplayRate;
 	bool ret = false;
 	SongInfo& si = m_songInfo;
+	si.hostReplayRate = hostReplayRate;
 	if (ice_24_header((unsigned char*)rawSndhFile))
 	{
-		si.rawBinaryPlayerSize = (uint32_t)ice_24_origsize((unsigned char*)rawSndhFile);
-		si.rawBinaryPlayer = malloc(si.rawBinaryPlayerSize);
-		long csize = ice_24_depack((unsigned char*)rawSndhFile, (unsigned char*)si.rawBinaryPlayer);
-		if (si.rawBinaryPlayerSize != csize)
+		si.rawBinaryDataSize = (uint32_t)ice_24_origsize((unsigned char*)rawSndhFile);
+		si.rawBinaryData = malloc(si.rawBinaryDataSize);
+		long csize = ice_24_depack((unsigned char*)rawSndhFile, (unsigned char*)si.rawBinaryData);
+		if (si.rawBinaryDataSize != csize)
 		{
-			free((void*)si.rawBinaryPlayer);
-			si.rawBinaryPlayer = nullptr;
+			free((void*)si.rawBinaryData);
+			si.rawBinaryData = nullptr;
 			return false;
 		}
 	}
 	else
 	{
-		si.rawBinaryPlayerSize = sndhFileSize;
-		si.rawBinaryPlayer = malloc(si.rawBinaryPlayerSize);
-		memcpy((void*)si.rawBinaryPlayer, rawSndhFile, sndhFileSize);
+		si.rawBinaryDataSize = sndhFileSize;
+		si.rawBinaryData = malloc(si.rawBinaryDataSize);
+		memcpy((void*)si.rawBinaryData, rawSndhFile, sndhFileSize);
 	}
 
 	for (int i = 0; i < kSubsongCountMax; i++)
 		m_subSongLenInTick[i] = 0;
 
 	bool bFrms = false;
-	const char* read8 = (const char*)si.rawBinaryPlayer;
-	if (si.rawBinaryPlayerSize > 16)
+	const char* read8 = (const char*)si.rawBinaryData;
+	if (si.rawBinaryDataSize > 16)
 	{
 		if ((0x60 == read8[0]) && (0 == strncmp(read8 + 12, "SNDH", 4)))
 		{
@@ -220,7 +192,7 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 			// if no new FRMS timing tag, try to search in timedb
 			// (and eventually override any old TIME tag, that are often broken)
 			if (!bFrms)
-				timedbSearch(si.rawBinaryPlayer, si.rawBinaryPlayerSize, m_subSongLenInTick, kSubsongCountMax);
+				timedbSearch(si.rawBinaryData, si.rawBinaryDataSize, m_subSongLenInTick, kSubsongCountMax);
 
 			ret = true;
 		}
@@ -228,8 +200,9 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 
 	if (ret)
 	{
-		assert(m_songInfo.playerTickRate > 0);
-		m_samplePerTick = m_hostReplayRate / m_songInfo.playerTickRate;
+		assert(si.playerTickRate > 0);
+		assert(si.hostReplayRate > 0);
+		m_samplePerTick = si.hostReplayRate / si.playerTickRate;
 	}
 
 	return ret;
@@ -241,8 +214,8 @@ bool	SndhRenderer::InitSubSong(int subSongId)
 	if ((subSongId >= 1) && (subSongId <= m_songInfo.subsongCount))
 	{
 		m_innerSamplePos = 0;
-		m_atariMachine.Startup(m_hostReplayRate);
-		if (m_atariMachine.Upload(m_songInfo.rawBinaryPlayer, SNDH_UPLOAD_ADDR, m_songInfo.rawBinaryPlayerSize))
+		m_atariMachine.Startup(m_songInfo.hostReplayRate);
+		if (m_atariMachine.Upload(m_songInfo.rawBinaryData, SNDH_UPLOAD_ADDR, m_songInfo.rawBinaryDataSize))
 		{
 			ret = m_atariMachine.Jsr(SNDH_UPLOAD_ADDR, subSongId);
 		}
@@ -305,11 +278,6 @@ void SndhRenderer::AudioRender(int16_t* buffer, uint32_t count)
 	AudioRenderInternal(buffer, count, nullptr);
 }
 
-void 	SndhRenderer::FastForward(uint32_t sampleCount)
-{
-	AudioRenderInternal(nullptr, sampleCount, nullptr);
-}
-
 void SndhRenderer::AudioRenderWithVisualInfos(int16_t* buffer, uint32_t count, uint32_t* pVisualSamples)
 {
 	AudioRenderInternal(buffer, count, pVisualSamples);
@@ -323,6 +291,7 @@ uint32_t SndhRenderer::GetSubsongDurationSample(int subsongId) const
 	return (m_subSongLenInTick[subsongId-1] * m_samplePerTick);	// by convention, SNDH subsong id starts at 1
 }
 
+/*
 uint32_t SndhRenderer::GetSubsongDurationMs(int subsongId) const
 {
 	uint32_t ms = 0;
@@ -333,3 +302,4 @@ uint32_t SndhRenderer::GetSubsongDurationMs(int subsongId) const
 	}
 	return ms;
 }
+	*/

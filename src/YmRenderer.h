@@ -6,41 +6,28 @@
 --------------------------------------------------------------------*/
 #pragma once
 #include <stdint.h>
-#include "AtariAudio.h"
+#include "AtariAudioRenderer.h"
+#include "ym2149c.h"
 #include "Mk68901.h"
 
 class YmRenderer : public AtariAudioRenderer
 {
 public:
-	struct SongInfo
-	{
-		int playerTickRate;
-		const char* musicName;
-		const char* musicAuthor;
-		const char* ripper;
-		const char* converter;
-		const char* year;
-		const void* rawBinaryData;
-		uint32_t rawBinaryDataSize;
-	};
-
 	// Create a YmRenderer instance from a YM file data located in memory
 	// The input YM data could be LZH packed
 	// hostReplayRate is the rate you want to render audio stream ( ie 44100 for 44.1Khz )
 	// After create you can free sndhMemoryData if needed (SndhRenderer keep an internal copy of the required data)
 	static YmRenderer*	Create(const void* ymMemoryData, uint32_t ymMemorySize, uint32_t hostReplayRate);
 
-	// Destroy SndhRenderer object
-	static void Destroy(YmRenderer* yr);
-
 	// Get information about the SNDH (like song name, author, amount of subsong, etc.)
-//	const 	SongInfo&	GetSongInfo() const { return m_songInfo; };
+	const 	AtariAudioRenderer::SongInfo&	GetSongInfo() const;
 
-	// Get song duration in samples. 0 means there is no information about duration for this song
-	uint32_t GetSongDurationSample() const;
+	// Get a subsong duration in samples. 0 means there is no information about duration for this subsong
+	uint32_t GetSubsongDurationSample(int subsongId) const;
 
-	// Same as GetSongDurationSample, but returned value is in millisec
-	uint32_t GetSongDurationMs() const;
+	// Initialize music driver to play a sub-song. By convention, subsongId starts at 1 (not 0)
+	// You must call InitSubSong before any call to AudioRender
+	bool	InitSubSong(int subSongId);
 
 	// Main audio rendering function.
 	// Compute the next "count" samples into "buffer" (mono, signed, 16bits samples)
@@ -88,22 +75,17 @@ private:
 	int16_t ComputeNextSample(void);
 	bool	Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostReplayRate);
 	void		AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t* pSampleViewInfo);
-	uint8_t ReadInterleaved(int reg) const { return m_dataStream[m_songLenInTick*reg + m_tick]; }
+	uint8_t ReadInterleaved(int reg) const { return m_dataStream[m_subSongLenInTick[0]*reg + m_tick]; }
 	void YmWrite(int reg, uint8_t d);
 
 	uint16_t Read16(const char** r);
 	uint32_t Read32(const char** r);
 
-	SongInfo m_songInfo;
 	Ym2149c m_ym2149;
 	Mk68901 m_mfp;
 
 	uint32_t m_tick;
-	uint32_t	m_songLenInTick;
 	uint32_t m_songLoopTick;
-	uint32_t	m_samplePerTick;
-	uint32_t	m_innerSamplePos;
-	uint32_t 	m_hostReplayRate;
 	uint32_t m_flags;
 	const uint8_t* m_dataStream;
 	int m_dataStreamStride;
