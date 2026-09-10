@@ -2,9 +2,9 @@ name: Linux Build Check
 
 on:
   push:
-    branches: [ main ]
+    branches: [ ym ]
   pull_request:
-    branches: [ main ]
+    branches: [ ym ]
 
 jobs:
   build-linux:
