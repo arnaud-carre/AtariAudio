@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------------
-	Atari Audio Library v1.10
+	Atari Audio Library v1.20
 	Small & accurate ATARI-ST audio emulation
 	Arnaud Carré aka Leonard/Oxygene
 	@leonard_coder
@@ -35,6 +35,10 @@ public:
 		uint32_t rawBinaryDataSize;
 	};
 
+	// Create a SndhRenderer instance from a SNDH file data located in memory
+	// The input SNDH data could be ICE! packed
+	// hostReplayRate is the rate you want to render audio stream ( ie 44100 or 44.1Khz )
+	// After create you can free sndhMemoryData if needed (SndhRenderer keep an internal copy of the required data)
 	static AtariAudioRenderer* Create(const void* fileMemoryData, uint32_t fileMemorySize, uint32_t hostReplayRate);
 	static void Destroy(AtariAudioRenderer* ar);
 	
@@ -62,6 +66,14 @@ public:
 	// the 32bits contains vu meter values for 3 ym voices and STE DAC in form of 8888
 	// Use it if you want to draw some per voice vu meter in a player
 	virtual void AudioRenderWithVisualInfos(int16_t* buffer, uint32_t sampleCount, uint32_t* pVisualSamples) = 0;
+
+	// Set a mute mask to artifically mute some YM or STE dac voices
+	// NOTE: InitSubSong always un-mute everything. So MuteVoices should be called after InitSubsong
+	static const uint32_t kYMVoiceA = (1 << 0);
+	static const uint32_t kYMVoiceB = (1 << 1);
+	static const uint32_t kYMVoiceC = (1 << 2);
+	static const uint32_t kSTEDac = (1 << 3);
+	virtual void MuteVoices(uint32_t muteVoiceMask) = 0;
 
 protected:
 	static	const	int		kSubsongCountMax = 128;

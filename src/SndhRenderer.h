@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------------
-	Atari Audio Library v1.10
+	Atari Audio Library v1.20
 	Small & accurate ATARI-ST audio emulation
 	Arnaud Carré aka Leonard/Oxygene
 	@leonard_coder
@@ -12,42 +12,13 @@
 class SndhRenderer : public AtariAudioRenderer
 {
 public:
-
-	// Create a SndhRenderer instance from a SNDH file data located in memory
-	// The input SNDH data could be ICE! packed
-	// hostReplayRate is the rate you want to render audio stream ( ie 44100 or 44.1Khz )
-	// After create you can free sndhMemoryData if needed (SndhRenderer keep an internal copy of the required data)
-	static SndhRenderer*	Create(const void* sndhMemoryData, uint32_t sndhMemorySize, uint32_t hostReplayRate);
-
-
-	// Get a subsong duration in samples. 0 means there is no information about duration for this subsong
+	// Read the base AtariAudioRenderer.h header for more details about API
+	static SndhRenderer* Create(const void* sndhMemoryData, uint32_t sndhMemorySize, uint32_t hostReplayRate);
+	const SongInfo&	GetSongInfo() const;
 	uint32_t GetSubsongDurationSample(int subsongId) const;
-
-	// Initialize music driver to play a sub-song. By convention, subsongId starts at 1 (not 0)
-	// You must call InitSubSong before any call to AudioRender
-	bool	InitSubSong(int subSongId);
-
-	// Main audio rendering function.
-	// Compute the next "count" samples into "buffer" (mono, signed, 16bits samples)
-	// by default the song will loop. If you want to stop at the perfect end, you can
-	// use GetSubsongDurationSample() upfront to get exact amount of samples.
-	void	AudioRender(int16_t* buffer, uint32_t sampleCount);
-
-	//-------------------------------------------------------------------------
-	// Additional functions for high level players
-	//-------------------------------------------------------------------------
-
-	// Same as AudioRender but also fills pVisualSamples buffer with 1 32bits per sample
-	// the 32bits contains vu meter values for 3 ym voices and STE DAC in form of 8888
-	// Use it if you want to draw some per voice vu meter in a player
-	void	AudioRenderWithVisualInfos(int16_t* buffer, uint32_t sampleCount, uint32_t* pVisualSamples);
-
-	// Set a mute mask to artifically mute some YM or STE dac voices
-	// NOTE: InitSubSong always un-mute everything. So MuteVoices should be called after InitSubsong
-	static const uint32_t kYMVoiceA = (1 << 0);
-	static const uint32_t kYMVoiceB = (1 << 1);
-	static const uint32_t kYMVoiceC = (1 << 2);
-	static const uint32_t kSTEDac = (1 << 3);
+	bool InitSubSong(int subSongId);
+	void AudioRender(int16_t* buffer, uint32_t sampleCount);
+	void AudioRenderWithVisualInfos(int16_t* buffer, uint32_t sampleCount, uint32_t* pVisualSamples);
 	void MuteVoices(uint32_t muteVoiceMask) { m_atariMachine.MuteVoices(muteVoiceMask); }
 
 private:

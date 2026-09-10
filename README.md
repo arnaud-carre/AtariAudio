@@ -1,25 +1,25 @@
-# AtariAudio Library v1.10
+# AtariAudio Library v1.20
 
-src/ contains all files needed to compile AtariAudio library. It allows you to play ATARI SNDH music files. You can also directly use YM2149 emulator if you want to write your own YM tracker.
+src/ contains all files needed to compile AtariAudio library. It allows you to play ATARI .SNDH and .YM music files. You can also directly use YM2149 emulator if you want to write your own YM tracker.
 The libray doesn't use any dependency, and should compile on any platform, including embeded systems (it doesn't even use float )
 
 **NOTE: Since 1.10 AtariAudio library is thread safe! Any thread could create any amount of SndhRenderer instances. (obviously two different threads can't use the same instance of SndhRenderer)**
 
-# Playing SNDH file in your own app
+# Playing .SNDH and .YM file in your own app
 
 AtariAudio library doesn't use any file IO. You should provide data from memory. Entry point is SndhRenderer class.
-Look at SndhRenderer.h for API details but here is the absolute minimal:
+Look at AtariAudioRenderer.h for API details but here is the absolute minimal:
 
 ````
-static SndhRenderer* Create(const void* sndhMemoryData, uint32_t sndhMemorySize, uint32_t hostReplayRate);
+static AtariAudioRenderer* Create(const void* sndhMemoryData, uint32_t sndhMemorySize, uint32_t hostReplayRate);
 
 ````
-Load a SNDH file from memory. You should provide the memory buffer, size of the raw file, and host replay rate. ( ex 44100 for 44.1Khz )
+Load a .SNDH or .YM file from memory. You should provide the memory buffer, size of the raw file, and host replay rate. ( ex 44100 for 44.1Khz )
 
 ````
 bool	InitSubSong(int subSongId);
 ````
-Atari SNDH musics could contain several subsongs. You should *always* call InitSubsong before any audio rendering function. By convention, subsongs starts at 1.
+Atari .SNDH musics could contain several subsongs. You should *always* call InitSubsong before any audio rendering function. By convention, subsongs starts at 1.
 
 ````
 void	AudioRender(int16_t* buffer, uint32_t sampleCount);
@@ -27,7 +27,7 @@ void	AudioRender(int16_t* buffer, uint32_t sampleCount);
 This is the main audio rendering function. Render "count" samples into buffer. Buffer is a 16bits, signed, mono, sample buffer.
 
 Musics doesn't have an end by default, so AudioRender doesn't returns anything. If you want to generate the exact amount of samples, you can use GetSubsongDurationSample()
-NOTE: some SNDH files doesn't provide any song duration information. In this case GetSubsongDurationSample() will return 0.
+NOTE: some .SNDH files doesn't provide any song duration information. In this case GetSubsongDurationSample() will return 0.
 
 ````
 static void Destroy(SndhRenderer* sr);

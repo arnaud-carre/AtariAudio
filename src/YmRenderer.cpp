@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------------
-	Atari Audio Library v1.10
+	Atari Audio Library v1.20
 	Small & accurate ATARI-ST audio emulation
 	Arnaud Carré aka Leonard/Oxygene
 	@leonard_coder
@@ -154,12 +154,10 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 		assert(m_songInfo.playerTickRate > 0);
 
 		m_samplePerTick = si.hostReplayRate / m_songInfo.playerTickRate;
-		m_ym2149.Reset(si.hostReplayRate, ymClock);
-		m_mfp.Reset(si.hostReplayRate);
+		si.ym2149Clock = ymClock;
 		si.subsongCount = 1;
 		si.defaultSubsong = 1;
 		si.fileType = eFileType::eYm;
-		si.ym2149Clock = ymClock;
 	}
 
 	return ret;
@@ -181,6 +179,10 @@ bool YmRenderer::InitSubSong(int subSongId)
 	{
 		m_innerSamplePos = 0;
 		m_tick = 0;
+
+		m_ym2149.Reset(m_songInfo.hostReplayRate, m_songInfo.ym2149Clock);
+		m_mfp.Reset(m_songInfo.hostReplayRate);
+		MuteVoices(0);		// nothing is muted by default
 
 		// enable timer A & B for potential 2 YM fx
 		m_mfp.Write8(0x07, (1 << 5) | (1 << 0));
@@ -208,14 +210,17 @@ int16_t YmRenderer::ComputeNextSample()
 				const uint8_t r = (fx.fxPhase & 1)?fx.sidVol : 0;
 				YmWrite(fx.ymVoice + 8, r);
 			}
+			else if (eSyncBuzzer == fx.type)
+			{
+				YmWrite(13, fx.syncBuzzShape);
+			}
 			else if (eDigidrum == fx.type)
 			{
 				const YmSample& smp = m_samples[fx.drumId];
 				if (fx.fxPhase < smp.len)
 				{
-					const uint8_t r = smp.data[fx.fxPhase];
+					YmWrite(fx.ymVoice + 8, smp.data[fx.fxPhase]&15);
 					fx.fxPhase++;
-					YmWrite(fx.ymVoice + 8, r);
 				}
 				else
 				{
@@ -226,7 +231,6 @@ int16_t YmRenderer::ComputeNextSample()
 			}
 		}
 	}
-
 	return out;
 }
 
@@ -240,7 +244,6 @@ void YmRenderer::AudioRenderWithVisualInfos(int16_t* buffer, uint32_t sampleCoun
 	AudioRenderInternal(buffer, sampleCount, pVisualSamples);
 }
 
-
 void YmRenderer::YmWrite(int reg, uint8_t d)
 {
 	m_ym2149.WritePort(0, reg);	// select reg
@@ -250,10 +253,8 @@ void YmRenderer::YmWrite(int reg, uint8_t d)
 void YmRenderer::SetTimer(int slot, int prediv, int count)
 {
 	// drive Atari timer A or B for YM fx
-	const int ctrlReg = (0 == slot) ? 0x19 : 0x1b;
-	const int dataReg = (0 == slot) ? 0x1f : 0x21;
-	m_mfp.Write8(ctrlReg, prediv);
-	m_mfp.Write8(dataReg, count);
+	m_mfp.Write8((0 == slot) ? 0x19 : 0x1b, prediv);
+	m_mfp.Write8((0 == slot) ? 0x1f : 0x21, count);
 }
 
 uint32_t YmRenderer::YmFxDecode(int fxSlot, int regCode, int regPrediv, int regCount)
@@ -268,25 +269,14 @@ uint32_t YmRenderer::YmFxDecode(int fxSlot, int regCode, int regPrediv, int regC
 
 	if (eYmType::eYM5a == m_ymType)
 	{
-		int code5 = (ReadInterleaved(regCode) >> 4) & 3;
-		if (code5)
+		// ym5 fx, convert data into ym6 
+		code &= 0x30;
+		if (code)
 		{
-			// ym5 fx, convert data into ym6 
-			if (0 == fxSlot)
-			{
-				// ym5 SID
-				code = (code5 << 4) | 0x0;
-			}
-			else if (1 == fxSlot)
-			{
-				// ym5 digidrum
-				code = (code5 << 4) | 0x40;
-			}
+			static const uint8_t sFxCode[2] = {0x0, 0x40}; // ym5 SID & ym5 digidrum
+			code |= sFxCode[fxSlot];
 		}
-		else
-			code = 0;
 	}
-
 
 	if (code & 0x30)
 	{
@@ -314,10 +304,8 @@ uint32_t YmRenderer::YmFxDecode(int fxSlot, int regCode, int regPrediv, int regC
 			case 0xc0:		// Sync-Buzzer.
 				fx.type = eSyncBuzzer;
 				fx.syncBuzzShape = ReadInterleaved(fx.ymVoice + 8) & 15;
-				skipMask = 1 << (fx.ymVoice + 8);
 				SetTimer(fxSlot, prediv, count);
 				break;
-
 
 			default:
 				assert(false);
@@ -415,3 +403,9 @@ void	YmRenderer::AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t* 
 		m_innerSamplePos -= todo;
 	}
 }
+
+void YmRenderer::MuteVoices(uint32_t muteVoiceMask)
+{
+	m_ym2149.MuteVoices(muteVoiceMask);
+}
+
