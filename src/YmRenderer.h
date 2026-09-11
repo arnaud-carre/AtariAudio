@@ -104,11 +104,21 @@ private:
 	struct YmSample
 	{
 		const uint8_t* data;
+		uint32_t mixStart;
 		uint32_t len;
-		uint32_t replen;
+		uint16_t repeat;
+		uint16_t replayRate;
 	};
 
+	uint32_t m_songDurationSample;
+	const uint8_t* m_mixBank;
+	uint32_t m_mixFrac;
+	int m_mixPatternPos;
+	int m_mixCurrentRepeat;
+	uint32_t m_mixSamplePos;
 	int m_sampleCount;
 	YmSample m_samples[kYmMaxSamples];
+
+
 };
 

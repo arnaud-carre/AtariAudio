@@ -72,7 +72,7 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 	bool ret = false;
 	m_innerSamplePos = 0;
 	m_samplePerTick = 0;
-	m_subSongLenInTick[0] = 0;
+	m_songDurationSample = 0;
 	m_sampleCount = 0;
 	m_tick = 0;
 
@@ -111,6 +111,7 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 				m_sampleCount = StreamBE16(&r8);
 				ymClock = StreamBE32(&r8);
 				si.playerTickRate = StreamBE16(&r8);
+				assert(si.playerTickRate > 0);
 				m_songLoopTick = StreamBE32(&r8);
 				int skip = StreamBE16(&r8);
 				r8 += skip;
@@ -122,7 +123,6 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 						{
 							YmSample& smp = m_samples[s];
 							smp.len = StreamBE32(&r8);
-							smp.replen = 0;
 							smp.data = (const uint8_t*)r8;
 							r8 += smp.len;
 						}
@@ -141,8 +141,49 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 					m_dataStreamStride = 16;
 
 					m_ymType = (e_YM5a == sign) ? eYmType::eYM5a : eYmType::eYM6a;
+					m_samplePerTick = si.hostReplayRate / si.playerTickRate;
+					m_songDurationSample = m_subSongLenInTick[0] * m_samplePerTick;
 					ret = true;
 				}
+			}
+		}
+		break;
+		case e_MIX1:	// 'YMT1'
+		{
+			m_songInfo.playerTickRate = 50;
+			r8 += 12;
+			m_flags = StreamBE32(&r8);
+			uint32_t bankSize = StreamBE32(&r8);
+			m_sampleCount = StreamBE32(&r8);
+			if (m_sampleCount <= kYmMaxSamples)
+			{
+				uint64_t duration = 0;
+				for (int i = 0; i < m_sampleCount; i++)
+				{
+					m_samples[i].data = nullptr;
+					m_samples[i].mixStart = StreamBE32(&r8);
+					m_samples[i].len = StreamBE32(&r8);
+					m_samples[i].repeat = StreamBE16(&r8);
+					if (m_samples[i].repeat > 16)
+						m_samples[i].repeat = 16;
+					m_samples[i].replayRate = StreamBE16(&r8);
+					assert(m_samples[i].replayRate > 0);
+					duration += (uint64_t(m_samples[i].len * m_samples[i].repeat) * m_songInfo.hostReplayRate) / m_samples[i].replayRate;
+				}
+				m_songDurationSample = uint32_t(duration);
+				si.musicName = r8;
+				r8 = AUskipNTString(r8);
+				si.musicAuthor = r8;
+				r8 = AUskipNTString(r8);
+				si.converter = r8;
+				r8 = AUskipNTString(r8);
+				m_mixBank = (const uint8_t*)r8;
+				m_ymType = eYmType::eMIX1;
+				m_mixFrac = 0;
+				m_mixPatternPos = 0;
+				m_mixCurrentRepeat = m_samples[0].repeat;
+				m_mixSamplePos = 0;
+				ret = true;
 			}
 		}
 		break;
@@ -152,8 +193,7 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 	{
 		assert(ymClock > 0);
 		assert(m_songInfo.playerTickRate > 0);
-
-		m_samplePerTick = si.hostReplayRate / m_songInfo.playerTickRate;
+		
 		si.ym2149Clock = ymClock;
 		si.subsongCount = 1;
 		si.defaultSubsong = 1;
@@ -169,7 +209,7 @@ uint32_t YmRenderer::GetSubsongDurationSample(int subsongId) const
 		return 0;
 
 	assert(1 == subsongId);
-	return m_subSongLenInTick[0] * m_samplePerTick;
+	return m_songDurationSample;
 }
 
 bool YmRenderer::InitSubSong(int subSongId)
@@ -196,40 +236,74 @@ bool YmRenderer::InitSubSong(int subSongId)
 
 int16_t YmRenderer::ComputeNextSample()
 {
-	int16_t out = m_ym2149.ComputeNextSample();
-
-	// tick 2 Atari timers, maybe one of them is running
-	for (int t = 0; t < 2; t++)
+	int16_t out = 0;
+	if (eYmType::eMIX1 != m_ymType)
 	{
-		if (m_mfp.Tick(t))
+
+		out = m_ym2149.ComputeNextSample();
+
+		// tick 2 Atari timers, maybe one of them is running
+		for (int t = 0; t < 2; t++)
 		{
-			YmFx& fx = m_ymFx[t];
-			if (eSid == fx.type)
+			if (m_mfp.Tick(t))
 			{
-				fx.fxPhase++;
-				const uint8_t r = (fx.fxPhase & 1)?fx.sidVol : 0;
-				YmWrite(fx.ymVoice + 8, r);
-			}
-			else if (eSyncBuzzer == fx.type)
-			{
-				YmWrite(13, fx.syncBuzzShape);
-			}
-			else if (eDigidrum == fx.type)
-			{
-				const YmSample& smp = m_samples[fx.drumId];
-				if (fx.fxPhase < smp.len)
+				YmFx& fx = m_ymFx[t];
+				if (eSid == fx.type)
 				{
-					YmWrite(fx.ymVoice + 8, smp.data[fx.fxPhase]&15);
 					fx.fxPhase++;
+					const uint8_t r = (fx.fxPhase & 1)?fx.sidVol : 0;
+					YmWrite(fx.ymVoice + 8, r);
 				}
-				else
+				else if (eSyncBuzzer == fx.type)
 				{
-					// end digidrum, switch off
-					SetTimer(t, 0, 0);
-					fx.type = eNone;
+					YmWrite(13, fx.syncBuzzShape);
+				}
+				else if (eDigidrum == fx.type)
+				{
+					const YmSample& smp = m_samples[fx.drumId];
+					if (fx.fxPhase < smp.len)
+					{
+						YmWrite(fx.ymVoice + 8, smp.data[fx.fxPhase] & 15);
+						fx.fxPhase++;
+					}
+					else
+					{
+						// end digidrum, switch off
+						SetTimer(t, 0, 0);
+						fx.type = eNone;
+					}
 				}
 			}
 		}
+	}
+	else
+	{
+		// MIX
+
+		const YmSample& smp = m_samples[m_mixPatternPos];
+		int8_t out8 = m_mixBank[smp.mixStart+m_mixSamplePos];
+
+		m_mixFrac += smp.replayRate;
+		if (m_mixFrac >= m_songInfo.hostReplayRate)
+		{
+			m_mixSamplePos++;
+			if (m_mixSamplePos >= smp.len)
+			{
+				m_mixSamplePos = 0;
+				m_mixCurrentRepeat--;
+				if (m_mixCurrentRepeat <= 0)
+				{
+					m_mixPatternPos++;
+					if (m_mixPatternPos >= m_sampleCount)
+						m_mixPatternPos = 0;
+
+					m_mixCurrentRepeat = m_samples[m_mixPatternPos].repeat;
+				}
+			}
+			m_mixFrac -= m_songInfo.hostReplayRate;
+		}
+
+		out = int16_t(out8) << 7;
 	}
 	return out;
 }
@@ -364,17 +438,20 @@ void YmRenderer::PlayerTick()
 
 void	YmRenderer::AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t* pSampleViewInfo)
 {
-
 	while (count > 0)
 	{
-		if (0 == m_innerSamplePos)
+		uint32_t todo = count;
+		if (eYmType::eMIX1 != m_ymType)
 		{
-			PlayerTick();
-			m_innerSamplePos = m_samplePerTick;
-		}
+			if (0 == m_innerSamplePos)
+			{
+				PlayerTick();
+				m_innerSamplePos = m_samplePerTick;
+			}
 
-		uint32_t todo = (m_innerSamplePos <= count) ? m_innerSamplePos : count;
-		assert(m_innerSamplePos >= todo);
+			todo = (m_innerSamplePos <= count) ? m_innerSamplePos : count;
+			assert(m_innerSamplePos >= todo);
+		}
 
 		if (buffer)
 		{

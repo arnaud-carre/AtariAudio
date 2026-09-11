@@ -44,7 +44,7 @@ void*	LzhDepacker::Unpack(const void* dataIn, uint32_t inSize, uint32_t& outSize
 	inSize -= r8[0] + 2;
 
 	// Check for corrupted archive
-	if ((packedSize <= inSize) && (packedSize < originalSize))
+//	if ((packedSize <= inSize) && (packedSize < originalSize))
 	{
 		ret = malloc(originalSize);
 		if (LzUnpack((void*)r8, packedSize, ret, originalSize))
