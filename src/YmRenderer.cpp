@@ -10,6 +10,13 @@
 #include "YmRenderer.h"
 #include "external/lzh.h"
 
+#define	D_DBG_OUTPUT				0
+
+#if D_DBG_OUTPUT
+#include <stdio.h>
+static FILE*	sDbgH;
+#endif
+
 YmRenderer*	YmRenderer::Create(const void* ymMemoryData, uint32_t ymMemorySize, uint32_t hostReplayRate)
 {
 	YmRenderer* yr = new YmRenderer();
@@ -229,6 +236,11 @@ bool YmRenderer::InitSubSong(int subSongId)
 		SetTimer(0, 0, 0);
 		SetTimer(1, 0, 0);
 		ret = true;
+
+		#if D_DBG_OUTPUT
+		sDbgH = fopen("ymRecorder_log.txt", "w");
+		#endif
+
 	}
 	return ret;
 }
@@ -419,6 +431,35 @@ uint8_t YmRenderer::ReadInterleaved(int reg) const
 void YmRenderer::PlayerTick()
 {
 
+	#if D_DBG_OUTPUT
+	int ymRegs[14];
+	for (int r=0;r<14;r++)
+		ymRegs[r] = ReadInterleaved(r);
+
+	int ms = (m_tick * 1000) / m_songInfo.playerTickRate;
+
+	int perB = (ymRegs[3] << 8) | ymRegs[2];
+
+	fprintf(sDbgH, "F%4d (%3d.%03d) : ", m_tick, ms / 1000, ms % 1000);
+	fprintf(sDbgH, "P:$%04x ", perB);
+
+	if (perB > 0)
+	{
+		int hz = (2000000 / 8) / perB;
+		fprintf(sDbgH, "(%4d Hz) ", hz);
+	}
+
+	fprintf(sDbgH, "V:$%02x", ymRegs[9]);
+	if ( ymRegs[9]&0x10)
+		fprintf(sDbgH, "(E) ");
+	else
+		fprintf(sDbgH, "    ");
+
+	fprintf(sDbgH, "ENV: $%04x S:$%02x", (ymRegs[12] << 8) | ymRegs[11], ymRegs[13]);
+
+	fprintf(sDbgH, "\n");
+
+	#endif
 	uint32_t skipMask = 0;
 	if ((eYmType::eYM5a == m_ymType) || (eYmType::eYM6a == m_ymType))
 	{
@@ -435,6 +476,16 @@ void YmRenderer::PlayerTick()
 	}
 	YmWrite(7, r7);
 	skipMask |= (1 << 7);
+
+	// some YM files have one frame delay between enabling env and setting env period.
+	// Set a very long period to avoid high pich env a single player tick frame
+	int envPer = (ReadInterleaved(12) << 8) | ReadInterleaved(11);
+	if (0 == envPer)
+	{
+		YmWrite(11, 0xff);
+		YmWrite(12, 0xff);
+		skipMask |= (1 << 11) | (1 << 12);
+	}
 
 	// send data to YM
 	for (int r = 0; r <= 12; r++)
