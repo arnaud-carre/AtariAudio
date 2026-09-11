@@ -107,7 +107,6 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 				r8 += 12;
 				m_subSongLenInTick[0] = StreamBE32(&r8);
 				m_flags = StreamBE32(&r8);
-				assert(m_flags & 1);	// stream is interleaved
 				m_sampleCount = StreamBE16(&r8);
 				ymClock = StreamBE32(&r8);
 				si.playerTickRate = StreamBE16(&r8);
@@ -234,6 +233,15 @@ bool YmRenderer::InitSubSong(int subSongId)
 	return ret;
 }
 
+uint32_t YmRenderer::ComputeCurrentVisualLevels()
+{
+	if (eYmType::eMIX1 != m_ymType)
+		return m_ym2149.ComputeCurrentVisualLevels();
+
+	int8_t v = m_mixLastSample >> 1;
+	return uint32_t(v)<<24;
+}
+
 int16_t YmRenderer::ComputeNextSample()
 {
 	int16_t out = 0;
@@ -281,7 +289,7 @@ int16_t YmRenderer::ComputeNextSample()
 		// MIX
 
 		const YmSample& smp = m_samples[m_mixPatternPos];
-		int8_t out8 = m_mixBank[smp.mixStart+m_mixSamplePos];
+		m_mixLastSample = m_mixBank[smp.mixStart+m_mixSamplePos];
 
 		m_mixFrac += smp.replayRate;
 		if (m_mixFrac >= m_songInfo.hostReplayRate)
@@ -303,7 +311,7 @@ int16_t YmRenderer::ComputeNextSample()
 			m_mixFrac -= m_songInfo.hostReplayRate;
 		}
 
-		out = int16_t(out8) << 7;
+		out = int16_t(m_mixLastSample) << 6;
 	}
 	return out;
 }
@@ -399,6 +407,14 @@ uint32_t YmRenderer::YmFxDecode(int fxSlot, int regCode, int regPrediv, int regC
 	return skipMask;
 }
 
+uint8_t YmRenderer::ReadInterleaved(int reg) const
+{
+	if (m_flags&1)
+		return m_dataStream[m_subSongLenInTick[0]*reg + m_tick];	// stream interleaved
+
+	return m_dataStream[m_tick * m_dataStreamStride + reg];
+}
+
 
 void YmRenderer::PlayerTick()
 {
@@ -465,7 +481,7 @@ void	YmRenderer::AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t* 
 				for (uint32_t s = 0; s < todo; s++)
 				{
 					*buffer++ = ComputeNextSample();
-					*pSampleViewInfo++ = m_ym2149.ComputeCurrentVisualLevels();
+					*pSampleViewInfo++ = ComputeCurrentVisualLevels();
 				}
 			}
 		}

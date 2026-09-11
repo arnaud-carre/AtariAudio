@@ -57,6 +57,7 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 		m_subSongLenInTick[i] = 0;
 
 	bool bFrms = false;
+	int tagCount = 0;
 	const char* read8 = (const char*)si.rawBinaryData;
 	if (si.rawBinaryDataSize > 16)
 	{
@@ -78,37 +79,44 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 				{
 					assert(si.subsongCount > 0);
 					read8 += 4 + si.subsongCount * 2;			// skip 2bytes per offset
+					tagCount++;
 				}
 				if (0 == strncmp(read8, "!#", 2))
 				{
 					si.defaultSubsong = atoi(read8 + 2);
 					read8 = AUskipNTString(read8+2);
+					tagCount++;
 				}
 				else if (0 == strncmp(read8, "TITL", 4))
 				{
 					si.musicName = read8 + 4;
 					read8 = AUskipNTString(read8 + 4);
+					tagCount++;
 				}
 				else if (0 == strncmp(read8, "COMM", 4))
 				{
 					si.musicAuthor = read8 + 4;
 					read8 = AUskipNTString(read8 + 4);
+					tagCount++;
 				}
 				else if (0 == strncmp(read8, "RIPP", 4))
 				{
 					si.ripper = read8 + 4;
 					read8 = AUskipNTString(read8 + 4);
+					tagCount++;
 				}
 				else if (0 == strncmp(read8, "CONV", 4))
 				{
 					si.converter = read8 + 4;
 					read8 = AUskipNTString(read8 + 4);
+					tagCount++;
 				}
 				else if ((0 == strncmp(read8, "YEAR", 4)))
 				{
 					if ( read8[4] != 0)
 						si.year = read8 + 4;	// many sndh files have "" as year string
 					read8 = AUskipNTString(read8 + 4);
+					tagCount++;
 				}
 				else if (0 == strncmp(read8, "##", 2))
 				{
@@ -119,6 +127,7 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 					if ((si.subsongCount <= 0) || (si.subsongCount > kSubsongCountMax))	// some SNDH files have broken ## tag
 						si.subsongCount = 1;
 					read8 += 4;
+					tagCount++;
 				}
 				else if (0 == strncmp(read8, "TIME", 4))
 				{
@@ -133,6 +142,7 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 						m_subSongLenInTick[i] = lenInSec * si.playerTickRate;
 						read8 += 2;
 					}
+					tagCount++;
 				}
 				else if (0 == strncmp(read8, "FRMS", 4))
 				{
@@ -144,6 +154,7 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 						read8 += 4;
 					}
 					bFrms = true;
+					tagCount++;
 				}
 				else if (0 == strncmp(read8, "HDNS", 4))
 				{
@@ -157,6 +168,7 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 				{
 					si.playerTickRate = atoi(read8 + 2);
 					read8 = AUskipNTString(read8 + 2);
+					tagCount++;
 				}
 				else
 				{
@@ -164,15 +176,18 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 				}
 			}
 
-			if ((si.defaultSubsong > si.subsongCount) || (si.defaultSubsong < 1))
-				si.defaultSubsong = 1;
+			if (tagCount >= 1)	// sndh should at least have one tag
+			{
+				if ((si.defaultSubsong > si.subsongCount) || (si.defaultSubsong < 1))
+					si.defaultSubsong = 1;
 
-			// if no new FRMS timing tag, try to search in timedb
-			// (and eventually override any old TIME tag, that are often broken)
-			if (!bFrms)
-				timedbSearch(si.rawBinaryData, si.rawBinaryDataSize, m_subSongLenInTick, kSubsongCountMax);
+				// if no new FRMS timing tag, try to search in timedb
+				// (and eventually override any old TIME tag, that are often broken)
+				if (!bFrms)
+					timedbSearch(si.rawBinaryData, si.rawBinaryDataSize, m_subSongLenInTick, kSubsongCountMax);
 
-			ret = true;
+				ret = true;
+			}
 		}
 	}
 

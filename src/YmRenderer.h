@@ -82,9 +82,10 @@ private:
 	int16_t ComputeNextSample(void);
 	bool	Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostReplayRate);
 	void		AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t* pSampleViewInfo);
-	uint8_t ReadInterleaved(int reg) const { return m_dataStream[m_subSongLenInTick[0]*reg + m_tick]; }
+	uint8_t ReadInterleaved(int reg) const;
 	void YmWrite(int reg, uint8_t d);
 	void ConvertTo4Bits(void);
+	uint32_t ComputeCurrentVisualLevels();
 
 	uint16_t StreamBE16(const char** r);
 	uint32_t StreamBE32(const char** r);
@@ -117,6 +118,7 @@ private:
 	int m_mixCurrentRepeat;
 	uint32_t m_mixSamplePos;
 	int m_sampleCount;
+	int8_t m_mixLastSample;
 	YmSample m_samples[kYmMaxSamples];
 
 
