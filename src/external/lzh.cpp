@@ -15,7 +15,10 @@ bool LzhDepacker::IsLzhPacked(const void* data, uint32_t size)
 
 	const char* pr = (const char*)data;
 	if (pr[0] && (0 == strncmp(pr + 2, "-lh5-", 5)))
-		return true;
+	{
+		if ( 0 == pr[0x14] )	// check it's LZH header level 0
+			return true;
+	}
 
 	return false;
 }
@@ -34,28 +37,30 @@ void*	LzhDepacker::Unpack(const void* dataIn, uint32_t inSize, uint32_t& outSize
 	void* ret = nullptr;
 	outSize = 0;
 
+	if (!IsLzhPacked(dataIn, inSize))
+		return nullptr;
+
 	const uint8_t* r8 = (const uint8_t *)dataIn;
-	uint32_t packedSize = ReadLE32(r8+7);
 	uint32_t originalSize = ReadLE32(r8+11);
+	uint32_t packedSize = ReadLE32(r8+7);
 
-	r8 += r8[0];	// size of header
+	uint32_t headerSize = 0x16 + r8[0x15] + 2;		// 2 for CRC16
+	uint32_t estimatedPackedSize = inSize - (headerSize  + 1);	// +1 for end archive marker (00)
 
-	r8 += 2;				// skip CRC16
-	inSize -= r8[0] + 2;
+	if (estimatedPackedSize != packedSize)
+		packedSize = estimatedPackedSize;		// this means broken LZH header regarding packedsize
 
-	// Check for corrupted archive
-//	if ((packedSize <= inSize) && (packedSize < originalSize))
+	r8 += headerSize;
+
+	ret = malloc(originalSize);
+	if (LzUnpack((void*)r8, packedSize, ret, originalSize))
 	{
-		ret = malloc(originalSize);
-		if (LzUnpack((void*)r8, packedSize, ret, originalSize))
-		{
-			outSize = originalSize;
-		}
-		else
-		{
-			free(ret);
-			ret = nullptr;
-		}
+		outSize = originalSize;
+	}
+	else
+	{
+		free(ret);
+		ret = nullptr;
 	}
 	return ret;
 }
