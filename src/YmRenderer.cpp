@@ -159,7 +159,7 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 			m_songInfo.playerTickRate = 50;
 			r8 += 12;
 			m_flags = StreamBE32(&r8);
-			uint32_t bankSize = StreamBE32(&r8);
+			StreamBE32(&r8);			// skip total sample bank size
 			m_sampleCount = StreamBE32(&r8);
 			if (m_sampleCount <= kYmMaxSamples)
 			{
@@ -298,8 +298,7 @@ int16_t YmRenderer::ComputeNextSample()
 	}
 	else
 	{
-		// MIX
-
+		// Digimix YM driver
 		const YmSample& smp = m_samples[m_mixPatternPos];
 		m_mixLastSample = m_mixBank[smp.mixStart+m_mixSamplePos];
 
@@ -322,8 +321,7 @@ int16_t YmRenderer::ComputeNextSample()
 			}
 			m_mixFrac -= m_songInfo.hostReplayRate;
 		}
-
-		out = int16_t(m_mixLastSample) << 6;
+		out = int16_t(m_mixLastSample) << 7;
 	}
 	return out;
 }
