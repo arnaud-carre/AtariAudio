@@ -106,6 +106,25 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 	const uint32_t sign = ReadBE32(r8);
 	switch (sign)
 	{
+		case e_YM3a:
+		case e_YM3b:
+		{
+			m_dataStreamStride = 14;
+			m_flags = 1;		// interleaved
+			m_subSongLenInTick[0] = (si.rawBinaryDataSize-4) / m_dataStreamStride; // -4 for header
+			si.playerTickRate = 50;
+			m_songLoopTick = 0;
+			m_ymType = (e_YM3a == sign) ? eYmType::eYM3a : eYmType::eYM3b;
+			m_dataStream = (const uint8_t *)r8 + 4;
+			if (eYmType::eYM3b == m_ymType)
+			{
+				const uint32_t* pr = (const uint32_t *)(r8 + si.rawBinaryDataSize - 4);
+				m_songLoopTick = *pr;
+			}
+			m_samplePerTick = si.hostReplayRate / si.playerTickRate;
+			ret = true;
+		}
+		break;
 		case e_YM5a://'YM5!':		// Extended YM2149 format, all machines.
 		case e_YM6a://'YM6!':		// Extended YM2149 format, all machines.
 		{
@@ -199,7 +218,10 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 	{
 		assert(ymClock > 0);
 		assert(m_songInfo.playerTickRate > 0);
-		
+
+		if (m_songLoopTick >= m_subSongLenInTick[0])
+			m_songLoopTick = 0;
+
 		si.ym2149Clock = ymClock;
 		si.subsongCount = 1;
 		si.defaultSubsong = 1;
@@ -498,7 +520,7 @@ void YmRenderer::PlayerTick()
 	// next ym music frame
 	m_tick++;
 	if (m_tick >= m_subSongLenInTick[0])
-		m_tick = 0;
+		m_tick = m_songLoopTick;
 }
 
 void	YmRenderer::AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t* pSampleViewInfo)
