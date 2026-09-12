@@ -8,7 +8,6 @@
 #include <string.h>
 #include <assert.h>
 #include "SndhRenderer.h"
-#include "YmRenderer.h"
 #include "external/ice_24.h"
 #include "timedb.h"
 
@@ -284,16 +283,3 @@ uint32_t SndhRenderer::GetSubsongDurationSample(int subsongId) const
 
 	return (m_subSongLenInTick[subsongId-1] * m_samplePerTick);	// by convention, SNDH subsong id starts at 1
 }
-
-/*
-uint32_t SndhRenderer::GetSubsongDurationMs(int subsongId) const
-{
-	uint32_t ms = 0;
-	if (m_hostReplayRate > 0)
-	{
-		uint64_t tmp = (uint64_t(GetSubsongDurationSample(subsongId)) * 1000) / m_hostReplayRate;
-		ms = uint32_t(tmp);
-	}
-	return ms;
-}
-	*/

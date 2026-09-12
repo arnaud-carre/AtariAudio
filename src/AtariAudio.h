@@ -8,7 +8,5 @@
 
 #define	ATARI_AUDIO_VERSION		"1.20"
 
-#include "ym2149c.h"
-#include "AtariMachine.h"
 #include "SndhRenderer.h"
 #include "YmRenderer.h"

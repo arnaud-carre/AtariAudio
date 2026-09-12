@@ -200,8 +200,6 @@ int Ym2149c::Tick()
 	#else
 	return (s_ym2149RecordedMixTable[levels]);
 	#endif
-
-
 }
 
 void Ym2149c::MuteVoices(uint32_t muteMask)
@@ -220,14 +218,11 @@ int16_t Ym2149c::ComputeNextSample()
 	do
 	{
 		acc += Tick();
-		m_innerCycle += m_hostReplayRate;
 		counter++;
+		m_innerCycle += m_hostReplayRate;
 	}
 	while (m_innerCycle < m_ymClockOneEighth);
 	m_innerCycle -= m_ymClockOneEighth;
-
-	assert(counter >= 1);
-
 	return dcAdjust(acc / counter);
 }
 

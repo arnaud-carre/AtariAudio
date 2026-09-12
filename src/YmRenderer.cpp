@@ -550,4 +550,3 @@ void YmRenderer::MuteVoices(uint32_t muteVoiceMask)
 {
 	m_ym2149.MuteVoices(muteVoiceMask);
 }
-
