@@ -120,7 +120,7 @@ uint8_t Ym2149c::ReadPort(uint8_t port) const
 	return ~0;
 }
 
-int16_t	Ym2149c::dcAdjust(uint16_t v)
+int32_t	Ym2149c::dcAdjust(uint16_t v)
 {
 	m_dcAdjustSum -= m_dcAdjustBuffer[m_dcAdjustPos];
 	m_dcAdjustSum += v;
@@ -129,7 +129,7 @@ int16_t	Ym2149c::dcAdjust(uint16_t v)
 	m_dcAdjustPos &= (1 << kDcAdjustHistoryBit) - 1;
 	int32_t ov = int32_t(v) - int32_t(m_dcAdjustSum >> kDcAdjustHistoryBit);
 	// max amplitude is 15bits (not 16) so dc adjuster should never overshoot
-	return int16_t(ov);
+	return ov;
 }
 
 // Tick internal YM2149 state machine at 250Khz ( 2Mhz/8 )
@@ -211,7 +211,7 @@ int16_t Ym2149c::ComputeNextSample()
 	const int halfShiftA = ((m_tonePeriod[0] > 1) || (m_regs[7]&(1<<0)))?0:1;
 	const int halfShiftB = ((m_tonePeriod[1] > 1) || (m_regs[7]&(1<<1)))?0:1;
 	const int halfShiftC = ((m_tonePeriod[2] > 1) || (m_regs[7]&(1<<2)))?0:1;
-
+#if 1
 	const uint32_t indexA = (levels >> 0) & 31;
 	const uint32_t indexB = (levels >> 5) & 31;
 	const uint32_t indexC = (levels >> 10) & 31;
@@ -220,6 +220,17 @@ int16_t Ym2149c::ComputeNextSample()
 	uint32_t levelC = s_ym2149LogLevels[indexC] >> halfShiftC;
 
 	return dcAdjust(levelA + levelB + levelC);
+#else
+	const uint32_t indexA = (levels >> 1) & 15;
+	const uint32_t indexB = (levels >> 6) & 15;
+	const uint32_t indexC = (levels >> 11) & 15;
+	int out = dcAdjust(s_ym2149Measured[indexA * 256 + indexB * 16 + indexC]);
+	if (out > 32767)
+		out = 32767;
+	else if (out < -32768)
+		out = 32768;
+	return int16_t(out);
+#endif
 }
 
 #define	k15toS8(a)	((((a*127)>>15)+63)^0x80)	// signed 8bits value for oscillators viewing display per voice
