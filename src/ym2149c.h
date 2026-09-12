@@ -25,11 +25,11 @@ public:
 
 private:
 	void	WriteReg(int reg, uint8_t value);
-	uint16_t Tick();
+	int Tick();
 
 	static const uint32_t kDcAdjustHistoryBit = 11;	// 2048 values (~20ms at 44Khz) 
 
-	int32_t		dcAdjust(uint16_t v);
+	int32_t		dcAdjust(int32_t v);
 
 	int			m_selectedReg;
 	const uint8_t* m_pCurrentEnv;

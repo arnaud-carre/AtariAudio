@@ -120,7 +120,7 @@ uint8_t Ym2149c::ReadPort(uint8_t port) const
 	return ~0;
 }
 
-int32_t	Ym2149c::dcAdjust(uint16_t v)
+int32_t	Ym2149c::dcAdjust(int32_t v)
 {
 	m_dcAdjustSum -= m_dcAdjustBuffer[m_dcAdjustPos];
 	m_dcAdjustSum += v;
@@ -133,7 +133,7 @@ int32_t	Ym2149c::dcAdjust(uint16_t v)
 }
 
 // Tick internal YM2149 state machine at 250Khz ( 2Mhz/8 )
-uint16_t Ym2149c::Tick()
+int Ym2149c::Tick()
 {
 
 	// three voices at same time
@@ -172,7 +172,36 @@ uint16_t Ym2149c::Tick()
 			m_noiseCounter = 0;
 		}
 	}
-	return vmask;
+
+	const uint32_t envLevel = m_pCurrentEnv[m_envPos + 64];
+	uint32_t levels;
+	levels  = ((m_regs[8] & 0x10) ? envLevel : ((m_regs[8]<<1)|1)) << 0;
+	levels |= ((m_regs[9] & 0x10) ? envLevel : ((m_regs[9]<<1)|1)) << 5;
+	levels |= ((m_regs[10] & 0x10) ? envLevel : ((m_regs[10]<<1)|1)) << 10;
+	levels &= vmask;
+	assert(levels < 0x8000);
+
+	levels &= m_enableMask;		// ability to artificially mute some voices
+
+	m_currentVisualLevels = uint16_t(levels);
+
+	#if 0
+	// if period <=1 and TONE is active, empirically reduce final output value by 2 (some STF digisound use this mode)
+	const int halfShiftA = ((m_tonePeriod[0] > 1) || (m_regs[7]&(1<<0)))?0:1;
+	const int halfShiftB = ((m_tonePeriod[1] > 1) || (m_regs[7]&(1<<1)))?0:1;
+	const int halfShiftC = ((m_tonePeriod[2] > 1) || (m_regs[7]&(1<<2)))?0:1;
+	const uint32_t indexA = (levels >> 0) & 31;
+	const uint32_t indexB = (levels >> 5) & 31;
+	const uint32_t indexC = (levels >> 10) & 31;
+	uint32_t levelA = s_ym2149LogLevels[indexA] >> halfShiftA;
+	uint32_t levelB = s_ym2149LogLevels[indexB] >> halfShiftB;
+	uint32_t levelC = s_ym2149LogLevels[indexC] >> halfShiftC;
+	return levelA + levelB + levelC;
+	#else
+	return (s_ym2149RecordedMixTable[levels]);
+	#endif
+
+
 }
 
 void Ym2149c::MuteVoices(uint32_t muteMask)
@@ -186,51 +215,20 @@ void Ym2149c::MuteVoices(uint32_t muteMask)
 // internally update YM chip state machine at 250Khz and average output for each host sample
 int16_t Ym2149c::ComputeNextSample()
 {
-	uint16_t highMask = 0;
+	int acc = 0;
+	int counter = 0;
 	do
 	{
-		highMask |= Tick();
+		acc += Tick();
 		m_innerCycle += m_hostReplayRate;
+		counter++;
 	}
 	while (m_innerCycle < m_ymClockOneEighth);
 	m_innerCycle -= m_ymClockOneEighth;
 
-	const uint32_t envLevel = m_pCurrentEnv[m_envPos + 64];
-	uint32_t levels;
-	levels  = ((m_regs[8] & 0x10) ? envLevel : (m_regs[8]<<1)) << 0;
-	levels |= ((m_regs[9] & 0x10) ? envLevel : (m_regs[9]<<1)) << 5;
-	levels |= ((m_regs[10] & 0x10) ? envLevel : (m_regs[10]<<1)) << 10;
-	levels &= highMask;
-	assert(levels < 0x8000);
+	assert(counter >= 1);
 
-	levels &= m_enableMask;		// ability to artificially mute some voices
-
-	m_currentVisualLevels = uint16_t(levels);
-
-	// if period <=1 and TONE is active, empirically reduce final output value by 2 (some STF digisound use this mode)
-	const int halfShiftA = ((m_tonePeriod[0] > 1) || (m_regs[7]&(1<<0)))?0:1;
-	const int halfShiftB = ((m_tonePeriod[1] > 1) || (m_regs[7]&(1<<1)))?0:1;
-	const int halfShiftC = ((m_tonePeriod[2] > 1) || (m_regs[7]&(1<<2)))?0:1;
-#if 1
-	const uint32_t indexA = (levels >> 0) & 31;
-	const uint32_t indexB = (levels >> 5) & 31;
-	const uint32_t indexC = (levels >> 10) & 31;
-	uint32_t levelA = s_ym2149LogLevels[indexA] >> halfShiftA;
-	uint32_t levelB = s_ym2149LogLevels[indexB] >> halfShiftB;
-	uint32_t levelC = s_ym2149LogLevels[indexC] >> halfShiftC;
-
-	return dcAdjust(levelA + levelB + levelC);
-#else
-	const uint32_t indexA = (levels >> 1) & 15;
-	const uint32_t indexB = (levels >> 6) & 15;
-	const uint32_t indexC = (levels >> 11) & 15;
-	int out = dcAdjust(s_ym2149Measured[indexA * 256 + indexB * 16 + indexC]);
-	if (out > 32767)
-		out = 32767;
-	else if (out < -32768)
-		out = 32768;
-	return int16_t(out);
-#endif
+	return dcAdjust(acc / counter);
 }
 
 #define	k15toS8(a)	((((a*127)>>15)+63)^0x80)	// signed 8bits value for oscillators viewing display per voice

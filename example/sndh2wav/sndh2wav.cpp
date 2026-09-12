@@ -191,13 +191,13 @@ int main(int argc, char* argv[])
 
 
 	FILE* h = fopen("tables.txt", "w");
-	static const int kl = 16;
+	static const int kl = 32;
 	for (int i = 0; i < kl*kl*kl; i++)
 	{
 		if ( 0 == (i%kl))
 			fprintf(h, "\t");
 
-		fprintf(h, "0x%04x,", mixTable[i]);
+		fprintf(h, "0x%04x,", mixTable5b[i]);
 
 		if ( kl-1 == (i%kl))
 			fprintf(h, "\n");
