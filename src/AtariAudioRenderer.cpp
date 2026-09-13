@@ -64,6 +64,19 @@ AtariAudioRenderer::eFileType AtariAudioRenderer::QuickFileTypeCheck(const void*
 	return eFileType::eUnknown;
 }
 
+uint32_t AtariAudioRenderer::SampleToMs(uint32_t sample) const
+{
+	if (0 == m_songInfo.hostReplayRate)
+		return 0;
+
+	return uint32_t(((uint64_t(sample) * 1000) / m_songInfo.hostReplayRate));
+}
+
+uint32_t AtariAudioRenderer::MsToSample(uint32_t ms) const
+{
+	return uint32_t(((uint64_t(ms) * m_songInfo.hostReplayRate) / 1000));
+}
+
 uint16_t	AtariAudioRenderer::ReadBE16(const char* r)
 {
 	const uint8_t* r8 = (const uint8_t*)r;

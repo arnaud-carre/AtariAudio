@@ -58,6 +58,10 @@ public:
 	// use GetSubsongDurationSample() upfront to get exact amount of samples.
 	virtual void AudioRender(int16_t* buffer, uint32_t count) = 0;
 
+	// Helper time unity convert functions
+	uint32_t SampleToMs(uint32_t sample) const;
+	uint32_t MsToSample(uint32_t ms) const;
+
 	//-------------------------------------------------------------------------
 	// Additional functions for high level players
 	//-------------------------------------------------------------------------
