@@ -176,7 +176,7 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 			}
 		}
 		break;
-		case eYmType::eMIX1:	// 'YMT1'
+		case eYmType::eMIX1:	// 'MIX1'
 		{
 			m_songInfo.playerTickRate = 50;
 			r8 += 12;
@@ -184,6 +184,8 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 			m_flags = kYmInterleaved;		// MIX is always interleaved format
 			if (tmp & 1)
 				m_flags |= kYmSignedSample;
+
+			si.playerTickRate = 50;
 
 			StreamBE32(&r8);			// skip total sample bank size
 			m_sampleCount = StreamBE32(&r8);
@@ -215,6 +217,7 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 				m_mixPatternPos = 0;
 				m_mixCurrentRepeat = m_samples[0].mixRepeat;
 				m_mixSamplePos = 0;
+				m_samplePerTick = si.hostReplayRate / si.playerTickRate;
 				ret = true;
 			}
 		}

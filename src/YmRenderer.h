@@ -101,7 +101,7 @@ private:
 	static const int kYmSignedSample = 1<<1;
 	static const int kYm4BitsSample = 1<<2;
 
-	static const int kYmMaxSamples = 128;
+	static const int kYmMaxSamples = 256;
 	struct YmSample
 	{
 		const uint8_t* data;
