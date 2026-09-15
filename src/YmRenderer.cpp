@@ -11,13 +11,6 @@
 #include "external/lzh.h"
 #include "ym2data.h"
 
-#define	D_DBG_OUTPUT				0
-
-#if D_DBG_OUTPUT
-#include <stdio.h>
-static FILE*	sDbgH;
-#endif
-
 YmRenderer*	YmRenderer::Create(const void* ymMemoryData, uint32_t ymMemorySize, uint32_t hostReplayRate)
 {
 	YmRenderer* yr = new YmRenderer();
@@ -54,13 +47,7 @@ uint32_t YmRenderer::StreamBE32(const char** r)
 
 void YmRenderer::ConvertTo4Bits(void)
 {
-/*
-	// MadMAx 4bits table ripped from Wings Of Death replayer :)
-	$0002ea 0007 090a
-	$0002ee 0b0c 0c0d
-	$0002f2 0d0d 0e0e
-	$0002f6 0e0f 0f0f
-*/
+	// MadMax 4bits table ripped from Wings Of Death original Atari replayer :)
 	static const uint8_t sMadMax4BitsTable[16] = { 0x0, 0x7, 0x9, 0xa, 0xb, 0xc, 0xc, 0xd, 0xd, 0xd, 0xe, 0xe, 0xe, 0xf, 0xf, 0xf };
 	for (int s = 0; s < m_sampleCount; s++)
 	{
@@ -323,11 +310,6 @@ bool YmRenderer::InitSubSong(int subSongId)
 		SetTimer(0, 0, 0);
 		SetTimer(1, 0, 0);
 		ret = true;
-
-		#if D_DBG_OUTPUT
-		sDbgH = fopen("ymRecorder_log.txt", "w");
-		#endif
-
 	}
 	return ret;
 }
