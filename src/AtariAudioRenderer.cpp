@@ -106,7 +106,7 @@ uint32_t	AtariAudioRenderer::ReadBE32(const char* r)
 	return v;
 }
 
-const char* AtariAudioRenderer::AUskipNTString(const char* r)
+const char* AtariAudioRenderer::SkipNTString(const char* r)
 {
 	r += strlen(r) + 1;
 	return r;

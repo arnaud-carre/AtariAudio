@@ -81,6 +81,7 @@ private:
 
 	int16_t ComputeNextYmTrackerSample();
 	int16_t ComputeNextYmMixSample();
+	void FetchNextDigimixBlock();
 
 	uint16_t StreamBE16(const char** r);
 	uint32_t StreamBE32(const char** r);
@@ -101,15 +102,12 @@ private:
 	static const int kYmSignedSample = 1<<1;
 	static const int kYm4BitsSample = 1<<2;
 
-	static const int kYmMaxSamples = 256;
+	static const int kYmMaxSamples = 64;
 	struct YmSample
 	{
 		const uint8_t* data;
-		uint32_t mixStart;
 		uint32_t len;
 		uint32_t repPos;
-		uint16_t mixRepeat;
-		uint16_t replayRate;
 	};
 
 	static const int kYmMaxTrackerVoices = 8;
@@ -128,14 +126,18 @@ private:
 	const int8_t* m_mixBank;
 	uint32_t m_mixFrac;
 	int m_mixPatternPos;
+	int m_mixPatternCount;
 	int m_mixCurrentRepeat;
+	uint32_t m_mixBankOffset;
 	uint32_t m_mixSamplePos;
+	uint32_t m_mixSampleLen;
+	uint32_t m_mixReplayRate;
 	uint8_t m_mixSignXor;
-	int m_sampleCount;
 	int8_t m_mixLastSample;
-	int m_trkVoiceCount;
 	int m_trkFreqShift;
+	int m_trkVoiceCount;
 	YmTrackerVoice m_trkVoices[kYmMaxTrackerVoices];
+	int m_sampleCount;
 	YmSample m_samples[kYmMaxSamples];
 
 

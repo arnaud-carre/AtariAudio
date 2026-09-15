@@ -159,11 +159,11 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 					}
 
 					si.musicName = r8;
-					r8 = AUskipNTString(r8);
+					r8 = SkipNTString(r8);
 					si.musicAuthor = r8;
-					r8 = AUskipNTString(r8);
+					r8 = SkipNTString(r8);
 					si.converter = r8;
-					r8 = AUskipNTString(r8);
+					r8 = SkipNTString(r8);
 
 					m_dataStream = (const uint8_t *)r8;
 					m_dataStreamStride = 16;
@@ -181,45 +181,42 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 			m_songInfo.playerTickRate = 50;
 			r8 += 12;
 			uint32_t tmp = StreamBE32(&r8);
-			m_flags = kYmInterleaved;		// MIX is always interleaved format
+			m_flags = 0;		// MIX score data is not interleaved
 			if (tmp & 1)
 				m_flags |= kYmSignedSample;
 
 			si.playerTickRate = 50;
 
 			StreamBE32(&r8);			// skip total sample bank size
-			m_sampleCount = StreamBE32(&r8);
-			if (m_sampleCount <= kYmMaxSamples)
+			m_mixPatternCount = StreamBE32(&r8);
+			m_dataStream = (const uint8_t *)r8;
+			uint64_t duration = 0;
+			for (int i = 0; i < m_mixPatternCount; i++)
 			{
-				uint64_t duration = 0;
-				for (int i = 0; i < m_sampleCount; i++)
-				{
-					m_samples[i].data = nullptr;
-					m_samples[i].mixStart = StreamBE32(&r8);
-					m_samples[i].len = StreamBE32(&r8);
-					m_samples[i].mixRepeat = StreamBE16(&r8);
-					if (m_samples[i].mixRepeat > 16)
-						m_samples[i].mixRepeat = 16;
-					m_samples[i].replayRate = StreamBE16(&r8);
-					assert(m_samples[i].replayRate > 0);
-					duration += (uint64_t(m_samples[i].len * m_samples[i].mixRepeat) * m_songInfo.hostReplayRate) / m_samples[i].replayRate;
-				}
-				m_songDurationSample = uint32_t(duration);
-				si.musicName = r8;
-				r8 = AUskipNTString(r8);
-				si.musicAuthor = r8;
-				r8 = AUskipNTString(r8);
-				si.converter = r8;
-				r8 = AUskipNTString(r8);
-				m_mixBank = (const int8_t*)r8;	// mix bank is considered as signed
-				m_mixFrac = 0;
-				m_ymType = sign;
-				m_mixPatternPos = 0;
-				m_mixCurrentRepeat = m_samples[0].mixRepeat;
-				m_mixSamplePos = 0;
-				m_samplePerTick = si.hostReplayRate / si.playerTickRate;
-				ret = true;
+				StreamBE32(&r8);	// skip sample start
+				uint32_t len = StreamBE32(&r8);
+				uint32_t mixRepeat = StreamBE16(&r8);
+				if (mixRepeat > 16)
+					mixRepeat = 16;
+				uint32_t replayRate = StreamBE16(&r8);
+				assert(replayRate > 0);
+				duration += (uint64_t(len * mixRepeat) * m_songInfo.hostReplayRate) / replayRate;
 			}
+			m_songDurationSample = uint32_t(duration);
+			si.musicName = r8;
+			r8 = SkipNTString(r8);
+			si.musicAuthor = r8;
+			r8 = SkipNTString(r8);
+			si.converter = r8;
+			r8 = SkipNTString(r8);
+			m_mixBank = (const int8_t*)r8;	// mix bank is considered as signed
+			m_mixFrac = 0;
+			m_ymType = sign;
+			m_mixPatternPos = -1;		// on purpose start at -1 so following FetchNext will fetch the first row
+			FetchNextDigimixBlock();
+			m_mixSamplePos = 0;
+			m_samplePerTick = si.hostReplayRate / si.playerTickRate;
+			ret = true;
 		}
 		break;
 		case eYmType::eYMT1:
@@ -236,11 +233,11 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 				m_sampleCount = StreamBE16(&r8);
 				m_flags = StreamBE32(&r8);
 				si.musicName = r8;
-				r8 = AUskipNTString(r8);
+				r8 = SkipNTString(r8);
 				si.musicAuthor = r8;
-				r8 = AUskipNTString(r8);
+				r8 = SkipNTString(r8);
 				si.converter = r8;
-				r8 = AUskipNTString(r8);
+				r8 = SkipNTString(r8);
 				if (m_sampleCount <= kYmMaxSamples)
 				{
 					if (m_sampleCount > 0)
@@ -385,27 +382,34 @@ int16_t YmRenderer::ComputeNextYmTrackerSample()
 	return int16_t(out);
 }
 
+void YmRenderer::FetchNextDigimixBlock()
+{
+	m_mixPatternPos++;
+	if (m_mixPatternPos >= m_mixPatternCount)
+		m_mixPatternPos = 0;
+
+	const char* r8 = (const char*)(m_dataStream + m_mixPatternPos * 12);
+	m_mixBankOffset = ReadBE32(r8 + 0);
+	m_mixSampleLen = ReadBE32(r8 + 4);
+	m_mixCurrentRepeat = ReadBE16(r8 + 8);
+	m_mixReplayRate = ReadBE16(r8 + 10);
+}
+
 int16_t YmRenderer::ComputeNextYmMixSample()
 {
-	const YmSample& smp = m_samples[m_mixPatternPos];
-	m_mixLastSample = (m_mixBank[smp.mixStart + m_mixSamplePos] ^ m_mixSignXor);
 
-	m_mixFrac += smp.replayRate;
+	m_mixLastSample = (m_mixBank[m_mixBankOffset + m_mixSamplePos] ^ m_mixSignXor);
+
+	m_mixFrac += m_mixReplayRate;
 	if (m_mixFrac >= m_songInfo.hostReplayRate)
 	{
 		m_mixSamplePos++;
-		if (m_mixSamplePos >= smp.len)
+		if (m_mixSamplePos >= m_mixSampleLen)
 		{
 			m_mixSamplePos = 0;
 			m_mixCurrentRepeat--;
 			if (m_mixCurrentRepeat <= 0)
-			{
-				m_mixPatternPos++;
-				if (m_mixPatternPos >= m_sampleCount)
-					m_mixPatternPos = 0;
-
-				m_mixCurrentRepeat = m_samples[m_mixPatternPos].mixRepeat;
-			}
+				FetchNextDigimixBlock();
 		}
 		m_mixFrac -= m_songInfo.hostReplayRate;
 	}

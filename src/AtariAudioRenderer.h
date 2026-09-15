@@ -94,7 +94,7 @@ protected:
 	static eFileType QuickFileTypeCheck(const void* rawMemory, uint32_t rawSize);
 	uint16_t ReadBE16(const char* r);
 	uint32_t ReadBE32(const char* r);
-	const char* AUskipNTString(const char* r);
+	const char* SkipNTString(const char* r);
 
 	SongInfo m_songInfo;
 	uint32_t	m_subSongLenInTick[kSubsongCountMax];
