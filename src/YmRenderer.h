@@ -112,7 +112,7 @@ private:
 		uint16_t replayRate;
 	};
 
-	static const int kYmMaxTrackerVoices = 4;
+	static const int kYmMaxTrackerVoices = 8;
 	struct YmTrackerVoice
 	{
 		uint32_t sampleId;

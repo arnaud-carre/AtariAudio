@@ -384,7 +384,6 @@ int16_t YmRenderer::ComputeNextYmTrackerSample()
 
 int16_t YmRenderer::ComputeNextYmMixSample()
 {
-	// Digimix YM driver
 	const YmSample& smp = m_samples[m_mixPatternPos];
 	m_mixLastSample = (m_mixBank[smp.mixStart + m_mixSamplePos] ^ m_mixSignXor);
 
@@ -535,6 +534,7 @@ uint32_t YmRenderer::YmFxDecode(int fxSlot, int regCode, int regPrediv, int regC
 			case 0xc0:		// Sync-Buzzer.
 				fx.type = eYmFxType::eSyncBuzzer;
 				fx.syncBuzzShape = ReadInterleaved(fx.ymVoice + 8) & 15;
+				skipMask = 1 << (fx.ymVoice + 8);
 				SetTimer(fxSlot, prediv, count);
 				break;
 
@@ -711,18 +711,15 @@ void	YmRenderer::AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t* 
 {
 	while (count > 0)
 	{
-		uint32_t todo = count;
-		if (eYmType::eMIX1 != m_ymType)
+		if (0 == m_innerSamplePos)
 		{
-			if (0 == m_innerSamplePos)
-			{
-				PlayerTick();
-				m_innerSamplePos = m_samplePerTick;
-			}
-
-			todo = (m_innerSamplePos <= count) ? m_innerSamplePos : count;
-			assert(m_innerSamplePos >= todo);
+			PlayerTick();
+			m_innerSamplePos = m_samplePerTick;
 		}
+
+		uint32_t todo = count;
+		todo = (m_innerSamplePos <= count) ? m_innerSamplePos : count;
+		assert(m_innerSamplePos >= todo);
 
 		if (buffer)
 		{
