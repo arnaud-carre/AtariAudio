@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------------
-	Atari Audio Library v1.23
+	Atari Audio Library v1.24
 	Small & accurate ATARI-ST audio emulation
 	Arnaud Carré aka Leonard/Oxygene
 	@leonard_coder
@@ -185,21 +185,7 @@ int Ym2149c::Tick()
 
 	m_currentVisualLevels = uint16_t(levels);
 
-	#if 0
-	// if period <=1 and TONE is active, empirically reduce final output value by 2 (some STF digisound use this mode)
-	const int halfShiftA = ((m_tonePeriod[0] > 1) || (m_regs[7]&(1<<0)))?0:1;
-	const int halfShiftB = ((m_tonePeriod[1] > 1) || (m_regs[7]&(1<<1)))?0:1;
-	const int halfShiftC = ((m_tonePeriod[2] > 1) || (m_regs[7]&(1<<2)))?0:1;
-	const uint32_t indexA = (levels >> 0) & 31;
-	const uint32_t indexB = (levels >> 5) & 31;
-	const uint32_t indexC = (levels >> 10) & 31;
-	uint32_t levelA = s_ym2149LogLevels[indexA] >> halfShiftA;
-	uint32_t levelB = s_ym2149LogLevels[indexB] >> halfShiftB;
-	uint32_t levelC = s_ym2149LogLevels[indexC] >> halfShiftC;
-	return levelA + levelB + levelC;
-	#else
 	return (s_ym2149RecordedMixTable[levels]);
-	#endif
 }
 
 void Ym2149c::MuteVoices(uint32_t muteMask)
