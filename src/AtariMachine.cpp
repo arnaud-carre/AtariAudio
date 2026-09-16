@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------------
-	Atari Audio Library v1.10
+	Atari Audio Library v1.23
 	Small & accurate ATARI-ST audio emulation
 	Arnaud Carré aka Leonard/Oxygene
 	@leonard_coder
@@ -326,7 +326,7 @@ void	AtariMachine::Startup(uint32_t hostReplayRate)
 
 	memset(m_RAM, 0, RAM_SIZE);
 
-	m_ym2149.Reset(hostReplayRate);
+	m_ym2149.Reset(hostReplayRate, 2000000);
 	m_mfp.Reset(hostReplayRate);
 	m_steDac.Reset(hostReplayRate);
 	m_nextGemdosMallocAd = GEMDOS_MALLOC_EMUL_BUFFER;
@@ -421,11 +421,7 @@ static const uint32_t	s_ViewVolTab[16*2] =
 
 uint32_t AtariMachine::ComputeCurrentVisualLevels() const
 {
-	const uint32_t ymVisual = m_ym2149.GetCurrentVisualLevels();
-	const unsigned int indexA = (ymVisual >> 0) & 31;
-	const unsigned int indexB = (ymVisual >> 5) & 31;
-	const unsigned int indexC = (ymVisual >> 10) & 31;
-	uint32_t visualLevels = (s_ViewVolTab[indexA] << 0) | (s_ViewVolTab[indexB] << 8) | (s_ViewVolTab[indexC] << 16);
+	uint32_t visualLevels = m_ym2149.ComputeCurrentVisualLevels();
 	if ( 0 == (m_muteMask&(1<<3)))
 		visualLevels |= (m_steDac.GetCurrentVisualLevel()<<24);
 	return visualLevels;

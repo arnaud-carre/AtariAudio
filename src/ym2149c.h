@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------------
-	Atari Audio Library v1.10
+	Atari Audio Library v1.23
 	Small & accurate ATARI-ST audio emulation
 	Arnaud Carré aka Leonard/Oxygene
 	@leonard_coder
@@ -11,22 +11,25 @@ class Ym2149c
 {
 public:
 
-	void	Reset(uint32_t hostReplayRate, uint32_t ymClock = 2000000);
+	static const uint32_t kDefaultAtariYmClock = 2000000;
+
+	void	Reset(uint32_t hostReplayRate, uint32_t ymClock = kDefaultAtariYmClock);
 	void	WritePort(uint8_t port, uint8_t value);
 	uint8_t ReadPort(uint8_t port) const;
 	int16_t	ComputeNextSample();
 	void	InsideTimerIrq(bool inside);
 
-	uint16_t GetCurrentVisualLevels() const { return m_currentVisualLevels; } // only used for some player visual, contains 3 YM voices volume and STE DAC in 8888 format
+	uint32_t ComputeCurrentVisualLevels() const; // only used for some player visual, contains 3 YM voices volume and STE DAC in 8888 format
+
 	void MuteVoices(uint32_t muteMask);
 
 private:
 	void	WriteReg(int reg, uint8_t value);
-	uint16_t Tick();
+	int Tick();
 
 	static const uint32_t kDcAdjustHistoryBit = 11;	// 2048 values (~20ms at 44Khz) 
 
-	int16_t		dcAdjust(uint16_t v);
+	int32_t		dcAdjust(int32_t v);
 
 	int			m_selectedReg;
 	const uint8_t* m_pCurrentEnv;

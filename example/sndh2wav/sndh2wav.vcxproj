@@ -125,8 +125,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\AtariAudioRenderer.cpp" />
     <ClCompile Include="..\..\src\AtariMachine.cpp" />
-    <ClCompile Include="..\..\src\external\ice_24.c" />
+    <ClCompile Include="..\..\src\external\ice_24.cpp" />
+    <ClCompile Include="..\..\src\external\lzh.cpp" />
     <ClCompile Include="..\..\src\external\Musashi\m68k.cpp" />
     <ClCompile Include="..\..\src\external\Musashi\m68kcpu.cpp" />
     <ClCompile Include="..\..\src\external\Musashi\m68kops.cpp" />
@@ -135,14 +137,16 @@
     <ClCompile Include="..\..\src\SteDac.cpp" />
     <ClCompile Include="..\..\src\timedb.cpp" />
     <ClCompile Include="..\..\src\ym2149c.cpp" />
-    <ClCompile Include="jobSystem.cpp" />
+    <ClCompile Include="..\..\src\YmRenderer.cpp" />
     <ClCompile Include="Sndh2Wav.cpp" />
     <ClCompile Include="wavwriter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\AtariAudio.h" />
+    <ClInclude Include="..\..\src\AtariAudioRenderer.h" />
     <ClInclude Include="..\..\src\AtariMachine.h" />
     <ClInclude Include="..\..\src\external\ice_24.h" />
+    <ClInclude Include="..\..\src\external\lzh.h" />
     <ClInclude Include="..\..\src\external\Musashi\m68k.h" />
     <ClInclude Include="..\..\src\external\Musashi\m68kconf.h" />
     <ClInclude Include="..\..\src\external\Musashi\m68kcpu.h" />
@@ -154,7 +158,8 @@
     <ClInclude Include="..\..\src\timedb.h" />
     <ClInclude Include="..\..\src\ym2149c.h" />
     <ClInclude Include="..\..\src\ym2149_tables.h" />
-    <ClInclude Include="jobSystem.h" />
+    <ClInclude Include="..\..\src\ym2data.h" />
+    <ClInclude Include="..\..\src\YmRenderer.h" />
     <ClInclude Include="wavwriter.h" />
   </ItemGroup>
   <ItemGroup>

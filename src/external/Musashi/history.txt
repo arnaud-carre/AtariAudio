@@ -9,7 +9,7 @@ I figured it would be the ideal chip to cut my teeth on.
 Had I known then how much work was involved in emulating a chip like this, I
 may not have even started ;-)
 
-9-Sept-206: Changes by Arnaud Carré
+9-Sept-2026: Changes by Arnaud Carré
             WARNING: This version is heavily modifyed and specific:
                      - it's now thread safe (you can execute several instances
 					   of M68k class from different threads)

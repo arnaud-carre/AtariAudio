@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------------
-	Atari Audio Library v1.10
+	Atari Audio Library v1.23
 	Small & accurate ATARI-ST audio emulation
 	Arnaud Carré aka Leonard/Oxygene
 	@leonard_coder
@@ -120,7 +120,7 @@ uint8_t Ym2149c::ReadPort(uint8_t port) const
 	return ~0;
 }
 
-int16_t	Ym2149c::dcAdjust(uint16_t v)
+int32_t	Ym2149c::dcAdjust(int32_t v)
 {
 	m_dcAdjustSum -= m_dcAdjustBuffer[m_dcAdjustPos];
 	m_dcAdjustSum += v;
@@ -129,11 +129,11 @@ int16_t	Ym2149c::dcAdjust(uint16_t v)
 	m_dcAdjustPos &= (1 << kDcAdjustHistoryBit) - 1;
 	int32_t ov = int32_t(v) - int32_t(m_dcAdjustSum >> kDcAdjustHistoryBit);
 	// max amplitude is 15bits (not 16) so dc adjuster should never overshoot
-	return int16_t(ov);
+	return ov;
 }
 
 // Tick internal YM2149 state machine at 250Khz ( 2Mhz/8 )
-uint16_t Ym2149c::Tick()
+int Ym2149c::Tick()
 {
 
 	// three voices at same time
@@ -172,7 +172,34 @@ uint16_t Ym2149c::Tick()
 			m_noiseCounter = 0;
 		}
 	}
-	return vmask;
+
+	const uint32_t envLevel = m_pCurrentEnv[m_envPos + 64];
+	uint32_t levels;
+	levels  = ((m_regs[8] & 0x10) ? envLevel : ((m_regs[8]<<1)|1)) << 0;
+	levels |= ((m_regs[9] & 0x10) ? envLevel : ((m_regs[9]<<1)|1)) << 5;
+	levels |= ((m_regs[10] & 0x10) ? envLevel : ((m_regs[10]<<1)|1)) << 10;
+	levels &= vmask;
+	assert(levels < 0x8000);
+
+	levels &= m_enableMask;		// ability to artificially mute some voices
+
+	m_currentVisualLevels = uint16_t(levels);
+
+	#if 0
+	// if period <=1 and TONE is active, empirically reduce final output value by 2 (some STF digisound use this mode)
+	const int halfShiftA = ((m_tonePeriod[0] > 1) || (m_regs[7]&(1<<0)))?0:1;
+	const int halfShiftB = ((m_tonePeriod[1] > 1) || (m_regs[7]&(1<<1)))?0:1;
+	const int halfShiftC = ((m_tonePeriod[2] > 1) || (m_regs[7]&(1<<2)))?0:1;
+	const uint32_t indexA = (levels >> 0) & 31;
+	const uint32_t indexB = (levels >> 5) & 31;
+	const uint32_t indexC = (levels >> 10) & 31;
+	uint32_t levelA = s_ym2149LogLevels[indexA] >> halfShiftA;
+	uint32_t levelB = s_ym2149LogLevels[indexB] >> halfShiftB;
+	uint32_t levelC = s_ym2149LogLevels[indexC] >> halfShiftC;
+	return levelA + levelB + levelC;
+	#else
+	return (s_ym2149RecordedMixTable[levels]);
+	#endif
 }
 
 void Ym2149c::MuteVoices(uint32_t muteMask)
@@ -186,40 +213,39 @@ void Ym2149c::MuteVoices(uint32_t muteMask)
 // internally update YM chip state machine at 250Khz and average output for each host sample
 int16_t Ym2149c::ComputeNextSample()
 {
-	uint16_t highMask = 0;
+	int acc = 0;
+	int counter = 0;
 	do
 	{
-		highMask |= Tick();
+		acc += Tick();
+		counter++;
 		m_innerCycle += m_hostReplayRate;
 	}
 	while (m_innerCycle < m_ymClockOneEighth);
 	m_innerCycle -= m_ymClockOneEighth;
+	return dcAdjust(acc / counter);
+}
 
-	const uint32_t envLevel = m_pCurrentEnv[m_envPos + 64];
-	uint32_t levels;
-	levels  = ((m_regs[8] & 0x10) ? envLevel : (m_regs[8]<<1)) << 0;
-	levels |= ((m_regs[9] & 0x10) ? envLevel : (m_regs[9]<<1)) << 5;
-	levels |= ((m_regs[10] & 0x10) ? envLevel : (m_regs[10]<<1)) << 10;
-	levels &= highMask;
-	assert(levels < 0x8000);
+#define	k15toS8(a)	((((a*127)>>15)+63)^0x80)	// signed 8bits value for oscillators viewing display per voice
+static const uint32_t	s_ViewVolTab[16*2] =
+{
+	k15toS8(152),k15toS8(181),k15toS8(215),k15toS8(255),
+	k15toS8(304),k15toS8(362),k15toS8(430),k15toS8(511),
+	k15toS8(608),k15toS8(724),k15toS8(861),k15toS8(1023),
+	k15toS8(1217),k15toS8(1448),k15toS8(1722),k15toS8(2047),
+	k15toS8(2435),k15toS8(2896),k15toS8(3444),k15toS8(4095),
+	k15toS8(4870),k15toS8(5792),k15toS8(6888),k15toS8(8191),
+	k15toS8(9741),k15toS8(11584),k15toS8(13776),k15toS8(16383),
+	k15toS8(19483),k15toS8(23169),k15toS8(27553),k15toS8(32767)
+};
 
-	levels &= m_enableMask;		// ability to artificially mute some voices
-
-	m_currentVisualLevels = uint16_t(levels);
-
-	// if period <=1 and TONE is active, empirically reduce final output value by 2 (some STF digisound use this mode)
-	const int halfShiftA = ((m_tonePeriod[0] > 1) || (m_regs[7]&(1<<0)))?0:1;
-	const int halfShiftB = ((m_tonePeriod[1] > 1) || (m_regs[7]&(1<<1)))?0:1;
-	const int halfShiftC = ((m_tonePeriod[2] > 1) || (m_regs[7]&(1<<2)))?0:1;
-
-	const uint32_t indexA = (levels >> 0) & 31;
-	const uint32_t indexB = (levels >> 5) & 31;
-	const uint32_t indexC = (levels >> 10) & 31;
-	uint32_t levelA = s_ym2149LogLevels[indexA] >> halfShiftA;
-	uint32_t levelB = s_ym2149LogLevels[indexB] >> halfShiftB;
-	uint32_t levelC = s_ym2149LogLevels[indexC] >> halfShiftC;
-
-	return dcAdjust(levelA + levelB + levelC);
+uint32_t Ym2149c::ComputeCurrentVisualLevels() const
+{
+	const unsigned int indexA = (m_currentVisualLevels >> 0) & 31;
+	const unsigned int indexB = (m_currentVisualLevels >> 5) & 31;
+	const unsigned int indexC = (m_currentVisualLevels >> 10) & 31;
+	uint32_t visualLevels = (s_ViewVolTab[indexA] << 0) | (s_ViewVolTab[indexB] << 8) | (s_ViewVolTab[indexC] << 16);
+	return visualLevels;
 }
 
 void	Ym2149c::InsideTimerIrq(bool inside)
