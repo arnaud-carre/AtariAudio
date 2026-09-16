@@ -35,7 +35,7 @@ public:
 	unsigned int	memRead16(unsigned int address);
 	void			memWrite8(unsigned int address, unsigned int value);
 	void			memWrite16(unsigned int address, unsigned int value);
-	void			TrapInstructionCallback(int v);
+	int				TrapInstructionCallback(int v);
 	void			ResetCb(void);
 	void 			IllegalCb(void);
 	void 			MuteVoices(uint32_t muteMask);

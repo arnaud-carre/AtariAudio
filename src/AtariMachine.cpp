@@ -79,8 +79,7 @@ int M68k_Illegal_Callback(void* user, int opcode)
 int M68k_TrapN_Callback(void* user, int n)
 {
 	AtariMachine* mch = (AtariMachine*)user;
-	mch->TrapInstructionCallback(n);
-	return 1;
+	return mch->TrapInstructionCallback(n);
 }
 
 unsigned int  AtariMachine::memRead8(unsigned int address)
@@ -280,31 +279,31 @@ void	AtariMachine::XBios(int func, uint32_t a7)
 		}
 	}
 	break;
-		case 38:
-		{
-			// XBios(38) -> execute callback code in supervisor
-			// we just simulate a "jsr callback"
-			uint32_t callbackAddr = m_cpu.MemRead32(a7 + 2);
+	case 38:
+	{
+		// XBios(38) -> execute callback code in supervisor
+		// we just simulate a "jsr callback"
+		uint32_t callbackAddr = m_cpu.MemRead32(a7 + 2);
 
-			// push PC on stack (so future RTS will get back right after the TRAP)
-			uint32_t pc = m_cpu.m68k_get_reg(M68K_REG_PC);
-			a7 -= 4;
-			m_cpu.MemWrite32(a7, pc);
-			m_cpu.m68k_set_reg(M68K_REG_SP, a7);
-			m_cpu.m68k_set_reg(M68K_REG_PC, callbackAddr);
-		}
-		break;
+		// push PC on stack (so future RTS will get back right after the TRAP)
+		uint32_t pc = m_cpu.m68k_get_reg(M68K_REG_PC);
+		a7 -= 4;
+		m_cpu.MemWrite32(a7, pc);
+		m_cpu.m68k_set_reg(M68K_REG_SP, a7);
+		m_cpu.m68k_set_reg(M68K_REG_PC, callbackAddr);
+	}
+	break;
 	default:
 		assert(false);	// unsupported XBIOS function
 		break;
 	}
 }
 
-void	AtariMachine::TrapInstructionCallback(int v)
+int	AtariMachine::TrapInstructionCallback(int v)
 {
 	int a7 = m_cpu.m68k_get_reg(M68K_REG_SP);
 	int func = m_cpu.MemRead16(a7);
-
+	int ret = 1;		// properly intercepted by default
 	switch (v)
 	{
 	case 1:
@@ -314,9 +313,10 @@ void	AtariMachine::TrapInstructionCallback(int v)
 		XBios(func, a7);
 		break;
 	default:
-		assert(false);		// unsupported TRAP #n
+		ret = 0;		// unknown, jump to the 68k vector
 		break;
 	}
+	return ret;
 }
 
 void	AtariMachine::Startup(uint32_t hostReplayRate)
