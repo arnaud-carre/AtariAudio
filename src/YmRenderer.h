@@ -87,6 +87,8 @@ private:
 	uint32_t StreamBE32(const char** r);
 	const char* GetFileFormatString() const;
 
+	int16_t m_muteSteMask;
+
 	Ym2149c m_ym2149;
 	Mk68901 m_mfp;
 

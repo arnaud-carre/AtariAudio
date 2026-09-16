@@ -359,9 +359,8 @@ int16_t YmRenderer::ComputeNextYmTrackerSample()
 	else if (out < -32768)
 		out = -32768;
 
-	m_mixLastSample = int8_t(out >> 8);
-
-	return int16_t(out);
+	m_mixLastSample = int8_t((out >> 8) & m_muteSteMask);
+	return int16_t(out) & m_muteSteMask;
 }
 
 void YmRenderer::FetchNextDigimixBlock()
@@ -381,6 +380,7 @@ int16_t YmRenderer::ComputeNextYmMixSample()
 {
 
 	m_mixLastSample = (m_mixBank[m_mixBankOffset + m_mixSamplePos] ^ m_mixSignXor);
+	m_mixLastSample &= int8_t(m_muteSteMask);
 
 	m_mixFrac += m_mixReplayRate;
 	if (m_mixFrac >= m_songInfo.hostReplayRate)
@@ -395,7 +395,7 @@ int16_t YmRenderer::ComputeNextYmMixSample()
 		}
 		m_mixFrac -= m_songInfo.hostReplayRate;
 	}
-	return int16_t(m_mixLastSample) << 7;
+	return (int16_t(m_mixLastSample) << 7);
 }
 
 int16_t YmRenderer::ComputeNextSample()
@@ -740,6 +740,7 @@ void	YmRenderer::AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t* 
 
 void YmRenderer::MuteVoices(uint32_t muteVoiceMask)
 {
+	m_muteSteMask = (muteVoiceMask & (1<<3)) ? 0 : -1;
 	m_ym2149.MuteVoices(muteVoiceMask);
 }
 
