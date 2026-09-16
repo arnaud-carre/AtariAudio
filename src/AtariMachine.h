@@ -27,6 +27,7 @@ public:
 
 	void		Startup(uint32_t hostReplayRate);
 	bool		Upload(const void* src, uint32_t addr, uint32_t size);
+	bool 		PlayerTick(uint32_t musicDriverCallAddr);
 	bool		Jsr(uint32_t addr, uint32_t d0);
 	int16_t		ComputeNextSample();
 	uint32_t	ComputeCurrentVisualLevels() const;
@@ -46,6 +47,8 @@ private:
 	static	const	uint32_t	RESET_INSTRUCTION_ADDR = 0x502;
 	static	const	uint32_t	GEMDOS_MALLOC_EMUL_BUFFER = RAM_SIZE-0x100000;
 
+	// Peter Johnson used Xbios(32) (DoSound) for Arkanoid and Wizball!!
+	void 		DoSoundTick();
 	void		ConfigureReturnByRts();
 	void		ConfigureReturnByRte();
 	bool		JmpBinary(uint32_t pc, int timeOut50Hz);
@@ -53,6 +56,9 @@ private:
 	void		XBios(int func, uint32_t a7);
 	void		XbiosTimerSet(int ctrlPort, int dataPort, int enablePort, int bit, int mask, int ctrlValue, int dataValue);
 
+	uint32_t m_doSndPtr;
+	uint8_t m_doSndVal;
+	uint8_t m_doSndDelay;
 	uint8_t*	m_RAM;
 	int			m_exitCode;
 	uint32_t	m_nextGemdosMallocAd;

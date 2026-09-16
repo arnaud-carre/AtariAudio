@@ -279,6 +279,11 @@ void	AtariMachine::XBios(int func, uint32_t a7)
 		}
 	}
 	break;
+	case 32:
+	{
+		m_doSndPtr = m_cpu.MemRead32(a7 + 2);
+		break;
+	}
 	case 38:
 	{
 		// XBios(38) -> execute callback code in supervisor
@@ -350,6 +355,9 @@ void	AtariMachine::Startup(uint32_t hostReplayRate)
 	// so by default, set the timer C handler to RTE, just in case
 	m_cpu.MemWrite32(0x114, RTE_INSTRUCTION_ADDR);
 
+	m_doSndPtr = 0;
+	m_doSndVal = 0;
+	m_doSndDelay = 0;
 }
 
 bool	AtariMachine::Upload(const void* src, uint32_t addr, uint32_t size)
@@ -431,6 +439,56 @@ void AtariMachine::MuteVoices(uint32_t muteMask)
 {
 	m_ym2149.MuteVoices(muteMask);
 	m_muteMask = muteMask;
+}
+
+void AtariMachine::DoSoundTick()
+{
+	if (m_doSndPtr)
+	{
+		if (m_doSndDelay > 0)
+		{
+			m_doSndDelay--;
+			return;
+		}
+
+		for (;;)
+		{
+			uint8_t cmd = memRead8(m_doSndPtr);
+			if (cmd < 0x80)
+			{
+				m_ym2149.WritePort(0, cmd&15);
+				m_ym2149.WritePort(2, memRead8(m_doSndPtr+1));
+				m_doSndPtr += 2;
+			}
+			else if (0x80 == cmd)
+			{
+				m_doSndVal = memRead8(m_doSndPtr + 1);
+				m_doSndPtr += 2;
+			}
+			else if (0x81 == cmd)
+			{
+				m_ym2149.WritePort(0, memRead8(m_doSndPtr+1)&15);
+				m_doSndVal += memRead8(m_doSndPtr + 2);
+				m_ym2149.WritePort(2, m_doSndVal);
+				if ( m_doSndVal == memRead8(m_doSndPtr + 3))
+					m_doSndPtr += 4;
+				break;
+			}
+			else
+			{
+				m_doSndDelay = memRead8(m_doSndPtr + 1);
+				if (0 == m_doSndDelay)
+					m_doSndPtr = 0;
+				break;
+			}
+		}
+	}
+}
+
+bool AtariMachine::PlayerTick(uint32_t musicDriverCallAddr)
+{
+	DoSoundTick();
+	return Jsr(musicDriverCallAddr, 0);
 }
 
 int16_t	AtariMachine::ComputeNextSample()
