@@ -24,6 +24,15 @@
     <ClCompile Include="SndhArchiveTester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="jobSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="extern\zip\src\zip.c">
+      <Filter>Source Files\zip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AtariAudioRenderer.cpp">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\AtariMachine.cpp">
       <Filter>Source Files\AtariAudio</Filter>
     </ClCompile>
@@ -42,7 +51,13 @@
     <ClCompile Include="..\src\ym2149c.cpp">
       <Filter>Source Files\AtariAudio</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\external\ice_24.c">
+    <ClCompile Include="..\src\YmRenderer.cpp">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\external\ice_24.cpp">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\external\lzh.cpp">
       <Filter>Source Files\AtariAudio</Filter>
     </ClCompile>
     <ClCompile Include="..\src\external\Musashi\m68k.cpp">
@@ -54,15 +69,21 @@
     <ClCompile Include="..\src\external\Musashi\m68kops.cpp">
       <Filter>Source Files\AtariAudio</Filter>
     </ClCompile>
-    <ClCompile Include="jobSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="extern\zip\src\zip.c">
-      <Filter>Source Files\zip</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="jobSystem.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="extern\zip\src\miniz.h">
+      <Filter>Source Files\zip</Filter>
+    </ClInclude>
+    <ClInclude Include="extern\zip\src\zip.h">
+      <Filter>Source Files\zip</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\AtariAudio.h">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AtariAudioRenderer.h">
       <Filter>Source Files\AtariAudio</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AtariMachine.h">
@@ -80,13 +101,22 @@
     <ClInclude Include="..\src\timedb.h">
       <Filter>Source Files\AtariAudio</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\ym2data.h">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\ym2149_tables.h">
       <Filter>Source Files\AtariAudio</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ym2149c.h">
       <Filter>Source Files\AtariAudio</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\YmRenderer.h">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\external\ice_24.h">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\external\lzh.h">
       <Filter>Source Files\AtariAudio</Filter>
     </ClInclude>
     <ClInclude Include="..\src\external\timedb.inc.h">
@@ -104,23 +134,6 @@
     <ClInclude Include="..\src\external\Musashi\m68kops.h">
       <Filter>Source Files\AtariAudio</Filter>
     </ClInclude>
-    <ClInclude Include="jobSystem.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="extern\zip\src\miniz.h">
-      <Filter>Source Files\zip</Filter>
-    </ClInclude>
-    <ClInclude Include="extern\zip\src\zip.h">
-      <Filter>Source Files\zip</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\src\external\Musashi\history.txt">
-      <Filter>Source Files\AtariAudio</Filter>
-    </Text>
-    <Text Include="..\src\external\Musashi\readme.txt">
-      <Filter>Source Files\AtariAudio</Filter>
-    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\external\Musashi\m68k_func.inc">

@@ -9,7 +9,7 @@
 static const int kMaxZipWorkers = 16;
 static const int kHostReplayRate = 48000;
 
-static const int kTestBufferLen = kHostReplayRate * 1;	// 10 seconds
+static const int kTestBufferLen = kHostReplayRate * 1;	// 20 seconds
 static const int kTestBufferLenBytes = kTestBufferLen*sizeof(int16_t);	// 10 seconds
 
 struct ZipEntry
@@ -36,6 +36,7 @@ private:
 	int16_t* m_audioBuffer[kMaxZipWorkers];
 	int m_entryCount;
 	ZipEntry* m_entries;
+	std::atomic<int> m_subsongCount;
 	std::atomic<int> m_entryOk;
 	std::atomic<int> m_entryFail;
 };
@@ -76,15 +77,19 @@ bool ZipWalker::JobZipItemProcessing(int itemId, int workerId)
 			size_t depackSize = zip_entry_noallocread(hz, unpack, size);
 			if (depackSize == size)
 			{
-				SndhRenderer* sr = SndhRenderer::Create(unpack, uint32_t(size), kHostReplayRate);		// dummy host replay rate
+				AtariAudioRenderer* sr = AtariAudioRenderer::Create(unpack, uint32_t(size), kHostReplayRate);		// dummy host replay rate
 				if (sr)		// dummy host replay rate
 				{
-					const SndhRenderer::SongInfo& si = sr->GetSongInfo();
+					const AtariAudioRenderer::SongInfo& si = sr->GetSongInfo();
+					if ((si.ym2149Clock != 2000000) && ((si.ym2149Clock != 1000000)))
+					{
+						printf("%d (%s)\n", si.ym2149Clock, fname);
+					}
 					bool noTiming = false;
+					m_subsongCount.fetch_add(si.subsongCount);
 					for (int s = 0; s < si.subsongCount; s++)
 					{
 						noTiming |= (0 == sr->GetSubsongDurationSample(s + 1));
-
 						if (sr->InitSubSong(s + 1))
 						{
 							memset(audioBuffer, 0, kTestBufferLenBytes);
@@ -92,6 +97,8 @@ bool ZipWalker::JobZipItemProcessing(int itemId, int workerId)
 							{
 								if ( !IsSilent(audioBuffer, kTestBufferLen))
 									ok = true;
+								else
+									int z = 0;
 							}
 						}
 					}
@@ -100,7 +107,7 @@ bool ZipWalker::JobZipItemProcessing(int itemId, int workerId)
 					{
 						printf("ERROR: %s\n", e.sFilename);
 					}
-					SndhRenderer::Destroy(sr);
+					AtariAudioRenderer::Destroy(sr);
 				}
 			}
 			else
@@ -151,6 +158,7 @@ void ZipWalker::Browse(const char* sFilename)
 		JobSystem js;
 		m_entryOk = 0;
 		m_entryFail = 0;
+		m_subsongCount = 0;
 		js.RunJobs(this, m_entryCount, sJobZipItemProcessing, nullptr, workers);
 		int n = js.Join();
 
@@ -162,6 +170,7 @@ void ZipWalker::Browse(const char* sFilename)
 
 		printf("Entry ok..: %d\n", int(m_entryOk));
 		printf("Entry fail: %d\n", int(m_entryFail));
+		printf("subsongs..: %d\n", int(m_subsongCount));
 
 
 	}
@@ -173,7 +182,8 @@ int main()
 
 	ZipWalker zw;
 
-	zw.Browse("sndh2026_lf.zip");
+//	zw.Browse("sndh2026_lf.zip");
+	zw.Browse("modland-YM-all.zip");
 
 
 	return 0;
