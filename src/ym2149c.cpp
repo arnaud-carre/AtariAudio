@@ -120,7 +120,7 @@ uint8_t Ym2149c::ReadPort(uint8_t port) const
 	return ~0;
 }
 
-int32_t	Ym2149c::dcAdjust(int32_t v)
+int16_t	Ym2149c::dcAdjust(int16_t v)
 {
 	m_dcAdjustSum -= m_dcAdjustBuffer[m_dcAdjustPos];
 	m_dcAdjustSum += v;
@@ -129,7 +129,7 @@ int32_t	Ym2149c::dcAdjust(int32_t v)
 	m_dcAdjustPos &= (1 << kDcAdjustHistoryBit) - 1;
 	int32_t ov = int32_t(v) - int32_t(m_dcAdjustSum >> kDcAdjustHistoryBit);
 	// max amplitude is 15bits (not 16) so dc adjuster should never overshoot
-	return ov;
+	return int16_t(ov);
 }
 
 // Tick internal YM2149 state machine at 250Khz ( 2Mhz/8 )

@@ -403,11 +403,11 @@ int16_t YmRenderer::ComputeNextSample()
 	int16_t out = 0;
 	if ((eYmType::eYMT1 == m_ymType) || (eYmType::eYMT2 == m_ymType))
 	{
-		out = ComputeNextYmTrackerSample();
+		out = m_ym2149.dcAdjust(ComputeNextYmTrackerSample());
 	}
 	else if (eYmType::eMIX1 == m_ymType)
 	{
-		out = ComputeNextYmMixSample();
+		out = m_ym2149.dcAdjust(ComputeNextYmMixSample());
 	}
 	else
 	{
