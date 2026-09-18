@@ -50,32 +50,24 @@ AtariAudioRenderer::eFileType AtariAudioRenderer::QuickFileTypeCheck(const void*
 	if (rawSize > 16)
 	{
 		// check packed file
-		if (LzhDepacker::IsLzhPacked(rawMemory, rawSize))
-			return eFileType::eYm;
-
 		if (ice_24_header((unsigned char*)rawMemory))
 			return eFileType::eSndh;
 
-		// check unpacked input file
-		if (0 == strncmp(((const char*)rawMemory) + 4, "LeOnArD!", 8))
+		if (LzhDepacker::IsLzhPacked(rawMemory, rawSize))
 			return eFileType::eYm;
 
+		// check unpacked input file
 		const char* read8 = (const char*)rawMemory;
-		static const char* sSigns[] =
-		{
-			"YM2!","YM3!","YM3b","YM5!","YM6!","MIX1","YMT1","YMT2",
-			nullptr
-		};
-		const char** pr = sSigns;
-		while (*pr)
-		{
-			if ( 0 == strncmp(*pr, read8, 4))
-				return eFileType::eYm;
-			pr++;
-		}
-
-		if ((0x60 == read8[0]) && (0 == strncmp(read8 + 12, "SNDH", 4)))
+		if ((0x60 == read8[0]) && (0 == memcmp(read8 + 12, "SNDH", 4)))
 			return eFileType::eSndh;
+
+		if (0 == memcmp(read8 + 4, "LeOnArD!", 8))
+			return eFileType::eYm;
+
+		if ((0 == memcmp(read8, "YM2!", 4)) ||
+			(0 == memcmp(read8, "YM3!", 4)) ||
+			(0 == memcmp(read8, "YM3b", 4)))
+			return eFileType::eYm;
 	}
 	return eFileType::eUnknown;
 }

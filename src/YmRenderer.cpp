@@ -118,7 +118,7 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 		case eYmType::eYM5a://'YM5!':		// Extended YM2149 format, all machines.
 		case eYmType::eYM6a://'YM6!':		// Extended YM2149 format, all machines.
 		{
-			if (0 == strncmp(r8 + 4, "LeOnArD!", 8))
+			if (0 == memcmp(r8 + 4, "LeOnArD!", 8))
 			{
 				r8 += 12;
 				m_subSongLenInTick[0] = StreamBE32(&r8);
