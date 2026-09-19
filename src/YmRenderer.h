@@ -14,7 +14,7 @@ class YmRenderer : public AtariAudioRenderer
 {
 public:
 	// Read the base AtariAudioRenderer.h header for more details about API
-	static YmRenderer* Create(const void* sndhMemoryData, uint32_t sndhMemorySize, uint32_t hostReplayRate);
+	static YmRenderer* Create(const void* sndhMemoryData, uint32_t sndhMemorySize, uint32_t hostReplayRate, uint32_t defaultYm2149Clock);
 	const SongInfo&	GetSongInfo() const;
 	uint32_t GetSubsongDurationSample(int subsongId) const;
 	bool InitSubSong(int subSongId);
@@ -72,7 +72,7 @@ private:
 	void SetTimer(int slot, int prediv, int count);
 	uint32_t YmFxDecode(int fxSlot, int regCode, int regPrediv, int regCount);
 	int16_t ComputeNextSample(void);
-	bool	Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostReplayRate);
+	bool	Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostReplayRate, uint32_t defaultYm2149Clock);
 	void		AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t* pSampleViewInfo);
 	uint8_t ReadInterleaved(int reg) const;
 	void YmWrite(int reg, uint8_t d);

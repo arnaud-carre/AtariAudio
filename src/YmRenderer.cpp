@@ -11,10 +11,10 @@
 #include "external/lzh.h"
 #include "ym2data.h"
 
-YmRenderer*	YmRenderer::Create(const void* ymMemoryData, uint32_t ymMemorySize, uint32_t hostReplayRate)
+YmRenderer*	YmRenderer::Create(const void* ymMemoryData, uint32_t ymMemorySize, uint32_t hostReplayRate, uint32_t defaultYm2149Clock)
 {
 	YmRenderer* yr = new YmRenderer();
-	if ( yr->Load(ymMemoryData, ymMemorySize, hostReplayRate ))
+	if ( yr->Load(ymMemoryData, ymMemorySize, hostReplayRate, defaultYm2149Clock ))
 		return yr;
 	delete yr;
 	return nullptr;
@@ -61,7 +61,7 @@ void YmRenderer::ConvertTo4Bits(void)
 	}
 }
 
-bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostReplayRate)
+bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostReplayRate, uint32_t defaultYm2149Clock)
 {
 
 	bool ret = false;
@@ -88,7 +88,7 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 		memcpy((void*)si.rawBinaryData, rawYmFile, ymFileSize);
 	}
 
-	uint32_t ymClock = Ym2149c::kDefaultAtariYmClock;
+	uint32_t ymClock = defaultYm2149Clock;
 
 	const char* r8 = (const char*)si.rawBinaryData;
 	const eYmType sign = eYmType(ReadBE32(r8));

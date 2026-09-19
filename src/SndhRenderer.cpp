@@ -35,7 +35,7 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 	bool ret = false;
 	SongInfo& si = m_songInfo;
 	si.hostReplayRate = hostReplayRate;
-	si.ym2149Clock = Ym2149c::kDefaultAtariYmClock;
+	si.ym2149Clock = AtariAudioRenderer::kDefaultAtariYmClock;
 
 	if (ice_24_header((unsigned char*)rawSndhFile))
 	{

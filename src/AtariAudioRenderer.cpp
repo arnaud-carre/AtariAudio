@@ -13,13 +13,13 @@
 #include "external/lzh.h"
 #include "external/ice_24.h"
 
-AtariAudioRenderer* AtariAudioRenderer::Create(const void* fileMemoryData, uint32_t fileMemorySize, uint32_t hostReplayRate)
+AtariAudioRenderer* AtariAudioRenderer::Create(const void* fileMemoryData, uint32_t fileMemorySize, uint32_t hostReplayRate, uint32_t defaultYm2149Clock)
 {
 	const eFileType t = QuickFileTypeCheck(fileMemoryData, fileMemorySize);
 	if ( eFileType::eSndh == t )
 		return SndhRenderer::Create(fileMemoryData, fileMemorySize, hostReplayRate);
 	if ( eFileType::eYm == t )
-		return YmRenderer::Create(fileMemoryData, fileMemorySize, hostReplayRate);
+		return YmRenderer::Create(fileMemoryData, fileMemorySize, hostReplayRate, defaultYm2149Clock);
 	return nullptr;
 }
 
