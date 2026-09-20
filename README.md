@@ -39,6 +39,7 @@ Destroy AtariAudioRenderer object and free any internal allocated memory
 
 # Version history
 
+- 1.25 : optional ym2149 clock parameter for missing information in some music files
 - 1.24 : added xbios(32) support for some .sndh files, fixed voice muting for digimix and ymtracker files
 - 1.23 : Fix time duration with YM MIX1. Added fileFormat string in SongInfo
 - 1.22 : Add YMT1 & YMT2 support. Now AtariAudio has full coverage of deprecated StSound library
