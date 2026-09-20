@@ -1,11 +1,10 @@
-/*--------------------------------------------------------------------
-	Atari Audio Library v1.24
-	Small & accurate ATARI-ST audio emulation
-	Arnaud Carré aka Leonard/Oxygene
-	@leonard_coder
---------------------------------------------------------------------*/
-// Tiny & cycle accurate ym2149 emulation.
-// operate at original YM freq divided by 8 (so 250Khz, as nothing runs faster in the chip)
+//----------------------------------------------------------
+//
+//	AtariAudio 1.25
+//	Small & accurate ATARI-ST audio emulation
+//	by Arnaud Carré aka Leonard/Oxygene (@leonard_coder)
+//
+//----------------------------------------------------------
 #include <assert.h>
 #include "ym2149c.h"
 #include "ym2149_tables.h"
@@ -30,6 +29,7 @@ void	Ym2149c::Reset(uint32_t hostReplayRate, uint32_t ymClock)
 	m_toneEdges = (stdLibRand()&((1<<10)|(1<<5)|(1<<0)))*0x1f;		// YM internal edge state are un-predictable
 	m_insideTimerIrq = false;
 	m_hostReplayRate = hostReplayRate;
+	// operate at original YM freq divided by 8 (so 250Khz, as nothing runs faster in the chip)
 	m_ymClockOneEighth = ymClock/8;
 	m_noiseRndRack = 1;
 	m_noiseHalf = 0;
@@ -120,7 +120,7 @@ uint8_t Ym2149c::ReadPort(uint8_t port) const
 	return ~0;
 }
 
-int32_t	Ym2149c::dcAdjust(int32_t v)
+int16_t	Ym2149c::dcAdjust(int16_t v)
 {
 	m_dcAdjustSum -= m_dcAdjustBuffer[m_dcAdjustPos];
 	m_dcAdjustSum += v;
@@ -129,7 +129,7 @@ int32_t	Ym2149c::dcAdjust(int32_t v)
 	m_dcAdjustPos &= (1 << kDcAdjustHistoryBit) - 1;
 	int32_t ov = int32_t(v) - int32_t(m_dcAdjustSum >> kDcAdjustHistoryBit);
 	// max amplitude is 15bits (not 16) so dc adjuster should never overshoot
-	return ov;
+	return int16_t(ov);
 }
 
 // Tick internal YM2149 state machine at 250Khz ( 2Mhz/8 )
