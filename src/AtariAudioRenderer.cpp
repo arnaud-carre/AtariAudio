@@ -18,9 +18,9 @@ AtariAudioRenderer* AtariAudioRenderer::Create(const void* fileMemoryData, uint3
 {
 	const eFileType t = QuickFileTypeCheck(fileMemoryData, fileMemorySize);
 	if ( eFileType::eSndh == t )
-		return SndhRenderer::Create(fileMemoryData, fileMemorySize, hostReplayRate);
+		return SndhRenderer::Create(fileMemoryData, fileMemorySize, hostReplayRate);	// sndh files are all 2MHz ym2149 clock
 	if ( eFileType::eYm == t )
-		return YmRenderer::Create(fileMemoryData, fileMemorySize, hostReplayRate, defaultYm2149Clock);
+		return YmRenderer::Create(fileMemoryData, fileMemorySize, hostReplayRate, defaultYm2149Clock);	// ym2 or ym3 files do not provide ym2149 clock
 	return nullptr;
 }
 
