@@ -48,14 +48,14 @@ Destroy AtariAudioRenderer object and free any internal allocated memory
 - 1.09 : API refactor and MuteVoices function added
 - 1.08 : more robust API
 - 1.07 : some API changes and cleanup
-- 1.06 : added SetDefaultSongDuration for SNDH files without any duration info
+- 1.06 : added SetDefaultSongDuration for .sndh files without any duration info
 - 1.05 : SndhFile::AudioRender API change (now returns sample count). Use timedb database for SNDH without music len
 - 1.04 : added SndhFile::FastForward function
 - 1.03 : added Ripper & Converter into SubSongInfo struct. some minor linux compilation fixes
 
 # Examples
 
-The repo also contains a sndh2wav project to show how to convert a .sndh file into a WAV file
+The repo also contains a AtariAudio2Wav project to show how to convert a .sndh or .ym file into a WAV audio file
 
 # Applications using AtariAudio
 
