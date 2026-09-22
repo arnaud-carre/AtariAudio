@@ -20,7 +20,7 @@ jobs:
           sudo apt-get install -y build-essential cmake
 
       - name: Configure CMake
-        run: cmake -S example/sndh2wav -B example/sndh2wav/build -DCMAKE_BUILD_TYPE=Release
+        run: cmake -S example/AtariAudio2Wav -B example/AtariAudio2Wav/build -DCMAKE_BUILD_TYPE=Release
 
       - name: Compile project
-        run: cmake --build example/sndh2wav/build --config Release
+        run: cmake --build example/AtariAudio2Wav/build --config Release

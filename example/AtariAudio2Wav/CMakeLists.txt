@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.20)
-project(sndh2wav LANGUAGES C CXX)
+project(AtariAudio2Wav LANGUAGES C CXX)
 
-add_executable(sndh2wav)
+add_executable(AtariAudio2Wav)
 
-target_sources(sndh2wav
+target_sources(AtariAudio2Wav
     PRIVATE
         ../../src/external/ice_24.cpp
         ../../src/external/lzh.cpp
@@ -18,16 +18,16 @@ target_sources(sndh2wav
         ../../src/timedb.cpp
         ../../src/ym2149c.cpp
         ../../src/YmRenderer.cpp
-        sndh2wav.cpp
+        AtariAudio2Wav.cpp
         wavwriter.cpp
 )
 
-target_compile_features(sndh2wav
+target_compile_features(AtariAudio2Wav
     PRIVATE
         cxx_std_20
 )
 
-target_compile_definitions(sndh2wav
+target_compile_definitions(AtariAudio2Wav
     PRIVATE
         _CONSOLE
         UNICODE
@@ -38,7 +38,7 @@ target_compile_definitions(sndh2wav
 )
 
 if(MSVC)
-    target_compile_options(sndh2wav PRIVATE /W3)
+    target_compile_options(AtariAudio2Wav PRIVATE /W3)
 else()
-    target_compile_options(sndh2wav PRIVATE -Wall -Wextra)
+    target_compile_options(AtariAudio2Wav PRIVATE -Wall -Wextra)
 endif()
