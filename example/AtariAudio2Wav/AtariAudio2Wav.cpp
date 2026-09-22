@@ -196,21 +196,16 @@ void compute555Table()
 int main(int argc, char* argv[])
 {
 
-//	compute555Table();
-
-	printf("sndh2wav, convert atari SNDH music file into a wav\n");
-	printf("Build using AtariAudio library v" ATARI_AUDIO_VERSION "\n");
+	printf("AtariAudio2Wav, convert .sndh or .ym music into a .wav\n");
+	printf("Build using AtariAudio library " ATARI_AUDIO_VERSION "\n");
 	printf("https://github.com/arnaud-carre/AtariAudio\n");
 	printf("\n");
 	if (argc != 3)
 	{
 		printf("Usage:\n"
-			   "\tsndh2wav <sndh file> <wav file>\n");
+			   "\AtariAudio2Wav <.sndh or .ym file> <wav file>\n");
 		return -1;
 	}
-
-
-
 
 	uint32_t sndhFileSize;
 	void* sndhFileBuffer = LoadFile(argv[1], sndhFileSize);
@@ -232,8 +227,8 @@ int main(int argc, char* argv[])
 					uint32_t sampleCount = ar->GetSubsongDurationSample(s);
 					if (0 == sampleCount)
 					{
-						printf("WARNIN: no song duration, using default\n");
 						// a subsong of duration 0 means SNDH file doesn't provide any duration
+						printf("WARNING: no song duration in file, set to 3 minutes\n");
 						sampleCount = 3*60*kHostReplayRate;		// so decide to play 3 minutes by default
 					}
 					if (ar->InitSubSong(s))
@@ -256,7 +251,7 @@ int main(int argc, char* argv[])
 		}
 		else
 		{
-			printf("ERROR: %s is not supported by AtariAudio\n", argv[1]);
+			printf("ERROR: %s fileis not supported by AtariAudio\n", argv[1]);
 		}
 	}
 	return 0;
