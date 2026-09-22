@@ -3,9 +3,9 @@
 src/ contains all files needed to compile AtariAudio. It allows you to play ATARI .sndh and .ym music files. You can also directly use YM2149 emulator if you want to write your own YM tracker.
 The library doesn't use any dependency, and should compile on any platform, including embedded systems (it doesn't even use float).
 
-**NOTE: .ym replay has been completely rewritten and is now cycle accurate. The old StSound library is now deprecated**
+**NOTE 1: .ym replay has been completely rewritten and is now cycle accurate. The old [StSound](https://github.com/arnaud-carre/StSound) library is now deprecated**
 
-**NOTE: Since 1.10, AtariAudio is thread safe! (see notes bellow)
+**NOTE 2: Since 1.10, AtariAudio is thread safe! (see notes bellow)**
 
 # Playing .sndh and .ym file in your own app
 
