@@ -24,6 +24,7 @@
     <ProjectGuid>{d7f84550-dced-4100-87b6-6d0225016fa0}</ProjectGuid>
     <RootNamespace>Sndh2Wav</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>AtariAudio2Wav</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -138,7 +139,7 @@
     <ClCompile Include="..\..\src\timedb.cpp" />
     <ClCompile Include="..\..\src\ym2149c.cpp" />
     <ClCompile Include="..\..\src\YmRenderer.cpp" />
-    <ClCompile Include="Sndh2Wav.cpp" />
+    <ClCompile Include="AtariAudio2Wav.cpp" />
     <ClCompile Include="wavwriter.cpp" />
   </ItemGroup>
   <ItemGroup>

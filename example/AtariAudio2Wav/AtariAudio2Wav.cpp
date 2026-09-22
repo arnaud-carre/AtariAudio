@@ -1,0 +1,100 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdlib.h>
+#include <stdio.h>
+#include "../../src/AtariAudio.h"
+#include "wavwriter.h"
+#include <math.h>
+
+static const int kHostReplayRate = 48000;
+static const int kAudioBufferLen = kHostReplayRate*10;	// 10 seconds of audio buffer is enough
+
+static int16_t audioBuffer[kAudioBufferLen];
+
+void* LoadFile(const char* sFilename, uint32_t& sizeOut)
+{
+	sizeOut = 0;
+	void* buffer = nullptr;
+	FILE* h = fopen(sFilename, "rb");
+	if (h)
+	{
+		fseek(h, 0, SEEK_END);
+		size_t sndhSize = ftell(h);
+		buffer = malloc(sndhSize);
+		fseek(h, 0, SEEK_SET);
+		if (sndhSize == fread(buffer, 1, sndhSize, h))
+		{
+			sizeOut = uint32_t(sndhSize);
+		}
+		else
+		{
+			free(buffer);
+			buffer = nullptr;
+		}
+		fclose(h);
+	}
+	return buffer;
+}
+
+int main(int argc, char* argv[])
+{
+
+	printf("AtariAudio2Wav, convert .sndh or .ym music into a .wav\n");
+	printf("Build using AtariAudio library " ATARI_AUDIO_VERSION "\n");
+	printf("https://github.com/arnaud-carre/AtariAudio\n");
+	printf("\n");
+	if (argc != 3)
+	{
+		printf("Usage:\n"
+			   "\tAtariAudio2Wav <.sndh or .ym file> <wav file>\n");
+		return -1;
+	}
+
+	uint32_t sndhFileSize;
+	void* sndhFileBuffer = LoadFile(argv[1], sndhFileSize);
+	if ( sndhFileBuffer )
+	{
+		AtariAudioRenderer* ar = AtariAudioRenderer::Create(sndhFileBuffer, sndhFileSize, kHostReplayRate);
+		if (ar)
+		{
+			WavWriter wavWriter;
+			if (wavWriter.Open(argv[2], kHostReplayRate, 1))
+			{
+				const AtariAudioRenderer::SongInfo& si = ar->GetSongInfo();
+				printf("\"%s\" by %s\n", si.musicName, si.musicAuthor);
+				printf("Format: %s\n", si.fileFormat);
+
+				// Loop over all subsongs
+				for (int s = 1; s <= si.subsongCount; s++)
+				{
+					uint32_t sampleCount = ar->GetSubsongDurationSample(s);
+					if (0 == sampleCount)
+					{
+						// a subsong of duration 0 means SNDH file doesn't provide any duration
+						printf("WARNING: no song duration in file, set to 3 minutes\n");
+						sampleCount = 3*60*kHostReplayRate;		// so decide to play 3 minutes by default
+					}
+					if (ar->InitSubSong(s))
+					{
+						const int durationInSec = sampleCount / kHostReplayRate;
+						printf("Rendering %d:%02d sec of subsong #%d/#%d (%dHz player)\n", durationInSec / 60, durationInSec % 60, s, si.subsongCount, si.playerTickRate);
+
+						while (sampleCount > 0)
+						{
+							uint32_t todo = (sampleCount > kAudioBufferLen) ? kAudioBufferLen : sampleCount;
+							ar->AudioRender(audioBuffer, todo);
+							wavWriter.AddAudioData(audioBuffer, todo);
+							sampleCount -= todo;
+						}
+					}
+				}
+				wavWriter.Close();
+			}
+			AtariAudioRenderer::Destroy(ar);
+		}
+		else
+		{
+			printf("ERROR: %s fileis not supported by AtariAudio\n", argv[1]);
+		}
+	}
+	return 0;
+}
