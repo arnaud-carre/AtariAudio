@@ -23,8 +23,6 @@ public:
 	void		Write16(int port, uint16_t data, AtariMachine& machine);	// Write a 16bits value to blitter
 
 private:
-	void		AssertAdress(uint32_t ad);
-
 	uint16_t	ProcessMemorySourceWord(AtariMachine& machine);
 	uint8_t r8(int r) const;
 	uint16_t r16(int r) const;
