@@ -69,6 +69,9 @@
     <ClCompile Include="..\..\src\external\ice_24.cpp">
       <Filter>Source Files\AtariAudio\external</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Blitter.cpp">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="wavwriter.h">
@@ -126,6 +129,9 @@
       <Filter>Source Files\AtariAudio</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\ym2data.h">
+      <Filter>Source Files\AtariAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Blitter.h">
       <Filter>Source Files\AtariAudio</Filter>
     </ClInclude>
   </ItemGroup>
