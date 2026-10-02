@@ -2,9 +2,6 @@ name: Linux Build Check
 
 on:
   push:
-    branches: [ dev ]
-  pull_request:
-    branches: [ dev ]
 
 jobs:
   build-linux:
