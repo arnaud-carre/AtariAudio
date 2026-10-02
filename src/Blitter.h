@@ -32,18 +32,18 @@ private:
 	void		InternalFetch(AtariMachine& machine);
 	uint16_t ReadHOP(AtariMachine& machine);
 
-	uint32_t	m_iCurrentMotif;
-	int			m_iXCountReset;
-	int			m_iXCount;
-	uint32_t	m_iSrcAd;
-	uint32_t	m_iDstAd;
+	uint32_t	m_currentMotif;
+	int			m_xCountReset;
+	int			m_xCount;
+	uint32_t	m_srcAd;
+	uint32_t	m_dstAd;
 
-	int16_t		m_iXSrcInc;
-	int16_t		m_iYSrcInc;
-	int16_t		m_iXDstInc;
-	int16_t		m_iYDstInc;
+	int16_t		m_xSrcInc;
+	int16_t		m_ySrcInc;
+	int16_t		m_xDstInc;
+	int16_t		m_yDstInc;
 
-	int			m_iHalfToneLine;
+	int			m_halfToneLine;
 
 	bool		m_bFXSR;
 	bool		m_bNFSR;

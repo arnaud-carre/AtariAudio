@@ -343,8 +343,7 @@ void	AtariMachine::XBios(int func, uint32_t a7)
 	}
 	case 64:		// blitmode
 	{
-		uint16_t mode = m_cpu.MemRead16(a7 + 2);
-		m_cpu.m68k_set_reg(M68K_REG_D0, 0x3);
+		m_cpu.m68k_set_reg(M68K_REG_D0, 0x3);	// always says blitter is present and enabled
 		break;
 	}
 	default:
