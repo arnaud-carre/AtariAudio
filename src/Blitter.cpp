@@ -7,7 +7,7 @@
 //----------------------------------------------------------
 #include <assert.h>
 #include <memory.h>
-#include "blitter.h"
+#include "Blitter.h"
 #include "AtariMachine.h"
 
 
