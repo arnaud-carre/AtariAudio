@@ -128,6 +128,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\AtariAudioRenderer.cpp" />
     <ClCompile Include="..\..\src\AtariMachine.cpp" />
+    <ClCompile Include="..\..\src\Blitter.cpp" />
     <ClCompile Include="..\..\src\external\ice_24.cpp" />
     <ClCompile Include="..\..\src\external\lzh.cpp" />
     <ClCompile Include="..\..\src\external\Musashi\m68k.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="..\..\src\AtariAudio.h" />
     <ClInclude Include="..\..\src\AtariAudioRenderer.h" />
     <ClInclude Include="..\..\src\AtariMachine.h" />
+    <ClInclude Include="..\..\src\Blitter.h" />
     <ClInclude Include="..\..\src\external\ice_24.h" />
     <ClInclude Include="..\..\src\external\lzh.h" />
     <ClInclude Include="..\..\src\external\Musashi\m68k.h" />

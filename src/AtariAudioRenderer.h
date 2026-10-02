@@ -1,6 +1,6 @@
 //----------------------------------------------------------
 //
-//	AtariAudio 1.25
+//	AtariAudio 1.26
 //	Small & accurate ATARI-ST audio emulation
 //	by Arnaud Carré aka Leonard/Oxygene (@leonard_coder)
 //
@@ -13,6 +13,7 @@ class AtariAudioRenderer
 public:
 
 	static const uint32_t kDefaultAtariYmClock = 2000000;
+	static const uint32_t kAtariSTECpuClock = 8021247;
 
 	enum class eFileType
 	{
@@ -95,6 +96,7 @@ protected:
 	AtariAudioRenderer();
     AtariAudioRenderer(const AtariAudioRenderer&) = delete;
     AtariAudioRenderer& operator=(const AtariAudioRenderer&) = delete;
+	uint32_t ComputeHostSamplePerTick(uint32_t hostReplayRate, int playerTickRate) const;
 
 	static eFileType QuickFileTypeCheck(const void* rawMemory, uint32_t rawSize);
 	uint16_t ReadBE16(const char* r);

@@ -12,6 +12,7 @@ target_sources(AtariAudio2Wav
         ../../src/external/Musashi/m68kops.cpp
         ../../src/AtariAudioRenderer.cpp
         ../../src/AtariMachine.cpp
+        ../../src/Blitter.cpp
         ../../src/Mk68901.cpp
         ../../src/SndhRenderer.cpp
         ../../src/SteDac.cpp
