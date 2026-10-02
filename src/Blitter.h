@@ -24,9 +24,10 @@ public:
 
 private:
 	uint16_t	ProcessMemorySourceWord(AtariMachine& machine);
-	uint8_t r8(int r) const;
-	uint16_t r16(int r) const;
-	void w16(int r, uint16_t v);
+	uint8_t r8(int r) const { return m_regs[r]; }
+	uint16_t r16(int r) const { return (uint16_t(m_regs[r]) << 8) | m_regs[r + 1]; }
+	void w8(int r, uint8_t v) { m_regs[r] = v; }
+	void w16(int r, uint16_t v) { m_regs[r] = uint8_t(v >> 8); m_regs[r + 1] = uint8_t(v); }
 
 	void		InternalFetch(AtariMachine& machine);
 	uint16_t ReadHOP(AtariMachine& machine);

@@ -28,7 +28,7 @@ uint16_t Blitter::Read16(int port)
 
 void Blitter::Write8(int port, uint8_t data, AtariMachine& machine)
 {
-	m_regs[port] = data;
+	w8(port, data);
 	if (0x3c == port)
 		Run(machine);
 }
@@ -58,16 +58,6 @@ uint16_t	Blitter::ProcessMemorySourceWord(AtariMachine& machine)
 	return iWord;
 }
 
-uint8_t Blitter::r8(int r) const
-{
-	return m_regs[r];
-}
-
-uint16_t Blitter::r16(int r) const
-{
-	return (uint16_t(m_regs[r]) << 8) | m_regs[r+1];
-}
-
 uint16_t	Blitter::ReadHOP(AtariMachine& machine)
 {
 	uint16_t iHOP = 0;
@@ -80,6 +70,10 @@ uint16_t	Blitter::ReadHOP(AtariMachine& machine)
 	const int iLogicalHop = r8(0x3b)&0xf;
 	if ( s_iSourceRead[ iLogicalHop ] )
 	{
+		if (r8(0x3a) & 1)
+		{
+			int z = 0;
+		}
 		switch ( r8(0x3a) & 3)
 		{
 			case 0:	iHOP = 0xffff;													break;
@@ -94,12 +88,6 @@ uint16_t	Blitter::ReadHOP(AtariMachine& machine)
 void	Blitter::InternalFetch(AtariMachine& machine)
 {
 	m_iCurrentMotif = (m_iCurrentMotif<<16) | ReadHOP(machine);
-}
-
-void Blitter::w16(int r, uint16_t v)
-{
-	m_regs[r] = uint8_t(v >> 8);
-	m_regs[r+1] = uint8_t(v);
 }
 
 void	Blitter::Run(AtariMachine& machine)
@@ -125,8 +113,8 @@ void	Blitter::Run(AtariMachine& machine)
 
 		const int	iLogicalOp = r8( 0x3b ) & 0x0f;
 
-		m_iSrcAd = ((r16(0x24) << 16) | r16(0x26))&0x00fffffe;
-		m_iDstAd = ((r16(0x32) << 16) | r16(0x34))&0x00fffffe;
+		m_iSrcAd = ((uint32_t(r16(0x24)) << 16) | r16(0x26))&0x00fffffe;
+		m_iDstAd = ((uint32_t(r16(0x32)) << 16) | r16(0x34))&0x00fffffe;
 
 		uint16_t iEndMask[ 3 ];
 		iEndMask[ 0 ] = r16( 0x28 );
@@ -138,30 +126,22 @@ void	Blitter::Run(AtariMachine& machine)
 
 		do
 		{
-
 			m_iXCount = m_iXCountReset;
 
 			// first block
 			if ( m_bFXSR )
 			{	// FXSR
 				InternalFetch(machine);
-				//				m_iXCount--;
 			}
 
 			int iCurrentMaskId = 0;
-
 			while (m_iXCount >= 1)
 			{
-
 				InternalFetch(machine);
-
 				uint16_t iHOP = m_iCurrentMotif;
 				if ( 1 != r8( 0x3a ))
-				{
-					iHOP = (m_iCurrentMotif >> iShift) & 0xffff;
-				}
+					iHOP = (m_iCurrentMotif >> iShift);
 
-				const bool needDstFetch = (0xffff != iEndMask[iCurrentMaskId]);
 				uint16_t iOriginalValue = machine.memRead16( m_iDstAd);
 
 				uint16_t iHOPResult;
@@ -197,13 +177,11 @@ void	Blitter::Run(AtariMachine& machine)
 					iCurrentMaskId = 1;		// middle mask
 				if (1 == m_iXCount)
 					iCurrentMaskId = 2;		// end mask
-
 			}
 
 			// end of line
 			m_iSrcAd += m_iYSrcInc;
 			m_iDstAd += m_iYDstInc;
-
 			if (m_iYDstInc >= 0)
 				m_iHalfToneLine = (m_iHalfToneLine + 1) & 15;
 			else
@@ -212,10 +190,9 @@ void	Blitter::Run(AtariMachine& machine)
 		while (--iLineCount);
 
 		w16(0x24, m_iSrcAd >> 16);
-		w16(0x26, m_iSrcAd&0xffff);
+		w16(0x26, m_iSrcAd&0xfffe);
 		w16(0x32, m_iDstAd >> 16);
-		w16(0x34, m_iDstAd&0xffff);
-
+		w16(0x34, m_iDstAd&0xfffe);
 		w16(0x38, 0);
 	}
 
