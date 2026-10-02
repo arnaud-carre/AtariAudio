@@ -195,7 +195,7 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 	{
 		assert(si.playerTickRate > 0);
 		assert(si.hostReplayRate > 0);
-		m_samplePerTick = si.hostReplayRate / si.playerTickRate;
+		m_samplePerTick = ComputeHostSamplePerTick(si.hostReplayRate, si.playerTickRate);
 		m_songInfo.fileFormat = "SNDH";
 		si.fileType = eFileType::eSndh;
 	}
