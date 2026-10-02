@@ -7,7 +7,7 @@
 //----------------------------------------------------------
 #pragma once
 
-#define	ATARI_AUDIO_VERSION		"1.25"
+#define	ATARI_AUDIO_VERSION		"1.26"
 
 #include "SndhRenderer.h"
 #include "YmRenderer.h"
