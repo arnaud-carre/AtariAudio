@@ -1,6 +1,6 @@
 //----------------------------------------------------------
 //
-//	AtariAudio 1.26
+//	AtariAudio 1.27
 //	Small & accurate ATARI-ST audio emulation
 //	by Arnaud Carré aka Leonard/Oxygene (@leonard_coder)
 //
@@ -12,7 +12,7 @@ class Ym2149c
 {
 public:
 
-	void	Reset(uint32_t hostReplayRate, uint32_t ymClock);
+	void Reset(uint32_t hostReplayRate, uint32_t ymClock, bool predictibleState = false);
 	void	WritePort(uint8_t port, uint8_t value);
 	uint8_t ReadPort(uint8_t port) const;
 	int16_t	ComputeNextSample();
