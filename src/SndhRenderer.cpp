@@ -1,9 +1,10 @@
-/*--------------------------------------------------------------------
-	Atari Audio Library v1.23
-	Small & accurate ATARI-ST audio emulation
-	Arnaud Carré aka Leonard/Oxygene
-	@leonard_coder
---------------------------------------------------------------------*/
+//----------------------------------------------------------
+//
+//	AtariAudio 1.28
+//	Small & accurate ATARI-ST audio emulation
+//	by Arnaud Carré aka Leonard/Oxygene (@leonard_coder)
+//
+//----------------------------------------------------------
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
@@ -35,7 +36,7 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 	bool ret = false;
 	SongInfo& si = m_songInfo;
 	si.hostReplayRate = hostReplayRate;
-	si.ym2149Clock = Ym2149c::kDefaultAtariYmClock;
+	si.ym2149Clock = AtariAudioRenderer::kDefaultAtariYmClock;
 
 	if (ice_24_header((unsigned char*)rawSndhFile))
 	{
@@ -194,7 +195,7 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 	{
 		assert(si.playerTickRate > 0);
 		assert(si.hostReplayRate > 0);
-		m_samplePerTick = si.hostReplayRate / si.playerTickRate;
+		m_samplePerTick = ComputeHostSamplePerTick(si.hostReplayRate, si.playerTickRate);
 		m_songInfo.fileFormat = "SNDH";
 		si.fileType = eFileType::eSndh;
 	}
@@ -202,13 +203,13 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 	return ret;
 }
 
-bool	SndhRenderer::InitSubSong(int subSongId)
+bool	SndhRenderer::InitSubSong(int subSongId, bool predictibleYm2149State = false)
 {
 	bool ret = false;
 	if ((subSongId >= 1) && (subSongId <= m_songInfo.subsongCount))
 	{
 		m_innerSamplePos = 0;
-		m_atariMachine.Startup(m_songInfo.hostReplayRate);
+		m_atariMachine.Startup(m_songInfo.hostReplayRate, predictibleYm2149State);
 		if (m_atariMachine.Upload(m_songInfo.rawBinaryData, SNDH_UPLOAD_ADDR, m_songInfo.rawBinaryDataSize))
 		{
 			ret = m_atariMachine.Jsr(SNDH_UPLOAD_ADDR, subSongId);
@@ -227,7 +228,7 @@ void	SndhRenderer::AudioRenderInternal(int16_t* buffer, uint32_t count, uint32_t
 	{
 		if (0 == m_innerSamplePos)
 		{
-			if (!m_atariMachine.Jsr(SNDH_UPLOAD_ADDR + 8, 0))
+			if (!m_atariMachine.PlayerTick(SNDH_UPLOAD_ADDR + 8))
 			{
 				// player probably crash
 				m_subsongInit = false;

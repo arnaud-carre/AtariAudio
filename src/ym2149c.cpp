@@ -1,11 +1,10 @@
-/*--------------------------------------------------------------------
-	Atari Audio Library v1.23
-	Small & accurate ATARI-ST audio emulation
-	Arnaud Carré aka Leonard/Oxygene
-	@leonard_coder
---------------------------------------------------------------------*/
-// Tiny & cycle accurate ym2149 emulation.
-// operate at original YM freq divided by 8 (so 250Khz, as nothing runs faster in the chip)
+//----------------------------------------------------------
+//
+//	AtariAudio 1.28
+//	Small & accurate ATARI-ST audio emulation
+//	by Arnaud Carré aka Leonard/Oxygene (@leonard_coder)
+//
+//----------------------------------------------------------
 #include <assert.h>
 #include "ym2149c.h"
 #include "ym2149_tables.h"
@@ -19,17 +18,30 @@ uint16_t stdLibRand()
 	return uint16_t((sRndSeed >> 16) & 0x7fff);
 }
 
-void	Ym2149c::Reset(uint32_t hostReplayRate, uint32_t ymClock)
+void	Ym2149c::Reset(uint32_t hostReplayRate, uint32_t ymClock, bool predictibleYm2149State)
 {
+
+	if (predictibleYm2149State)
+		m_toneEdges = 0;
+	else
+		m_toneEdges = (stdLibRand()&((1<<10)|(1<<5)|(1<<0)))*0x1f;		// YM internal edge state are un-predictable
+
 	for (int v = 0; v < 3; v++)
 	{
 		m_toneCounter[v] = 0;
 		m_tonePeriod[v] = 0;
+		m_edgeNeedReset[v] = false;
 	}
+	m_envCounter = 0;
+	m_noiseCounter = 0;
+	m_envPeriod = 0;
+	m_noisePeriod = 0;
+	m_currentNoiseMask = ~0;
+
 	MuteVoices(0);	// do not mute anything
-	m_toneEdges = (stdLibRand()&((1<<10)|(1<<5)|(1<<0)))*0x1f;		// YM internal edge state are un-predictable
 	m_insideTimerIrq = false;
 	m_hostReplayRate = hostReplayRate;
+	// operate at original YM freq divided by 8 (so 250Khz, as nothing runs faster in the chip)
 	m_ymClockOneEighth = ymClock/8;
 	m_noiseRndRack = 1;
 	m_noiseHalf = 0;
@@ -120,7 +132,7 @@ uint8_t Ym2149c::ReadPort(uint8_t port) const
 	return ~0;
 }
 
-int32_t	Ym2149c::dcAdjust(int32_t v)
+int16_t	Ym2149c::dcAdjust(int16_t v)
 {
 	m_dcAdjustSum -= m_dcAdjustBuffer[m_dcAdjustPos];
 	m_dcAdjustSum += v;
@@ -129,7 +141,7 @@ int32_t	Ym2149c::dcAdjust(int32_t v)
 	m_dcAdjustPos &= (1 << kDcAdjustHistoryBit) - 1;
 	int32_t ov = int32_t(v) - int32_t(m_dcAdjustSum >> kDcAdjustHistoryBit);
 	// max amplitude is 15bits (not 16) so dc adjuster should never overshoot
-	return ov;
+	return int16_t(ov);
 }
 
 // Tick internal YM2149 state machine at 250Khz ( 2Mhz/8 )
@@ -137,7 +149,7 @@ int Ym2149c::Tick()
 {
 
 	// three voices at same time
-	const uint32_t vmask = (m_toneEdges | m_toneMask) & (m_currentNoiseMask | m_noiseMask);
+	uint32_t vmask = (m_toneEdges | m_toneMask) & (m_currentNoiseMask | m_noiseMask);
 
 	// update internal state
 	for (int v = 0; v < 3; v++)
@@ -148,6 +160,8 @@ int Ym2149c::Tick()
 			m_toneEdges ^= 0x1f<<(v*5);
 			m_toneCounter[v] = 0;
 		}
+		if ( 0 == m_tonePeriod[v])			// at highest rate, consider edge always 1 (classic STF sample sound mode)
+			vmask |= 0x1f<<(v*5);
 	}
 
 	m_envCounter++;
@@ -185,21 +199,7 @@ int Ym2149c::Tick()
 
 	m_currentVisualLevels = uint16_t(levels);
 
-	#if 0
-	// if period <=1 and TONE is active, empirically reduce final output value by 2 (some STF digisound use this mode)
-	const int halfShiftA = ((m_tonePeriod[0] > 1) || (m_regs[7]&(1<<0)))?0:1;
-	const int halfShiftB = ((m_tonePeriod[1] > 1) || (m_regs[7]&(1<<1)))?0:1;
-	const int halfShiftC = ((m_tonePeriod[2] > 1) || (m_regs[7]&(1<<2)))?0:1;
-	const uint32_t indexA = (levels >> 0) & 31;
-	const uint32_t indexB = (levels >> 5) & 31;
-	const uint32_t indexC = (levels >> 10) & 31;
-	uint32_t levelA = s_ym2149LogLevels[indexA] >> halfShiftA;
-	uint32_t levelB = s_ym2149LogLevels[indexB] >> halfShiftB;
-	uint32_t levelC = s_ym2149LogLevels[indexC] >> halfShiftC;
-	return levelA + levelB + levelC;
-	#else
 	return (s_ym2149RecordedMixTable[levels]);
-	#endif
 }
 
 void Ym2149c::MuteVoices(uint32_t muteMask)

@@ -1,9 +1,10 @@
-/*--------------------------------------------------------------------
-	Atari Audio Library v1.23
-	Small & accurate ATARI-ST audio emulation
-	Arnaud Carré aka Leonard/Oxygene
-	@leonard_coder
---------------------------------------------------------------------*/
+//----------------------------------------------------------
+//
+//	AtariAudio 1.28
+//	Small & accurate ATARI-ST audio emulation
+//	by Arnaud Carré aka Leonard/Oxygene (@leonard_coder)
+//
+//----------------------------------------------------------
 #include <stdint.h>
 // This file contains bank of ym2 4bits digidrum samples
 

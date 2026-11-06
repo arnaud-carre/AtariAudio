@@ -24,6 +24,7 @@
     <ProjectGuid>{d7f84550-dced-4100-87b6-6d0225016fa0}</ProjectGuid>
     <RootNamespace>Sndh2Wav</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>AtariAudio2Wav</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -127,6 +128,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\AtariAudioRenderer.cpp" />
     <ClCompile Include="..\..\src\AtariMachine.cpp" />
+    <ClCompile Include="..\..\src\Blitter.cpp" />
     <ClCompile Include="..\..\src\external\ice_24.cpp" />
     <ClCompile Include="..\..\src\external\lzh.cpp" />
     <ClCompile Include="..\..\src\external\Musashi\m68k.cpp" />
@@ -138,13 +140,14 @@
     <ClCompile Include="..\..\src\timedb.cpp" />
     <ClCompile Include="..\..\src\ym2149c.cpp" />
     <ClCompile Include="..\..\src\YmRenderer.cpp" />
-    <ClCompile Include="Sndh2Wav.cpp" />
+    <ClCompile Include="AtariAudio2Wav.cpp" />
     <ClCompile Include="wavwriter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\AtariAudio.h" />
     <ClInclude Include="..\..\src\AtariAudioRenderer.h" />
     <ClInclude Include="..\..\src\AtariMachine.h" />
+    <ClInclude Include="..\..\src\Blitter.h" />
     <ClInclude Include="..\..\src\external\ice_24.h" />
     <ClInclude Include="..\..\src\external\lzh.h" />
     <ClInclude Include="..\..\src\external\Musashi\m68k.h" />

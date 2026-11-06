@@ -1,9 +1,11 @@
-/*--------------------------------------------------------------------
-	Atari Audio Library v1.23
-	Small & accurate ATARI-ST audio emulation
-	Arnaud Carré aka Leonard/Oxygene
-	@leonard_coder
---------------------------------------------------------------------*/
+//----------------------------------------------------------
+//
+//	AtariAudio 1.28
+//	Small & accurate ATARI-ST audio emulation
+//	by Arnaud Carré aka Leonard/Oxygene (@leonard_coder)
+//
+//----------------------------------------------------------
+#include <assert.h>
 #include "SteDac.h"
 #include "Mk68901.h"
 
@@ -224,9 +226,10 @@ void	SteDac::MicrowireProceed()
 		if (2 == (value >> 9))
 		{
 			const int data = value & 0x3f;
-			switch ((value >> 6) & 7)
+			const int cmd = ((value >> 6) & 7);
+			switch (cmd)
 			{
-			case 3:	m_masterVolume = (data > 40) ? 64 : (data*64)/40;	break;
+				case 3:	m_masterVolume = (data > 40) ? 64 : (data*64)/40;	break;
 			default:
 				break;
 			}

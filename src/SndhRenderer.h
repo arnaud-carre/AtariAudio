@@ -1,9 +1,10 @@
-/*--------------------------------------------------------------------
-	Atari Audio Library v1.23
-	Small & accurate ATARI-ST audio emulation
-	Arnaud Carré aka Leonard/Oxygene
-	@leonard_coder
---------------------------------------------------------------------*/
+//----------------------------------------------------------
+//
+//	AtariAudio 1.28
+//	Small & accurate ATARI-ST audio emulation
+//	by Arnaud Carré aka Leonard/Oxygene (@leonard_coder)
+//
+//----------------------------------------------------------
 #pragma once
 #include <stdint.h>
 #include "AtariAudioRenderer.h"
@@ -16,7 +17,7 @@ public:
 	static SndhRenderer* Create(const void* sndhMemoryData, uint32_t sndhMemorySize, uint32_t hostReplayRate);
 	const SongInfo&	GetSongInfo() const;
 	uint32_t GetSubsongDurationSample(int subsongId) const;
-	bool InitSubSong(int subSongId);
+	bool InitSubSong(int subSongId, bool predictibleYm2149State);
 	void AudioRender(int16_t* buffer, uint32_t sampleCount);
 	void AudioRenderWithVisualInfos(int16_t* buffer, uint32_t sampleCount, uint32_t* pVisualSamples);
 	void MuteVoices(uint32_t muteVoiceMask) { m_atariMachine.MuteVoices(muteVoiceMask); }
