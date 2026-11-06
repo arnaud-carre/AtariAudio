@@ -11,6 +11,9 @@
 #include "SndhRenderer.h"
 #include "external/ice_24.h"
 #include "timedb.h"
+#include <atomic>
+
+std::atomic<int> g_defaultSubsong = 0;
 
 SndhRenderer*	SndhRenderer::Create(const void* sndhMemoryData, uint32_t sndhMemorySize, uint32_t hostReplayRate)
 {
@@ -75,14 +78,15 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 			read8 += 16;
 			while (read8 + 4 <= readEnd)
 			{
-				if (0 == strncmp(read8, "!#SN", 4))
+				if (0 == strncmp(read8, "#!SN", 4))
 				{
 					assert(si.subsongCount > 0);
 					read8 += 4 + si.subsongCount * 2;			// skip 2bytes per offset
 					tagCount++;
 				}
-				if (0 == strncmp(read8, "!#", 2))
+				if (0 == strncmp(read8, "#!", 2))
 				{
+					g_defaultSubsong.fetch_add(1);
 					si.defaultSubsong = atoi(read8 + 2);
 					read8 = SkipNTString(read8+2);
 					tagCount++;

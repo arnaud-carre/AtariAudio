@@ -86,7 +86,7 @@ bool ZipWalker::JobZipItemProcessing(int itemId, int workerId)
 						printf("%d (%s)\n", si.ym2149Clock, fname);
 					}
 					bool noTiming = false;
-					m_subsongCount.fetch_add(si.subsongCount);
+
 					for (int s = 0; s < si.subsongCount; s++)
 					{
 						noTiming |= (0 == sr->GetSubsongDurationSample(s + 1));
@@ -168,9 +168,13 @@ void ZipWalker::Browse(const char* sFilename)
 			free(m_audioBuffer[w]);
 		}
 
+		extern std::atomic<int> g_defaultSubsong;
+
 		printf("Entry ok..: %d\n", int(m_entryOk));
 		printf("Entry fail: %d\n", int(m_entryFail));
 		printf("subsongs..: %d\n", int(m_subsongCount));
+		printf("Default subsong set:%d\n", int(g_defaultSubsong));
+
 
 
 	}
@@ -182,8 +186,8 @@ int main()
 
 	ZipWalker zw;
 
-//	zw.Browse("sndh2026_lf.zip");
-	zw.Browse("modland-YM-all.zip");
+	zw.Browse("sndh2026_lf.zip");
+//	zw.Browse("modland-YM-all.zip");
 
 
 	return 0;
