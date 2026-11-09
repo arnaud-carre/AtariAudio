@@ -86,7 +86,7 @@ At program startup, 2 dynamic allocations are performed, regardless of how many 
 
 When you call AtariAudioRenderer::Create(), only two allocations are performed:
 - One allocation for the AtariAudioRenderer object itself (using the standard new operator)
-- One single allocation (using malloc) containing all the song data required for playback
+- One single allocation containing all the song data required for playback
 
 For a .sndh music file, the first call to InitSubSong() requires one additional allocation:
 - 4 MiB of Atari RAM (you can change the default using kAtariMachineRamSize)
@@ -95,7 +95,7 @@ All allocations other than the renderer object itself are handled through AtariA
 
 Once AtariAudioRenderer::Create() returns, you are free to do whatever you want with the fileMemoryData buffer passed to it. AtariAudio keeps all the data required for playback in its single internal allocation, so the original buffer is no longer needed.
 
-When you call AtariAudioRenderer::Destroy(), the AtariAudioRenderer instance is deleted and the single internal memory allocation is freed.
+When you call AtariAudioRenderer::Destroy(), the AtariAudioRenderer instance is deleted and the single internal memory allocation is freed. If it was .sndh music, the 4 MiB of Atari RAM is also freed.
 
 # Credits
 
