@@ -13,7 +13,11 @@
 #include <math.h>
 
 static const int kHostReplayRate = 48000;
+#ifdef ESP_PLATFORM
+static const int kAudioBufferLen = 1024;
+#else
 static const int kAudioBufferLen = kHostReplayRate*10;	// 10 seconds of audio buffer is enough
+#endif
 
 static int16_t audioBuffer[kAudioBufferLen];
 
@@ -42,7 +46,7 @@ void* LoadFile(const char* sFilename, uint32_t& sizeOut)
 	return buffer;
 }
 
-int main(int argc, char* argv[])
+static int ConvertToWav(int argc, char* argv[])
 {
 
 	printf("AtariAudio2Wav, convert .sndh or .ym music into a .wav\n");
@@ -105,3 +109,20 @@ int main(int argc, char* argv[])
 	}
 	return 0;
 }
+
+#ifdef ESP_PLATFORM
+extern "C" void app_main()
+{
+	// Placeholder paths for the ESP32 compilation and link check.
+	char program[] = "AtariAudio2Wav";
+	char input[] = "input.sndh";
+	char output[] = "output.wav";
+	char* argv[] = { program, input, output, nullptr };
+	ConvertToWav(3, argv);
+}
+#else
+int main(int argc, char* argv[])
+{
+	return ConvertToWav(argc, argv);
+}
+#endif

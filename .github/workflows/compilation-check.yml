@@ -1,0 +1,58 @@
+name: Compilation Check
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-desktop:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: GCC Linux
+            os: ubuntu-24.04
+            cmake_args: -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
+          - name: MSVC Windows
+            os: windows-2022
+            cmake_args: -G "Visual Studio 17 2022" -A x64
+          - name: Apple Clang
+            os: macos-15
+            cmake_args: -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get -y update
+          sudo apt-get install -y build-essential cmake
+
+      - name: Configure CMake
+        run: cmake -S example/AtariAudio2Wav -B example/AtariAudio2Wav/build -DCMAKE_BUILD_TYPE=Release ${{ matrix.cmake_args }}
+
+      - name: Compile project
+        run: cmake --build example/AtariAudio2Wav/build --config Release --parallel 2
+
+  build-esp32:
+    name: ESP32 (Xtensa GCC)
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Compile and link ESP32 project
+        uses: espressif/esp-idf-ci-action@v1
+        with:
+          esp_idf_version: v5.4.2
+          target: esp32
+          path: example/AtariAudio2Wav
+          command: idf.py -DATARI_AUDIO_ESP32=ON reconfigure && cmake --build build --target AtariAudio2Wav.elf --parallel 2
