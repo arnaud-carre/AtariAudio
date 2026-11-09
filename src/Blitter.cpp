@@ -140,7 +140,7 @@ void	Blitter::Run(AtariMachine& machine)
 
 				uint16_t iOriginalValue = machine.memRead16( m_dstAd);
 
-				uint16_t iHOPResult;
+				uint16_t iHOPResult = 0;
 				switch (iLogicalOp)
 				{
 					case 0:		iHOPResult = 0;										break;
