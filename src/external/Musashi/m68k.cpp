@@ -1012,6 +1012,7 @@ void M68k::m68k_set_reg(m68k_register_t regnum, unsigned int value)
 /* Set the CPU type. */
 void M68k::m68k_set_cpu_type(unsigned int cpu_type)
 {
+	(void)cpu_type;
 	assert(M68K_CPU_TYPE_68000 == cpu_type);
 	assert(m68ki_cycles);
 	CPU_TYPE         = CPU_TYPE_000;
