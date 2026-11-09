@@ -30,16 +30,19 @@ void* LoadFile(const char* sFilename, uint32_t& sizeOut)
 	{
 		fseek(h, 0, SEEK_END);
 		size_t sndhSize = ftell(h);
-		buffer = malloc(sndhSize);
-		fseek(h, 0, SEEK_SET);
-		if (sndhSize == fread(buffer, 1, sndhSize, h))
+		buffer = AtariAudioMalloc(sndhSize);
+		if (buffer)
 		{
-			sizeOut = uint32_t(sndhSize);
-		}
-		else
-		{
-			free(buffer);
-			buffer = nullptr;
+			fseek(h, 0, SEEK_SET);
+			if (sndhSize == fread(buffer, 1, sndhSize, h))
+			{
+				sizeOut = uint32_t(sndhSize);
+			}
+			else
+			{
+				AtariAudioFree(buffer);
+				buffer = nullptr;
+			}
 		}
 		fclose(h);
 	}

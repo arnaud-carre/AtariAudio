@@ -7,6 +7,7 @@
 //----------------------------------------------------------
 #pragma once
 #include <stdint.h>
+#include <stddef.h>
 
 class AtariAudioRenderer
 {
@@ -109,3 +110,6 @@ protected:
 	uint32_t	m_innerSamplePos;
 	bool 		m_subsongInit;
 };
+
+void*	AtariAudioMalloc(size_t size);
+void 	AtariAudioFree(void* p);

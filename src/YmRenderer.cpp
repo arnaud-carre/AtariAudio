@@ -85,7 +85,9 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 	else
 	{
 		si.rawBinaryDataSize = ymFileSize;
-		si.rawBinaryData = malloc(si.rawBinaryDataSize);
+		si.rawBinaryData = AtariAudioMalloc(si.rawBinaryDataSize);
+		if (nullptr == si.rawBinaryData)
+			return false;
 		memcpy((void*)si.rawBinaryData, rawYmFile, ymFileSize);
 	}
 
