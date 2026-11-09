@@ -1,6 +1,6 @@
 //----------------------------------------------------------
 //
-//	AtariAudio 1.28
+//	AtariAudio 1.29
 //	Small & accurate ATARI-ST audio emulation
 //	by Arnaud Carré aka Leonard/Oxygene (@leonard_coder)
 //
@@ -260,10 +260,9 @@ bool YmRenderer::Load(const void* rawYmFile, uint32_t ymFileSize, uint32_t hostR
 	if (ret)
 	{
 		assert(ymClock > 0);
-		assert(m_songInfo.playerTickRate > 0);
-
 		if (m_ymType != eYmType::eMIX1)		// all format *but* MIX1 should call music driver code per frame tick
 		{
+			assert(m_songInfo.playerTickRate > 0);
 			m_samplePerTick = ComputeHostSamplePerTick(si.hostReplayRate, si.playerTickRate);
 			m_songDurationSample = m_subSongLenInTick[0] * m_samplePerTick;
 		}

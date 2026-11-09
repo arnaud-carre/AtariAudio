@@ -1,6 +1,6 @@
 //----------------------------------------------------------
 //
-//	AtariAudio 1.28
+//	AtariAudio 1.29
 //	Small & accurate ATARI-ST audio emulation
 //	by Arnaud Carré aka Leonard/Oxygene (@leonard_coder)
 //
@@ -75,13 +75,13 @@ bool	SndhRenderer::Load(const void* rawSndhFile, uint32_t sndhFileSize, uint32_t
 			read8 += 16;
 			while (read8 + 4 <= readEnd)
 			{
-				if (0 == strncmp(read8, "!#SN", 4))
+				if (0 == strncmp(read8, "#!SN", 4))
 				{
 					assert(si.subsongCount > 0);
 					read8 += 4 + si.subsongCount * 2;			// skip 2bytes per offset
 					tagCount++;
 				}
-				if (0 == strncmp(read8, "!#", 2))
+				if (0 == strncmp(read8, "#!", 2))
 				{
 					si.defaultSubsong = atoi(read8 + 2);
 					read8 = SkipNTString(read8+2);

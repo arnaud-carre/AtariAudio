@@ -1,3 +1,10 @@
+//----------------------------------------------------------
+//
+//	AtariAudio2Wave
+//	xform a .sndh or .ym Atari music file into pcm .wav
+//	by Arnaud Carré aka Leonard/Oxygene (@leonard_coder)
+//
+//----------------------------------------------------------
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdlib.h>
 #include <stdio.h>
