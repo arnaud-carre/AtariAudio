@@ -19,13 +19,17 @@ set(ATARI_AUDIO_SOURCES
     wavwriter.cpp
 )
 
-if(ESP_PLATFORM)
+# ESP_PLATFORM is also set during initial project configuration. Register
+# sources only when ESP-IDF evaluates this file as a component.
+if(COMMAND idf_component_register)
     set(ESP32_SOURCES)
     foreach(source IN LISTS ATARI_AUDIO_SOURCES)
         list(APPEND ESP32_SOURCES "${CMAKE_CURRENT_LIST_DIR}/${source}")
     endforeach()
     idf_component_register(SRCS ${ESP32_SOURCES} INCLUDE_DIRS ".")
-    target_compile_features(${COMPONENT_LIB} PRIVATE cxx_std_20)
+    if(NOT CMAKE_BUILD_EARLY_EXPANSION)
+        target_compile_features(${COMPONENT_LIB} PRIVATE cxx_std_20)
+    endif()
     return()
 endif()
 
