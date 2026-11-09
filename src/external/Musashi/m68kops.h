@@ -6,6 +6,7 @@
 /* ======================================================================== */
 
 
+#include <stddef.h>
 #include "m68kcpu.h"
 
 /* Build the opcode handler table */
