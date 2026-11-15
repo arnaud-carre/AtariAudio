@@ -1,5 +1,7 @@
 # AtariAudio 1.31
 
+![AtariAudio logo](./AtariAudioLogo.jpg)
+
 src/ contains all files needed to compile AtariAudio. It allows you to play ATARI .sndh and .ym music files. You can also directly use YM2149 emulator if you want to write your own YM tracker.
 The library doesn't use any dependency, and should compile on any platform, including embedded systems (it doesn't even use float).
 
