@@ -1,4 +1,4 @@
-# AtariAudio 1.30
+# AtariAudio 1.31
 
 src/ contains all files needed to compile AtariAudio. It allows you to play ATARI .sndh and .ym music files. You can also directly use YM2149 emulator if you want to write your own YM tracker.
 The library doesn't use any dependency, and should compile on any platform, including embedded systems (it doesn't even use float).
@@ -38,6 +38,7 @@ Destroy AtariAudioRenderer object and free any internal allocated memory
 
 # Version history
 
+- 1.31 : fixed InitSubSong() proper restart in case of MIX .ym music
 - 1.30 : added support for ESP32 tiny platform!
 - 1.29 : fixed typo in sndh header parser
 - 1.28 : fixed noisy high pitch regression with STF digisound
